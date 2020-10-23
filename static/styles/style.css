@@ -1,66 +1,53 @@
 .headerClass {
-    background-image: url('https://htmlcolorcodes.com/assets/images/html-color-codes-color-tutorials-hero-00e10b1f.jpg');
-    padding: 1px;
-    padding-bottom: 0px;
-    color:#ffcc00;
+    /* background-color: #3c5c83; */
+    background-color: #2d2d2d;
+    color:#fdf909;
+    padding: 1px 0px;
+    /* margin-bottom: 10px; */
 }
 body {
-    font-family: 'Montserrat', sans-serif;
-
-}
-
-.navBar ul{
-    text-decoration: none;
-    background-color:#262626;
-    padding:10px 0px 10px;
-}
-.navitem {
-    display:inline;
-    padding: 10px 0px 10px;
-}
-#about {
-    float:right;
-    padding:0px;
-}
-.navitem a:hover {
-    background-color:purple;
-    padding:10px;
-}
-
-.navBar a {
-    color: white;
-    text-decoration: none;
-    padding: 5px;
-    cursor: pointer;
+    font-family: 'Poppins', sans-serif;
+    background-image: url(3.jpeg);
+    background-size: contain;
+    margin: 0px;
 }
 
 .switcHead {
-    width:100%;
+    width:80%;
 }
 
 .formsClass {
     background-color: #e1e6e2;
-    box-shadow: 10px 10px 8px #888888;
+    /* box-shadow: 10px 10px 8px #888888; */
+    border-radius: 18px;
+    width: 80%;
 }
 
 .mainClass {
-    display: grid;
-    position: absolute;
-    left: 0;
-    right: 0;
-    margin: auto;
-    box-shadow: 10px 10px 8px #888888;
+    display: block;
+    position: relative;
+    float: right;
+    width: 25%;
+    height: 100%;
+    background-color: #e1e6e2;
+    /* margin: 10px; */
+    /* padding: 10px; */
+    /* border-radius: 18px; */
+    /* box-shadow: 10px 10px 8px #888888; */
 }
 
 #login-btn {
     background-color:#e1e6e2;;
     float:left;
+    /* border-top-left-radius: 18px; */
+    width: 50%;
 }
 
 #signup-btn {
     background-color: #a4a6a6;
     float: right;
-
+    /* border-top-right-radius: 18px; */
+    width: 50%;
 }
 
 #login-btn, #signup-btn {
@@ -79,9 +66,10 @@ body {
 
 .signupClass,.loginClass {
     padding:10px;
-    width:100%;
+    width:80%;
     margin:auto;
     box-sizing: border-box;
+    border-radius: 18px;
 }
 
 label {
@@ -91,15 +79,20 @@ label {
 }
 .inputClass  {
     padding:10px;
-    margin:5px;
+    /* margin:5px; */
     border:1px solid grey;
-    border-radius: 3px;
+    border-radius: 18px;
     width:95%;
     background-color:ivory;
+    outline:none;
+    font-family: 'Poppins', sans-serif;
+    transition: 0.3s;
 }
 .inputClass:focus {
-    border-radius: 5px;
-    border:1px solid black;
+    border-radius: 18px;
+    /* border:2px solid #3c5c83; */
+    border: 2px solid #2d2d2d;
+    transform: scale(1.05, 1.05);
 }
 .showPassClass {
     padding:2px;
@@ -107,9 +100,9 @@ label {
     text-align: left;
     width: 95%;
 }
-.showPassClass input {
-    width: 5%;
-    padding:10px 0px 10px;            
+.showPassClass img {
+    width: 8%;
+    /* padding:10px 0px 10px;*/
     float: left;
 
 }
@@ -119,15 +112,33 @@ label {
 }
 
 .submit {
+    font-family: 'Poppins', sans-serif;
     padding:10px;
     margin:10px;
     cursor:pointer;
     border:1px transparent;
-    border-radius: 3px;
-    background-color:forestgreen;
+    outline:none;
+    border-radius: 18px;
+    background-color:#3c5c83;
     color:white;
     float:center;
+    width:90%;
+    background-color: #2d2d2d;
+    transition: 0.3s;
 }
+.submit:hover {
+    background-color:#131921;
+    transform: scale(1.05,1.05);
+
+}
+
+.errMsg {
+    color: red;
+    float: right;
+    font-size: small;
+    display: none;
+}
+
 .col-1 {width: 8.33%;}
 .col-2 {width: 16.66%;}
 .col-3 {width: 25%;}
@@ -142,7 +153,9 @@ label {
 .col-12 {width: 100%;}
 
 @media screen and (max-width: 600px) {
-    .mainClass {
-        width:75%;
+    .mainClass{
+        float: none;
+        width: auto;
+        height: 100vh;
     }
 }

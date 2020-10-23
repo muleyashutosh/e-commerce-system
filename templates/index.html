@@ -2,40 +2,43 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://fonts.googleapis.com/css2?family=Kufam&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&family=Roboto&display=swap" rel="stylesheet">    <title>My Page</title>
+    <title>Welcome</title>
+    <link rel="icon" href="{{url_for('static', filename = 'styles/cart-2-512.png')}}" type="image/x-icon">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{url_for('static', filename = 'styles/style.css')}}">
 <body>
-    <div class = 'headerClass'>   
-        <span class = 'heading'><h2 align = 'center'>GAMERS' HUB</h2></span>
-        
+    <div class = 'headerClass col-12'>   
+        <div><h2 align = 'center'>El Carto</h2></div>
     </div>
-    <div class = 'col-4 mainClass' id = 'main' align = 'center'>
-        <div align = 'center' class = 'col-12 switchHead'>
-            <div class = 'col-6' id = 'login-btn' onclick="showForm('login')">Login</div>
-            <div class = 'col-6' id = 'signup-btn' onclick="showForm('signup')">Signup</div>
+    <div class = 'mainClass' id = 'main' align = 'center'>
+        <div align = 'center' class = 'switchHead'>
+            <div class = 'col-6' id = 'login-btn' onclick="showForm('login')"><strong>Login</strong></div>
+            <div class = 'col-6' id = 'signup-btn' onclick="showForm('signup')"><strong>Signup</strong></div>
         </div>
         <div class = 'formsClass col-12' id= 'forms'>
             <div id = 'login' class = 'loginClass'>
+                <br><br><br>
                 <form name = 'loginform' action = "/" id = 'loginform' method="POST"> 
-                    <label for = 'email'>Email</label><br><input class = 'inputClass' placeholder = 'Email' name = 'email'> <p id = 'email-msg'></p><br>
-                    <label>Password</label><br><input class = 'inputClass' id = 'passIn' placeholder = 'Password' type='password' name = 'password'><br>
+                    <label for = 'email'>Email</label><br><input id = 'emailIN' class = 'inputClass' placeholder = 'Email' type = 'email' name = 'email' required><br>
+                    <label>Password</label><br><input class = 'inputClass' id = 'passIn' placeholder = 'Password' type='password' name = 'password' required><br>
                     <div class = 'showPassClass'>
-                        <input onclick="showPass()" type = 'checkbox'><label>Show Password</label><br>
+                        <img id = 'eye' onclick="showPass()" src = '{{url_for('static', filename = 'styles/showPassNormal.svg')}}'><label>Show Password</label><br>
                     </div>
+                    <div class = 'errMsg' id = 'error'>*User Not Found: Invalid email / password</div>
                     <input type = 'hidden' name = 'login'><br>
-                    <button class = 'submit' type = 'submit'>Submit</button><br>
+                    <button class = 'submit' type = 'submit'>Login</button><br>
                 </form>
         
             </div>
             <div id ='signup' class = 'signupClass'>
+                <br><br><br>
                 <form name = 'signupform' action="/" id = 'signupform' method = 'POST'> 
-                    <label for = 'name'>Name</label><br><input class = 'inputClass' placeholder = 'Name' name = 'name'><br>
-                    <label for = 'email'>Email</label><br><input class = 'inputClass' placeholder = 'Email' name = 'email'><br>
-                    <label>Password</label> <br><input class = 'inputClass' placeholder = 'Password' type='password' name = 'password'><br>
-                    <label for = 'mob_no'>Mobile No.</label><br><input class = 'inputClass' placeholder = 'Mobile No.' name = 'mob_no'><br>
-                    <input type = 'hidden' name = 'signup'>
-                    <button class = 'submit' type = 'submit'>Submit</button><br>
+                    <label for = 'name'>Name</label><br><input class = 'inputClass' placeholder = 'Name' name = 'name' type = 'text' required><br>
+                    <label for = 'email'>Email</label><br><input class = 'inputClass' placeholder = 'Email' name = 'email' type = 'email' required><br>
+                    <label>Password</label> <br><input class = 'inputClass' placeholder = 'Password' type='password' name = 'password' required><br>
+                    <label for = 'mob_no'>Mobile No.</label><br><input class = 'inputClass' placeholder = 'Mobile No.' type = 'tel' pattern = '[1-9][0-9]{9}'name = 'mob_no' required><br>
+                    <input type = 'hidden' name = 'signup'><br>
+                    <button class = 'submit' type = 'submit'>Create an Account</button><br>
         
                 </form>
         
@@ -44,19 +47,8 @@
         </div>
         
     </div>
-    
-    {% if login_status == True %}
-        <script>
-            alert('Logged in Successfully')
-        </script>
-    {% elif login_status == False %} 
-        <script>
-            alert("User Not Found")
-        </script>
-    {% endif %}
-
-
 </body>
+
 
 
 <script> 
@@ -64,14 +56,14 @@
         if(id === 'login') {
             var curr = 'login';
             var other = 'signup';
-            document.getElementById('forms').style.boxShadow = '10px 10px 8px #888888';
-            document.getElementById('main').style.boxShadow = 'none';
+            // document.getElementById('forms').style.boxShadow = '10px 10px 8px #888888';
+            // document.getElementById('main').style.boxShadow = 'none';
         }
         else {
             var curr = 'signup'
             var other = 'login'
             document.getElementById('forms').style.boxShadow = 'none';
-            document.getElementById('main').style.boxShadow = '10px 10px 8px #888888';
+            // document.getElementById('main').style.boxShadow = '10px 10px 8px #888888';
         }
         document.getElementById(curr).style.display = 'block';
         document.getElementById(curr + '-btn').style.backgroundColor = '#e1e6e2';
@@ -82,13 +74,35 @@
 
     function showPass() {
         var x = document.getElementById('passIn')
+        var eye = document.getElementById('eye')
         if(x.type === 'password') {
             x.type = 'text';
+            eye.src = "{{url_for('static', filename = 'styles/showPassSelected.svg')}}"
         }
         else {
             x.type = 'password';
+            eye.src = "{{url_for('static', filename = 'styles/showPassNormal.svg')}}"
         }
     }
+    
+    document.getElementById('emailIN').addEventListener('focus', myFunction);
+    document.getElementById('passIn').addEventListener('focus', myFunction);
+
+    function myFunction() {
+        document.getElementById('error').style.display = 'none';
+    }
+
+
+
 </script>
+{% if login_status == True %}
+    <script>
+        alert('Logged in Successfully')
+    </script>
+{% elif login_status == False %}
+    <script>
+        document.getElementById('error').style.display = 'block';
+    </script>
+{% endif %}
 
 </html>

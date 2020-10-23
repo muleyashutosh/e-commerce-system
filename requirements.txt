@@ -1,0 +1,3 @@
+flask 
+PyQtWebEngine 
+git+git://github.com/widdershin/flask-desktop.git
