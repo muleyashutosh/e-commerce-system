@@ -2,13 +2,6 @@ from os import terminal_size
 from flask import Flask, render_template, request, session, url_for
 from werkzeug.utils import redirect
 from workbench import Workbench
-import os
-from dotenv import load_dotenv
-
-
-load_dotenv()
-mysql_pwd = os.getenv('mySQL_muleyashutosh_password')
-
 
 myapp = Flask(__name__)
 myapp.secret_key = 'ABCDEF'
@@ -18,7 +11,7 @@ def Hello_World():
     if(request.method == 'POST'):
         payload = request.form
         # print(payload)
-        dB = Workbench(password = mysql_pwd)
+        dB = Workbench(password = '1234')
 
         if('login' in payload):
             whereClause = dict([x for x in payload.items() if 'login' not in x])
