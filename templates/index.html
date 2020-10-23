@@ -1,0 +1,94 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Kufam&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&family=Roboto&display=swap" rel="stylesheet">    <title>My Page</title>
+    <link rel="stylesheet" href="{{url_for('static', filename = 'styles/style.css')}}">
+<body>
+    <div class = 'headerClass'>   
+        <span class = 'heading'><h2 align = 'center'>GAMERS' HUB</h2></span>
+        
+    </div>
+    <div class = 'col-4 mainClass' id = 'main' align = 'center'>
+        <div align = 'center' class = 'col-12 switchHead'>
+            <div class = 'col-6' id = 'login-btn' onclick="showForm('login')">Login</div>
+            <div class = 'col-6' id = 'signup-btn' onclick="showForm('signup')">Signup</div>
+        </div>
+        <div class = 'formsClass col-12' id= 'forms'>
+            <div id = 'login' class = 'loginClass'>
+                <form name = 'loginform' action = "/" id = 'loginform' method="POST"> 
+                    <label for = 'email'>Email</label><br><input class = 'inputClass' placeholder = 'Email' name = 'email'> <p id = 'email-msg'></p><br>
+                    <label>Password</label><br><input class = 'inputClass' id = 'passIn' placeholder = 'Password' type='password' name = 'password'><br>
+                    <div class = 'showPassClass'>
+                        <input onclick="showPass()" type = 'checkbox'><label>Show Password</label><br>
+                    </div>
+                    <input type = 'hidden' name = 'login'><br>
+                    <button class = 'submit' type = 'submit'>Submit</button><br>
+                </form>
+        
+            </div>
+            <div id ='signup' class = 'signupClass'>
+                <form name = 'signupform' action="/" id = 'signupform' method = 'POST'> 
+                    <label for = 'name'>Name</label><br><input class = 'inputClass' placeholder = 'Name' name = 'name'><br>
+                    <label for = 'email'>Email</label><br><input class = 'inputClass' placeholder = 'Email' name = 'email'><br>
+                    <label>Password</label> <br><input class = 'inputClass' placeholder = 'Password' type='password' name = 'password'><br>
+                    <label for = 'mob_no'>Mobile No.</label><br><input class = 'inputClass' placeholder = 'Mobile No.' name = 'mob_no'><br>
+                    <input type = 'hidden' name = 'signup'>
+                    <button class = 'submit' type = 'submit'>Submit</button><br>
+        
+                </form>
+        
+            </div>
+
+        </div>
+        
+    </div>
+    
+    {% if login_status == True %}
+        <script>
+            alert('Logged in Successfully')
+        </script>
+    {% elif login_status == False %} 
+        <script>
+            alert("User Not Found")
+        </script>
+    {% endif %}
+
+
+</body>
+
+
+<script> 
+    function showForm(id) {
+        if(id === 'login') {
+            var curr = 'login';
+            var other = 'signup';
+            document.getElementById('forms').style.boxShadow = '10px 10px 8px #888888';
+            document.getElementById('main').style.boxShadow = 'none';
+        }
+        else {
+            var curr = 'signup'
+            var other = 'login'
+            document.getElementById('forms').style.boxShadow = 'none';
+            document.getElementById('main').style.boxShadow = '10px 10px 8px #888888';
+        }
+        document.getElementById(curr).style.display = 'block';
+        document.getElementById(curr + '-btn').style.backgroundColor = '#e1e6e2';
+        document.getElementById(other + '-btn').style.backgroundColor = '#a4a6a6';
+        document.getElementById(other).style.display = 'none';
+
+    }
+
+    function showPass() {
+        var x = document.getElementById('passIn')
+        if(x.type === 'password') {
+            x.type = 'text';
+        }
+        else {
+            x.type = 'password';
+        }
+    }
+</script>
+
+</html>
