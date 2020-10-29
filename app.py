@@ -4,8 +4,6 @@ from flask import Flask, render_template, request, session, url_for
 from mysql.connector import Error
 from werkzeug.utils import redirect
 from workbench import Workbench
-<<<<<<< HEAD
-
 from random import randint
 from datetime import date
 # from webui import WebUI
@@ -14,8 +12,6 @@ from datetime import date
 
 mysql_pwd = "Ashu@12345"
 
-=======
->>>>>>> 3573b8b4be41934be881cbab6b7d70241f95cd2d
 
 myapp = Flask(__name__)
 # ui = WebUI(myapp, debug= True)
@@ -26,13 +22,8 @@ def Hello_World():
     if(request.method == 'POST'):
         payload = request.form
         # print(payload)
-<<<<<<< HEAD
         dB = Workbench(database = 'minProj', password = mysql_pwd)
         login_status = None
-=======
-        dB = Workbench(password = '1234')
-
->>>>>>> 3573b8b4be41934be881cbab6b7d70241f95cd2d
         if('login' in payload):
             whereClause = dict([x for x in payload.items() if 'login' not in x])
             # print(userDat)
