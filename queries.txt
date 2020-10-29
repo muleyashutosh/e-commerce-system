@@ -1,0 +1,18 @@
+CREATE DATABASE minProj;
+
+
+CREATE TABLE Customers (
+    custID INT PRIMARY KEY NOT NULL;
+    firstname VARCHAR(20) NOT NULL;
+    lastname VARCHAR(20) NOT NULL;
+    address VARCHAR(255);
+    city VARCHAR(20);
+    state VARCHAR(20);
+    pinCode VARCHAR(6);
+    pno VARCHAR(10) NOT NULL;
+    email VARCHAR(40) NOT NULL;
+    pwd VARCHAR(14) NOT NULL;
+    joinDate date NOT NULL;
+    paymentID INT;
+    -- FOREIGN KEY (paymentID) REFERENCES PaymentDet(paymentdetailID);
+);

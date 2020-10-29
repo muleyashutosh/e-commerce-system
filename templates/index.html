@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="{{url_for('static', filename = 'styles/style.css')}}">
 <body>
     <div class = 'headerClass col-12'>   
-        <div><h2 align = 'center'>El Carto</h2></div>
+        <h2 align = 'center'>El Carto</h2>
     </div>
     <div class = 'mainClass' id = 'main' align = 'center'>
         <div align = 'center' class = 'switchHead'>
@@ -19,26 +19,47 @@
             <div id = 'login' class = 'loginClass'>
                 <br><br><br>
                 <form name = 'loginform' action = "/" id = 'loginform' method="POST"> 
-                    <label for = 'email'>Email</label><br><input id = 'emailIN' class = 'inputClass' placeholder = 'Email' type = 'email' name = 'email' required><br>
-                    <label>Password</label><br><input class = 'inputClass' id = 'passIn' placeholder = 'Password' type='password' name = 'password' required><br>
-                    <div class = 'showPassClass'>
-                        <img id = 'eye' onclick="showPass()" src = '{{url_for('static', filename = 'styles/showPassNormal.svg')}}'><label>Show Password</label><br>
+                    <div>
+                        <input id = 'emailLog' class = 'inputClass' onfocusout='checker1(this)' onfocus="checker2(this)" type = 'email' name = 'email' value='' required>
+                        <label for = 'email' id = 'emailLogLab'>Email</label>
                     </div>
-                    <div class = 'errMsg' id = 'error'>*User Not Found: Invalid email / password</div>
+                    <div>
+                        <input class = 'inputClass' id = 'passIn' type='password' value="" name = 'pwd' required>
+                        <label>Password</label>
+                        <img id = 'eye' onclick="showPass()" src = '{{url_for('static', filename = 'styles/showPassNormal.svg')}}'>
+                    </div>    
+                    
+                    <div class = 'errMsg' id = 'error'>*Invalid email / password</div>
                     <input type = 'hidden' name = 'login'><br>
-                    <button class = 'submit' type = 'submit'>Login</button><br>
+                    <input class = 'submit' type = 'submit' value = 'Login'><br>
                 </form>
         
             </div>
             <div id ='signup' class = 'signupClass'>
                 <br><br><br>
                 <form name = 'signupform' action="/" id = 'signupform' method = 'POST'> 
-                    <label for = 'name'>Name</label><br><input class = 'inputClass' placeholder = 'Name' name = 'name' type = 'text' required><br>
-                    <label for = 'email'>Email</label><br><input class = 'inputClass' placeholder = 'Email' name = 'email' type = 'email' required><br>
-                    <label>Password</label> <br><input class = 'inputClass' placeholder = 'Password' type='password' name = 'password' required><br>
-                    <label for = 'mob_no'>Mobile No.</label><br><input class = 'inputClass' placeholder = 'Mobile No.' type = 'tel' pattern = '[1-9][0-9]{9}'name = 'mob_no' required><br>
+                    <div>
+                       <input class = 'inputClass' name = 'firstName' value="" type = 'text' required>
+                       <label for = 'firstName'>First Name</label>
+                    </div>
+                    <div>
+                        <input class = 'inputClass' name = 'lastName' value="" type = 'text' required>
+                        <label for = 'lastName'>Last Name</label>
+                    </div>
+                    <div>   
+                        <input class = 'inputClass' id= 'emailSign' name = 'email' onfocusout='checker1(this)' onfocus="checker2(this)" value="" type = 'email' required>
+                        <label for = 'email' id = 'emailSignLab'>Email</label>
+                    </div>
+                    <div>   
+                        <input class = 'inputClass' type='password' value="" name = 'pwd' required>
+                        <label>Password</label>
+                    </div>
+                    <div>
+                        <input class = 'inputClass' id = 'mob' type = 'tel' onfocusout='checker1(this)' onfocus="checker2(this)" pattern = '[1-9][0-9]{9}' value="" name = 'pno' required>
+                        <label for = 'mob_no' id = 'mobLab'>Mobile No.</label>
+                    </div>
                     <input type = 'hidden' name = 'signup'><br>
-                    <button class = 'submit' type = 'submit'>Create an Account</button><br>
+                    <input class = 'submit' type = 'submit' value= 'Create an Account'><br>
         
                 </form>
         
@@ -90,6 +111,43 @@
 
     function myFunction() {
         document.getElementById('error').style.display = 'none';
+    }
+
+    function checker1(x) {
+       if(x.value != '' && !x.checkValidity()) {
+            x.style.border = '2px solid #d32710';
+            var label = document.getElementById(x.id +'Lab')
+            label.style.zIndex = 1;
+            label.style.color = '#d32710';
+            label.style.fontWeight = 'bold';
+            label.style.top = '-20px';
+       }
+       else if(x.value == ''){
+            x.style.border = '2px solid #2d2d2d';
+            var label = document.getElementById(x.id +'Lab')
+            label.zIndex = '-1'
+            label.style.color = '#999';
+            label.style.top = '3px';
+       }
+       else if(x.value != '' && x.checkValidity()) {
+            x.style.border = '2px solid #2d2d2d';
+            var label = document.getElementById(x.id +'Lab')
+            label.style.color = '#2d2d2d';
+       }
+    }
+
+    function checker2(x) {
+
+        var label = document.getElementById(x.id +'Lab')
+        // console.log(label.style.color)
+        label.style.zIndex = 1;
+        if(label.style.color != 'rgb(211, 39, 16)') {
+            label.style.color = '#2f2f2f';
+            label.style.fontWeight = 'bold';
+            label.style.top = '-20px';
+        }
+            
+        
     }
 
 
