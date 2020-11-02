@@ -12,19 +12,19 @@
     </div>
     <div class = 'mainClass' id = 'main' align = 'center'>
         <div align = 'center' class = 'switchHead'>
-            <div class = 'col-6' id = 'login-btn' onclick="showForm('login')"><strong>Login</strong></div>
-            <div class = 'col-6' id = 'signup-btn' onclick="showForm('signup')"><strong>Signup</strong></div>
+            <div class = 'col-6' id = 'login-btn' onclick="showForm('login')">Login</div>
+            <div class = 'col-6' id = 'signup-btn' onclick="showForm('signup')">Signup</div>
         </div>
         <div class = 'formsClass col-12' id= 'forms'>
             <div id = 'login' class = 'loginClass'>
                 <br><br><br>
                 <form name = 'loginform' action = "/" id = 'loginform' method="POST"> 
                     <div>
-                        <input id = 'emailLog' class = 'inputClass' onfocusout='checker1(this)' onfocus="checker2(this)" type = 'email' name = 'email' value='' required>
+                        <input id = 'emailLog' class = 'inputClass' onfocusout='checker1(this)' onfocus="checker2(this); hide()" type = 'email' name = 'email' value='' required>
                         <label for = 'email' id = 'emailLogLab'>Email</label>
                     </div>
                     <div>
-                        <input class = 'inputClass' id = 'passIn' type='password' value="" name = 'pwd' required>
+                        <input class = 'inputClass' id = 'passIn' onfocus='hide()' type='password' value="" name = 'pwd' required>
                         <label>Password</label>
                         <img id = 'eye' onclick="showPass()" src = '{{url_for('static', filename = 'styles/showPassNormal.svg')}}'>
                     </div>    
@@ -39,31 +39,35 @@
                 <br><br><br>
                 <form name = 'signupform' action="/" id = 'signupform' method = 'POST'> 
                     <div>
-                       <input class = 'inputClass' name = 'firstName' value="" type = 'text' required>
+                       <input class = 'inputClass' name = 'firstName' onfocus='hide()' value="" type = 'text' required>
                        <label for = 'firstName'>First Name</label>
                     </div>
                     <div>
-                        <input class = 'inputClass' name = 'lastName' value="" type = 'text' required>
+                        <input class = 'inputClass' name = 'lastName' onfocus='hide()' value="" type = 'text' required>
                         <label for = 'lastName'>Last Name</label>
                     </div>
                     <div>   
-                        <input class = 'inputClass' id= 'emailSign' name = 'email' onfocusout='checker1(this)' onfocus="checker2(this)" value="" type = 'email' required>
+                        <input class = 'inputClass' id= 'emailSign' name = 'email' onfocusout='checker1(this)' onfocus="checker2(this);hide()" value="" type = 'email' required>
                         <label for = 'email' id = 'emailSignLab'>Email</label>
                     </div>
                     <div>   
-                        <input class = 'inputClass' type='password' value="" name = 'pwd' required>
+                        <input class = 'inputClass' type='password' onfocus='hide()' value="" name = 'pwd' required>
                         <label>Password</label>
                     </div>
                     <div>
-                        <input class = 'inputClass' id = 'mob' type = 'tel' onfocusout='checker1(this)' onfocus="checker2(this)" pattern = '[1-9][0-9]{9}' value="" name = 'pno' required>
+                        <input class = 'inputClass' id = 'mob' type = 'tel' onfocusout='checker1(this)' onfocus="checker2(this);hide()" pattern = '[1-9][0-9]{9}' title= 'Mobile no must contain 10 digits' value="" name = 'pno' required>
                         <label for = 'mob_no' id = 'mobLab'>Mobile No.</label>
                     </div>
-                    <input type = 'hidden' name = 'signup'><br>
+                    <input type = 'hidden' name = 'signup'>
+                    <div id = 'error1' class = 'errMsg'>
+                        Email id/ Mobile number already registered.<br>Please <a href=''onclick='showForm("login")'>Login</a> to continue.
+                    </div>
                     <input class = 'submit' type = 'submit' value= 'Create an Account'><br>
         
                 </form>
-        
+                
             </div>
+            
 
         </div>
         
@@ -77,19 +81,22 @@
         if(id === 'login') {
             var curr = 'login';
             var other = 'signup';
-            // document.getElementById('forms').style.boxShadow = '10px 10px 8px #888888';
-            // document.getElementById('main').style.boxShadow = 'none';
+            document.getElementById(other + '-btn').style.boxShadow = 'inset 10px -10px 5px 0px #888888';
+            document.getElementById(curr + '-btn').style.boxShadow = 'none';
         }
         else {
             var curr = 'signup'
             var other = 'login'
-            document.getElementById('forms').style.boxShadow = 'none';
-            // document.getElementById('main').style.boxShadow = '10px 10px 8px #888888';
+            document.getElementById(other + '-btn').style.boxShadow = 'inset -10px -10px 5px 0px #888888'
+            document.getElementById(curr + '-btn').style.boxShadow = 'none';
         }
         document.getElementById(curr).style.display = 'block';
         document.getElementById(curr + '-btn').style.backgroundColor = '#e1e6e2';
+        document.getElementById(curr + '-btn').style.fontWeight = 'bold';
         document.getElementById(other + '-btn').style.backgroundColor = '#a4a6a6';
         document.getElementById(other).style.display = 'none';
+        document.getElementById(other + '-btn').style.fontWeight = 'normal';
+        document.getElementById('error1').style.display = 'none';
 
     }
 
@@ -106,33 +113,35 @@
         }
     }
     
-    document.getElementById('emailIN').addEventListener('focus', myFunction);
-    document.getElementById('passIn').addEventListener('focus', myFunction);
-
-    function myFunction() {
+    function hide() {
         document.getElementById('error').style.display = 'none';
+        document.getElementById('error1').style.display = 'none';
     }
 
     function checker1(x) {
        if(x.value != '' && !x.checkValidity()) {
+            x.style.transform = 'scale(1.05,1.05)'
             x.style.border = '2px solid #d32710';
             var label = document.getElementById(x.id +'Lab')
             label.style.zIndex = 1;
             label.style.color = '#d32710';
             label.style.fontWeight = 'bold';
-            label.style.top = '-20px';
+            label.style.top = '-18px';
        }
-       else if(x.value == ''){
-            x.style.border = '2px solid #2d2d2d';
+       else if(x.value == '') {
+            x.style.transform = 'scale(1,1)'
+            x.style.border = '2px solid #3f3f3f';
             var label = document.getElementById(x.id +'Lab')
             label.zIndex = '-1'
-            label.style.color = '#999';
-            label.style.top = '3px';
+            label.style.color = '#999999';
+            label.style.fontWeight = 'normal';
+            label.style.top = '5px';
        }
        else if(x.value != '' && x.checkValidity()) {
-            x.style.border = '2px solid #2d2d2d';
+            x.style.border = '2px solid #3f3f3f';
             var label = document.getElementById(x.id +'Lab')
-            label.style.color = '#2d2d2d';
+            label.style.color = '#3f3f3f';
+            label.style.transform = 'scale(1.05,1.05);'
        }
     }
 
@@ -142,9 +151,10 @@
         // console.log(label.style.color)
         label.style.zIndex = 1;
         if(label.style.color != 'rgb(211, 39, 16)') {
-            label.style.color = '#2f2f2f';
+            label.style.color = '#f2a305';
             label.style.fontWeight = 'bold';
-            label.style.top = '-20px';
+            label.style.top = '-18px';
+            x.style.border = '2px solid #f2a305'
         }
             
         
@@ -152,15 +162,22 @@
 
 
 
+
+
 </script>
-{% if login_status == True %}
+{% if login_status == 'Already Exists' %}
     <script>
-        alert('Logged in Successfully')
+        showForm('signup')
+        // document.getElementById('signup').style.display = 'none'
+        document.getElementById('error1').style.display = 'block'
     </script>
+
 {% elif login_status == False %}
     <script>
+        window.onload = 'showForm("login")'
         document.getElementById('error').style.display = 'block';
     </script>
+
 {% endif %}
 
 </html>
