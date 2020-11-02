@@ -4,12 +4,18 @@
     color:#fdc100;
     padding: 1px 0px;
     margin: 0;
-    /* margin-bottom: 10px; */
+    pointer-events: none;
+    user-select: none;
+}
+
+.headerClass h2 {
+    margin:15px;
 }
 body {
     font-family: 'Poppins', sans-serif;
     background-image: url(3.jpeg);
     background-size: contain;
+    overflow: hidden;
     margin: 0px;
 }
 
@@ -35,22 +41,23 @@ body {
 #login-btn {
     background-color:#e1e6e2;;
     float:left;
-    /* border-top-left-radius: 18px; */
     width: 50%;
+    font-weight: bold;
 }
 
 #signup-btn {
     background-color: #a4a6a6;
     float: right;
-    /* border-top-right-radius: 18px; */
     width: 50%;
+    box-shadow: inset 10px -10px 5px 0px#888888;
 }
 
 #login-btn, #signup-btn {
-    padding:15px 0px 15px;
+    padding:13px 0px 13px;
 }
 #login-btn, #signup-btn:hover {
     cursor: pointer;
+    user-select: none;
 }
 
 .loginClass {
@@ -78,13 +85,13 @@ body {
 .signupClass label, .loginClass label{
     position: absolute;
     z-index: -1;
-    top:3px;
+    top:5px;
     left:15px;
     font-size: 15px;
     margin:5px;
     padding:1px 2px;
     float:left;
-    color: #a4a6a6;
+    color: #999999;
     transition: 0.3s;
     background-color: #e1e6e2;
     pointer-events: none;
@@ -95,7 +102,8 @@ body {
     z-index: 1;
     width:6%;
     top:15px;
-    right: 17px;
+    right: 21px;
+    user-select: none;
 }
 
 .inputClass  {
@@ -111,18 +119,30 @@ body {
 }
 
 .inputClass:focus ~ label,.inputClass:valid ~ label {
-    top: -20px;
+    top: -18px;
     z-index: 1;
-    color: #2d2d2d;
+    color: #f2a305;
+    font-weight: bold;
+}
+.inputClass:not(:focus):valid ~ label {
+    top: -18px;
+    z-index: 1;
+    color: #3f3f3f;
     font-weight: bold;
 }
 
 .inputClass:focus, .inputClass:valid {
     border-radius: 24px;
-    border: 2px solid #2d2d2d;
+    border: 2px solid #f2a305;
     transform: scale(1.05, 1.05);
 }
 
+.inputClass:not(:focus):valid {
+    border-radius: 24px;
+    border: 2px solid #3f3f3f;
+    transform: scale(1.05, 1.05);
+    color: #3f3f3f;
+}
 
 .inputClass:focus ~ #eye {
     position: absolute;
@@ -131,6 +151,7 @@ body {
     top:14px;
     right: 17px;
 }
+
 
 .submit {
     font-family: 'Poppins', sans-serif;
@@ -154,7 +175,10 @@ body {
 .errMsg {
     color: #d32710;
     float: none;
-    font-size: small;
+    font-size: small;   
+    font-weight: bold;
+    padding: 10px;
+    margin: 10px;
     display: none;
 }
 
