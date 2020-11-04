@@ -16,3 +16,20 @@ CREATE TABLE Customers (
     paymentID INT;
     -- FOREIGN KEY (paymentID) REFERENCES PaymentDet(paymentdetailID);
 );
+
+
+CREATE TABLE Products (
+    prodID INT PRIMARY KEY NOT NULL,
+    prodName VARCHAR(50) NOT NULL,
+    prodDesc VARCHAR(255) NOT NULL,
+    quantityPU INT NOT NULL,
+    unitPrice INT NOT NULL,
+    supplierID INT NOT NULL,
+    unitWeight INT NOT NULL,
+    unitStock INT NOT NULL,
+    prodAvail bool NOT NULL,
+    img VARCHAR(255) NOT NULL,
+    rating INT,
+    Note VARCHAR(255)
+);
+

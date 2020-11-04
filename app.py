@@ -66,6 +66,10 @@ def home():
     user = session['email']
     return render_template('home.html',user = user, login_status = True)
 
+@myapp.route('/logout')
+def logout():
+    session.pop('user', None)
+    return redirect(url_for('index'))
 
 if __name__ == "__main__":
     myapp.run(debug=True)
