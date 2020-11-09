@@ -104,6 +104,8 @@ body {
     top:15px;
     right: 21px;
     user-select: none;
+    cursor: pointer;
+    -webkit-user-drag: none;
 }
 
 .inputClass  {
@@ -115,7 +117,8 @@ body {
     background-color:transparent;
     outline:none;
     font-family: 'Poppins', sans-serif;
-    transition: 0.3s;
+    font-size: 12.5px;
+    transition: 0.5s;
 }
 
 .inputClass:focus ~ label,.inputClass:valid ~ label {
@@ -165,7 +168,7 @@ body {
     color:white;
     width:90%;
     background-color: #2d2d2d;
-    transition: 0.3s;
+    transition: 0.5s;
 }
 .submit:hover {
     background-color:#131921;
@@ -195,6 +198,58 @@ body {
 .col-11 {width: 91.66%;}
 .col-12 {width: 100%;}
 
+
+.fade-in {
+    animation: fadeIn ease 0.75s;
+    -webkit-animation: fadeIn ease 0.75s;
+    -moz-animation: fadeIn ease 0.75s;
+    -o-animation: fadeIn ease 0.75s;
+    -ms-animation: fadeIn ease 0.75s;
+  }
+  @keyframes fadeIn {
+    0% {
+      opacity:0;
+    }
+    100% {
+      opacity:1;
+    }
+  }
+  
+  @-moz-keyframes fadeIn {
+    0% {
+      opacity:0;
+    }
+    100% {
+      opacity:1;
+    }
+  }
+  
+  @-webkit-keyframes fadeIn {
+    0% {
+      opacity:0;
+    }
+    100% {
+      opacity:1;
+    }
+  }
+  
+  @-o-keyframes fadeIn {
+    0% {
+      opacity:0;
+    }
+    100% {
+      opacity:1;
+    }
+  }
+  
+  @-ms-keyframes fadeIn {
+    0% {
+      opacity:0;
+    }
+    100% {
+      opacity:1;
+    }
+  }
 @media screen and (max-width: 600px) {
     .mainClass{
         float: none;
