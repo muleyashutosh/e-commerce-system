@@ -63,12 +63,16 @@ def index():
 
 @myapp.route('/home')
 def home():
-    user = session['email']
+    if 'email' in session:
+        user = session['email']
+    else:
+        return redirect(url_for('index'));
+    
     return render_template('home.html',user = user, login_status = True)
 
 @myapp.route('/logout')
 def logout():
-    session.pop('user', None)
+    session.clear()
     return redirect(url_for('index'))
 
 if __name__ == "__main__":
