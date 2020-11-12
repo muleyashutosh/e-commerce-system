@@ -1,3 +1,7 @@
+* {
+  box-sizing: border-box;
+}
+
 .headerClass {
     /* background-color: #3c5c83; */
     background-color: #2d2d2d;
@@ -13,8 +17,8 @@
 }
 body {
     font-family: 'Poppins', sans-serif;
-    background-image: url(3.jpeg);
-    background-size: contain;
+    background-image: url(https://ik.imagekit.io/milyzn5unt/e-commerce-system/3_fQJe59KvGJ.jpeg);
+    background-size: cover;
     overflow: hidden;
     margin: 0px;
 }
@@ -26,7 +30,12 @@ body {
 .formsClass {
     background-color: #e1e6e2;
     border-radius: 18px;
-    width: 80%;
+    width: 200%;
+    -webkit-transition:all 0.3s ease-in-out;
+    -moz-transition:all 0.3s ease-in-out;
+    -o-transition:all 0.3s ease-in-out;
+    transition:all 0.3s ease-in-out;
+    transform: translateX(-50%);
 }
 
 .mainClass {
@@ -34,6 +43,7 @@ body {
     position: relative;
     float: right;
     width: 25%;
+    overflow:hidden;
     height: 100%;
     background-color: #e1e6e2;
 }
@@ -53,6 +63,7 @@ body {
 }
 
 #login-btn, #signup-btn {
+    transition: 0.3s;
     padding:13px 0px 13px;
 }
 #login-btn, #signup-btn:hover {
@@ -60,16 +71,10 @@ body {
     user-select: none;
 }
 
-.loginClass {
-    display: block;
-}
-.signupClass {
-    display: none;
-}
-
 .signupClass,.loginClass {
     padding:10px;
-    width:100%;
+    width:50%;
+    float: left;
     margin:auto;
     box-sizing: border-box;
     border-radius: 18px;
@@ -199,57 +204,7 @@ body {
 .col-12 {width: 100%;}
 
 
-.fade-in {
-    animation: fadeIn ease 0.75s;
-    -webkit-animation: fadeIn ease 0.75s;
-    -moz-animation: fadeIn ease 0.75s;
-    -o-animation: fadeIn ease 0.75s;
-    -ms-animation: fadeIn ease 0.75s;
-  }
-  @keyframes fadeIn {
-    0% {
-      opacity:0;
-    }
-    100% {
-      opacity:1;
-    }
-  }
   
-  @-moz-keyframes fadeIn {
-    0% {
-      opacity:0;
-    }
-    100% {
-      opacity:1;
-    }
-  }
-  
-  @-webkit-keyframes fadeIn {
-    0% {
-      opacity:0;
-    }
-    100% {
-      opacity:1;
-    }
-  }
-  
-  @-o-keyframes fadeIn {
-    0% {
-      opacity:0;
-    }
-    100% {
-      opacity:1;
-    }
-  }
-  
-  @-ms-keyframes fadeIn {
-    0% {
-      opacity:0;
-    }
-    100% {
-      opacity:1;
-    }
-  }
 @media screen and (max-width: 600px) {
     .mainClass{
         float: none;

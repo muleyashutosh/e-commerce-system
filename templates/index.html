@@ -3,7 +3,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Welcome</title>
-    <link rel="icon" href="{{url_for('static', filename = 'styles/cart-2-512.png')}}" type="image/x-icon">
+    <link rel="icon" href="https://ik.imagekit.io/milyzn5unt/e-commerce-system/cart-2-512_iEf65WcBxP.png" type="image/x-icon">
     <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{url_for('static', filename = 'styles/login.css')}}">
 </head>
@@ -16,28 +16,10 @@
             <div class = 'col-6' id = 'login-btn' onclick="showForm('login')">Login</div>
             <div class = 'col-6' id = 'signup-btn' onclick="showForm('signup')">Signup</div>
         </div>
-        <div class = 'formsClass col-12' id= 'forms'>
-            <div id = 'login' class = 'loginClass  fade-in'>
-                <br><br><br>
-                <form name = 'loginform' action = "/" id = 'loginform' method="POST"> 
-                    <div>
-                        <input id = 'emailLog' class = 'inputClass' onfocusout='checker1(this)' onfocus="checker2(this); hide()" type = 'email' name = 'email' value='' required>
-                        <label for = 'email' id = 'emailLogLab'>Email</label>
-                    </div>
-                    <div>
-                        <input class = 'inputClass' id = 'passIn' onfocus='hide()' type='password' value="" name = 'pwd' required>
-                        <label>Password</label>
-                        <img id = 'eye' onclick="showPass()" src = '{{url_for('static', filename = 'styles/showPassNormal.svg')}}'>
-                    </div>    
-                    
-                    <div class = 'errMsg' id = 'error'>*Invalid email / password</div>
-                    <input type = 'hidden' name = 'login'><br>
-                    <input class = 'submit' type = 'submit' value = 'Login'><br>
-                </form>
-        
-            </div>
-            <div id ='signup' class = 'signupClass fade-in'>
-                <br><br><br>
+        <div class = 'formsClass' id= 'forms'>
+
+            <div id ='signup' class = 'signupClass'>
+                <br>
                 <form name = 'signupform' action="/" id = 'signupform' method = 'POST'> 
                     <div>
                        <input class = 'inputClass' name = 'firstName' onfocus='hide()' value="" type = 'text' required>
@@ -68,8 +50,27 @@
                 </form>
                 
             </div>
-            
 
+            <div id = 'login' class = 'loginClass'>
+                <br>
+                <form name = 'loginform' action = "/" id = 'loginform' method="POST"> 
+                    <div>
+                        <input id = 'emailLog' class = 'inputClass' onfocusout='checker1(this)' onfocus="checker2(this); hide()" type = 'email' name = 'email' value='' required>
+                        <label for = 'email' id = 'emailLogLab'>Email</label>
+                    </div>
+                    <div>
+                        <input class = 'inputClass' id = 'passIn' onfocus='hide()' type='password' value="" name = 'pwd' required>
+                        <label>Password</label>
+                        <img id = 'eye' onclick="showPass()" src = 'https://ik.imagekit.io/milyzn5unt/e-commerce-system/showPassNormal_hI4WkY3i2z.svg'>
+                    </div>    
+                    
+                    <div class = 'errMsg' id = 'error'>*Invalid email / password</div>
+                    <input type = 'hidden' name = 'login'><br>
+                    <input class = 'submit' type = 'submit' value = 'Login'><br>
+                </form>
+        
+            </div>
+            
         </div>
         
     </div>
@@ -84,18 +85,20 @@
             var other = 'signup';
             document.getElementById(other + '-btn').style.boxShadow = 'inset 10px -10px 5px 0px #888888';
             document.getElementById(curr + '-btn').style.boxShadow = 'none';
+            document.getElementById('forms').style.transform = 'translateX(-50%)'
         }
         else {
             var curr = 'signup'
             var other = 'login'
             document.getElementById(other + '-btn').style.boxShadow = 'inset -10px -10px 5px 0px #888888'
             document.getElementById(curr + '-btn').style.boxShadow = 'none';
+            document.getElementById('forms').style.transform = 'translateX(0%)'
         }
-        document.getElementById(curr).style.display = 'block';
+        // document.getElementById(curr).style.display = 'block';
         document.getElementById(curr + '-btn').style.backgroundColor = '#e1e6e2';
         document.getElementById(curr + '-btn').style.fontWeight = 'bold';
         document.getElementById(other + '-btn').style.backgroundColor = '#a4a6a6';
-        document.getElementById(other).style.display = 'none';
+        // document.getElementById(other).style.display = 'none';
         document.getElementById(other + '-btn').style.fontWeight = 'normal';
         document.getElementById('error1').style.display = 'none';
 
@@ -106,11 +109,11 @@
         var eye = document.getElementById('eye')
         if(x.type === 'password') {
             x.type = 'text';
-            eye.src = "{{url_for('static', filename = 'styles/showPassSelected.svg')}}"
+            eye.src = "https://ik.imagekit.io/milyzn5unt/e-commerce-system/showPassSelected_Z472MnFZm.svg"
         }
         else {
             x.type = 'password';
-            eye.src = "{{url_for('static', filename = 'styles/showPassNormal.svg')}}"
+            eye.src = "https://ik.imagekit.io/milyzn5unt/e-commerce-system/showPassNormal_hI4WkY3i2z.svg"
         }
     }
     
