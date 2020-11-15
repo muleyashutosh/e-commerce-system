@@ -21,25 +21,41 @@
             <div id ='signup' class = 'signupClass'>
                 <br>
                 <form name = 'signupform' action="/" id = 'signupform' method = 'POST'> 
-                    <div>
+                    <div class = 'radioDiv'>
+                        <div>
+                            <input id = 'custoption' type='radio' name = 'user' value = 'customer' autofocus>
+                            <label>Customer</label>
+                        </div>
+                        <div>
+                            <input id = 'selloption' type='radio' name = 'user' value = 'seller' >
+                            <label>Seller</label>
+                        </div>
+                    </div>
+                    
+                    <div class = 'inputContain'>
                        <input class = 'inputClass' name = 'firstName' onfocus='hide()' value="" type = 'text' required>
-                       <label for = 'firstName'>First Name</label>
+                       <label class = 'moveLabel' for = 'firstName'>First Name</label>
                     </div>
-                    <div>
+                    <div class = 'inputContain'>
                         <input class = 'inputClass' name = 'lastName' onfocus='hide()' value="" type = 'text' required>
-                        <label for = 'lastName'>Last Name</label>
+                        <label class = 'moveLabel' for = 'lastName'>Last Name</label>
                     </div>
-                    <div>   
+                    <div id = 'orgName' class = 'inputContain'>
+                        <input id ='orgInput'class = 'inputClass' name = 'orgname' onfocus='hide()' value="" type = 'text'>
+                        <label class = 'moveLabel' for = 'orgname'>Organisation</label>
+                    </div>
+
+                    <div class = 'inputContain'>   
                         <input class = 'inputClass' id= 'emailSign' name = 'email' onfocusout='checker1(this)' onfocus="checker2(this);hide()" value="" type = 'email' required>
-                        <label for = 'email' id = 'emailSignLab'>Email</label>
+                        <label class = 'moveLabel' for = 'email' id = 'emailSignLab'>Email</label>
                     </div>
-                    <div>   
+                    <div class = 'inputContain'>   
                         <input class = 'inputClass' type='password' onfocus='hide()' value="" name = 'pwd' required>
-                        <label>Password</label>
+                        <label class = 'moveLabel'>Password</label>
                     </div>
-                    <div>
+                    <div class = 'inputContain'>
                         <input class = 'inputClass' id = 'mob' type = 'tel' onfocusout='checker1(this)' onfocus="checker2(this);hide()" pattern = '[1-9][0-9]{9}' title= 'Mobile no must contain 10 digits' value="" name = 'pno' required>
-                        <label for = 'mob_no' id = 'mobLab'>Mobile No.</label>
+                        <label class = 'moveLabel' for = 'mob_no' id = 'mobLab'>Mobile No.</label>
                     </div>
                     <input type = 'hidden' name = 'signup'>
                     <div id = 'error1' class = 'errMsg'>
@@ -54,15 +70,25 @@
             <div id = 'login' class = 'loginClass'>
                 <br>
                 <form name = 'loginform' action = "/" id = 'loginform' method="POST"> 
-                    <div>
+                    <div class = 'inputContain'>
                         <input id = 'emailLog' class = 'inputClass' onfocusout='checker1(this)' onfocus="checker2(this); hide()" type = 'email' name = 'email' value='' required>
-                        <label for = 'email' id = 'emailLogLab'>Email</label>
+                        <label class = 'moveLabel' for = 'email' id = 'emailLogLab'>Email</label>
                     </div>
-                    <div>
+                    <div class = 'inputContain'>
                         <input class = 'inputClass' id = 'passIn' onfocus='hide()' type='password' value="" name = 'pwd' required>
-                        <label>Password</label>
+                        <label class = 'moveLabel'>Password</label>
                         <img id = 'eye' onclick="showPass()" src = 'https://ik.imagekit.io/milyzn5unt/e-commerce-system/showPassNormal_hI4WkY3i2z.svg'>
-                    </div>    
+                    </div> 
+                    <div class = 'radioDiv'>
+                        <div>
+                            <input type='radio' name = 'user' value = 'customer' autofocus>
+                            <label>Customer</label>
+                        </div>
+                        <div>
+                            <input type='radio' name = 'user' value = 'seller'>
+                            <label>Seller</label>
+                        </div>
+                    </div>   
                     
                     <div class = 'errMsg' id = 'error'>*Invalid email / password</div>
                     <input type = 'hidden' name = 'login'><br>
@@ -163,6 +189,32 @@
             
         
     }
+
+    document.getElementById('selloption').addEventListener('change', function() {
+        var x = document.getElementById('orgName')
+        if(document.getElementById('selloption').checked) {
+            x.style.display = 'block'
+            document.getElementById('orgInput').required = true;
+            
+        }
+        else {
+            x.style.display = 'none';
+            document.getElementById('orgInput').required = false;
+        }
+    })
+    document.getElementById('custoption').addEventListener('change', function() {
+        var x = document.getElementById('orgName')
+        if(document.getElementById('custoption').checked) {
+            x.style.display = 'none';
+            document.getElementById('orgInput').required = false;
+        }
+        else {
+            x.style.display = 'block';
+            document.getElementById('orgInput').required = true;
+        }
+    })
+    
+    
 
 
 

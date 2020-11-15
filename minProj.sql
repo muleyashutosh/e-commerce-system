@@ -16,6 +16,29 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
+-- Table structure for table `Category`
+--
+
+DROP TABLE IF EXISTS `Category`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `Category` (
+  `categoryID` int NOT NULL,
+  `categoryName` varchar(50) NOT NULL,
+  PRIMARY KEY (`categoryID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `Category`
+--
+
+LOCK TABLES `Category` WRITE;
+/*!40000 ALTER TABLE `Category` DISABLE KEYS */;
+/*!40000 ALTER TABLE `Category` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `Customers`
 --
 
@@ -23,9 +46,9 @@ DROP TABLE IF EXISTS `Customers`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `Customers` (
-  `custID` int NOT NULL,
-  `firstName` varchar(20) NOT NULL,
-  `lastName` varchar(20) NOT NULL,
+  `custID` varchar(20) NOT NULL,
+  `firstname` varchar(20) NOT NULL,
+  `lastname` varchar(20) NOT NULL,
   `address` varchar(255) DEFAULT NULL,
   `city` varchar(20) DEFAULT NULL,
   `state` varchar(20) DEFAULT NULL,
@@ -35,10 +58,7 @@ CREATE TABLE `Customers` (
   `pwd` varchar(14) NOT NULL,
   `joinDate` date NOT NULL,
   `paymentID` int DEFAULT NULL,
-  PRIMARY KEY (`custID`),
-  UNIQUE KEY `custID_UNIQUE` (`custID`),
-  UNIQUE KEY `pno_UNIQUE` (`pno`),
-  UNIQUE KEY `email_UNIQUE` (`email`)
+  PRIMARY KEY (`custID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -48,7 +68,7 @@ CREATE TABLE `Customers` (
 
 LOCK TABLES `Customers` WRITE;
 /*!40000 ALTER TABLE `Customers` DISABLE KEYS */;
-INSERT INTO `Customers` VALUES (2093437,'asdasd','asdasd',NULL,NULL,NULL,NULL,'adsad','a@vc','adsaasdasd','2020-10-30',NULL),(4997270,'Saksham','Yadav',NULL,NULL,NULL,NULL,'9145774142','sakshamyadavpune@gmail.com','Saksham@123','2020-10-27',NULL);
+INSERT INTO `Customers` VALUES ('C-7731996','Monica','Paliwal',NULL,NULL,NULL,NULL,'8145612354','monicapaliwal17@gmail.com','Monica@123','2020-11-15',NULL),('C-8283317','Saksham','Yadav',NULL,NULL,NULL,NULL,'9145774142','sakshamyadavpune@gmail.com','Saksham@123','2020-11-15',NULL),('C-9723854','Ashutosh','Muley',NULL,NULL,NULL,NULL,'9096080085','muleyashutosh@gmail.com','Ashu@12345','2020-11-15',NULL);
 /*!40000 ALTER TABLE `Customers` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -63,16 +83,16 @@ CREATE TABLE `Products` (
   `prodID` int NOT NULL,
   `prodName` varchar(50) NOT NULL,
   `prodDesc` varchar(255) NOT NULL,
-  `quantityPU` int NOT NULL,
   `unitPrice` int NOT NULL,
-  `supplierID` int NOT NULL,
-  `unitWeight` int NOT NULL,
   `unitStock` int NOT NULL,
   `prodAvail` tinyint(1) NOT NULL,
   `img` varchar(255) NOT NULL,
   `rating` int DEFAULT NULL,
   `Note` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`prodID`)
+  `categoryID` int DEFAULT NULL,
+  PRIMARY KEY (`prodID`),
+  KEY `categoryID` (`categoryID`),
+  CONSTRAINT `Products_ibfk_1` FOREIGN KEY (`categoryID`) REFERENCES `Category` (`categoryID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -84,6 +104,67 @@ LOCK TABLES `Products` WRITE;
 /*!40000 ALTER TABLE `Products` DISABLE KEYS */;
 /*!40000 ALTER TABLE `Products` ENABLE KEYS */;
 UNLOCK TABLES;
+
+--
+-- Table structure for table `SupplierDet`
+--
+
+DROP TABLE IF EXISTS `SupplierDet`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `SupplierDet` (
+  `supplierID` varchar(20) NOT NULL,
+  `prodID` int NOT NULL,
+  PRIMARY KEY (`supplierID`,`prodID`),
+  KEY `prodID` (`prodID`),
+  CONSTRAINT `SupplierDet_ibfk_1` FOREIGN KEY (`supplierID`) REFERENCES `Suppliers` (`supplierID`),
+  CONSTRAINT `SupplierDet_ibfk_2` FOREIGN KEY (`prodID`) REFERENCES `Products` (`prodID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `SupplierDet`
+--
+
+LOCK TABLES `SupplierDet` WRITE;
+/*!40000 ALTER TABLE `SupplierDet` DISABLE KEYS */;
+/*!40000 ALTER TABLE `SupplierDet` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `Suppliers`
+--
+
+DROP TABLE IF EXISTS `Suppliers`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `Suppliers` (
+  `supplierID` varchar(20) NOT NULL,
+  `orgname` varchar(50) NOT NULL,
+  `firstname` varchar(20) NOT NULL,
+  `lastname` varchar(20) NOT NULL,
+  `address` varchar(255) DEFAULT NULL,
+  `city` varchar(20) DEFAULT NULL,
+  `state` varchar(20) DEFAULT NULL,
+  `pinCode` varchar(6) DEFAULT NULL,
+  `pno` varchar(10) NOT NULL,
+  `email` varchar(40) NOT NULL,
+  `pwd` varchar(14) NOT NULL,
+  `joinDate` date NOT NULL,
+  `paymentID` int DEFAULT NULL,
+  PRIMARY KEY (`supplierID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `Suppliers`
+--
+
+LOCK TABLES `Suppliers` WRITE;
+/*!40000 ALTER TABLE `Suppliers` DISABLE KEYS */;
+INSERT INTO `Suppliers` VALUES ('S-5709556','Yadav Enterprises','Saksham','Yadav',NULL,NULL,NULL,NULL,'9145774142','sakshamyadavpune@gmail.com','Saksham@123','2020-11-15',NULL);
+/*!40000 ALTER TABLE `Suppliers` ENABLE KEYS */;
+UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -94,4 +175,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-11-04 13:40:43
+-- Dump completed on 2020-11-15 21:49:05

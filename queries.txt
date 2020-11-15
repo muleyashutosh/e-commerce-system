@@ -2,19 +2,24 @@ CREATE DATABASE minProj;
 
 
 CREATE TABLE Customers (
-    custID INT PRIMARY KEY NOT NULL;
-    firstname VARCHAR(20) NOT NULL;
-    lastname VARCHAR(20) NOT NULL;
-    address VARCHAR(255);
-    city VARCHAR(20);
-    state VARCHAR(20);
-    pinCode VARCHAR(6);
-    pno VARCHAR(10) NOT NULL;
-    email VARCHAR(40) NOT NULL;
-    pwd VARCHAR(14) NOT NULL;
-    joinDate date NOT NULL;
-    paymentID INT;
-    -- FOREIGN KEY (paymentID) REFERENCES PaymentDet(paymentdetailID);
+    custID VARCHAR(20) PRIMARY KEY NOT NULL,
+    firstname VARCHAR(20) NOT NULL,
+    lastname VARCHAR(20) NOT NULL,
+    address VARCHAR(255),
+    city VARCHAR(20),
+    state VARCHAR(20),
+    pinCode VARCHAR(6),
+    pno VARCHAR(10) NOT NULL,
+    email VARCHAR(40) NOT NULL,
+    pwd VARCHAR(14) NOT NULL,
+    joinDate date NOT NULL,
+    paymentID INT,
+    -- FOREIGN KEY (paymentID) REFERENCES PaymentDet(paymentdetailID),
+);
+
+CREATE TABLE Category (
+    categoryID INT PRIMARY NOT NULL,
+    categoryName VARCHAR(50) NOT NULL
 );
 
 
@@ -22,14 +27,39 @@ CREATE TABLE Products (
     prodID INT PRIMARY KEY NOT NULL,
     prodName VARCHAR(50) NOT NULL,
     prodDesc VARCHAR(255) NOT NULL,
-    quantityPU INT NOT NULL,
     unitPrice INT NOT NULL,
-    supplierID INT NOT NULL,
-    unitWeight INT NOT NULL,
     unitStock INT NOT NULL,
     prodAvail bool NOT NULL,
     img VARCHAR(255) NOT NULL,
     rating INT,
-    Note VARCHAR(255)
+    Note VARCHAR(255),
+    categoryID INT,
+    FOREIGN KEY (categoryID) REFERENCES Category(categoryID)
+);
+
+CREATE TABLE Suppliers (
+    supplierID VARCHAR(20) PRIMARY KEY NOT NULL,
+    orgname VARCHAR(50) NOT NULL,
+    firstname VARCHAR(20) NOT NULL,
+    lastname VARCHAR(20) NOT NULL,
+    address VARCHAR(255),
+    city VARCHAR(20),
+    state VARCHAR(20),
+    pinCode VARCHAR(6),
+    pno VARCHAR(10) NOT NULL,
+    email VARCHAR(40) NOT NULL,
+    pwd VARCHAR(14) NOT NULL,
+    joinDate date NOT NULL,
+    paymentID INT,
+    -- FOREIGN KEY (paymentID) REFERENCES PaymentDet(paymentdetailID),
+);
+
+
+CREATE TABLE SupplierDet (
+    supplierID VARCHAR(20) NOT NULL,
+    prodID INT NOT NULL,
+    PRIMARY KEY(supplierID, prodID),
+    FOREIGN KEY (supplierID) REFERENCES Suppliers(supplierID),
+    FOREIGN KEY (prodID) REFERENCES Products(prodID)
 );
 
