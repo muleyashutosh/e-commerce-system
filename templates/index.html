@@ -22,14 +22,12 @@
                 <br>
                 <form name = 'signupform' action="/" id = 'signupform' method = 'POST'> 
                     <div class = 'radioDiv'>
-                        <div>
-                            <input id = 'custoption' type='radio' name = 'user' value = 'customer' autofocus>
-                            <label>Customer</label>
-                        </div>
-                        <div>
-                            <input id = 'selloption' type='radio' name = 'user' value = 'seller' >
-                            <label>Seller</label>
-                        </div>
+                        <label>
+                            <input id = 'custoption' type='radio' name = 'user' value = 'customer' checked>Customer
+                        </label>
+                        <label>
+                            <input id = 'selloption' type='radio' name = 'user' value = 'seller' >Seller
+                        </label>
                     </div>
                     
                     <div class = 'inputContain'>
@@ -80,15 +78,13 @@
                         <img id = 'eye' onclick="showPass()" src = 'https://ik.imagekit.io/milyzn5unt/e-commerce-system/showPassNormal_hI4WkY3i2z.svg'>
                     </div> 
                     <div class = 'radioDiv'>
-                        <div>
-                            <input type='radio' name = 'user' value = 'customer' autofocus>
-                            <label>Customer</label>
-                        </div>
-                        <div>
-                            <input type='radio' name = 'user' value = 'seller'>
-                            <label>Seller</label>
-                        </div>
-                    </div>   
+                        <label>
+                            <input type='radio' name = 'user' value = 'customer' checked>Customer
+                        </label>
+                        <label>
+                            <input type='radio' name = 'user' value = 'seller' >Seller
+                        </label>
+                    </div>
                     
                     <div class = 'errMsg' id = 'error'>*Invalid email / password</div>
                     <input type = 'hidden' name = 'login'><br>

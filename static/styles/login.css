@@ -107,19 +107,22 @@ body {
 .radioDiv {
     width: 90%;
     display: flex;
-    margin: 0px 10 0px 42px;
+    margin: 0px 10 0px 10%;
     font-size: 15px;
     padding: 0px 10px;
 }
 
-.radioDiv div {
+.radioDiv label {
     width: 50%;
     display: flex;
     padding: 10px 0px;
 }
 
-.radioDiv div input {
+.radioDiv label input {
     outline: none;
+    /* width: 14px;
+    height: 14px;
+    margin: 4px; */
 }
 
 #orgName {
@@ -129,12 +132,13 @@ body {
 #eye {
     position: absolute;
     z-index: 1;
-    width:6%;
+    width:15px;
     top:15px;
     right: 21px;
     user-select: none;
     cursor: pointer;
     -webkit-user-drag: none;
+    transition: all 0.5s;
 }
 
 .inputClass  {
@@ -179,8 +183,8 @@ body {
 .inputClass:focus ~ #eye {
     position: absolute;
     z-index: 1;
-    width:7%;
-    top:14px;
+    width:15px;
+    top:16px;
     right: 17px;
 }
 
@@ -227,14 +231,48 @@ body {
 .col-11 {width: 91.66%;}
 .col-12 {width: 100%;}
 
+@media screen and (max-width: 1000px) {
+    .mainClass{
+        width: 30%;
+        height: 100vh;
+    }
+    .radioDiv {
+        margin: 0px 10 0px 30px;
+    }
+    .radioDiv label {
+        margin: 0;
+        padding: 0;
+    }
+
+}
+@media screen and (max-width: 800px) {
+    .radioDiv {
+        margin: 0px 0px 10px 0px ;
+        display: block;
+    }
+    .radioDiv label {
+        margin: 0px 0px 0px 30px;
+        padding: 0;
+        width: 100%;
+    }
+
+}
 
   
 @media screen and (max-width: 600px) {
     .mainClass{
-        float: none;
         width: auto;
         height: 100vh;
     }
+    .radioDiv {
+        display: flex;
+        margin: 0px 10 0px 5%;
+    }
+    .radioDiv label {
+        padding: 10px 0px;
+        width: 50%;
+    }
+    
 }
 
 input:-webkit-autofill,
