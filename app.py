@@ -11,7 +11,7 @@ from datetime import date
 
 
 
-mysql_pwd = "Ashu@12345"
+mysql_pwd = "root"
 
 
 myapp = Flask(__name__)

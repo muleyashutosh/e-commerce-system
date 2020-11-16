@@ -34,7 +34,7 @@ class Workbench(Column):
     """
     MySQL Workbench Class
     """
-    def __init__(self, database='Sample', host='localhost', user='muleyashutosh', password=''):
+    def __init__(self, database='Sample', host='localhost', user='root', password=''):
         """
         INPUT: database name, hostname(default = localhost),
                     username(default = 'root'), password
