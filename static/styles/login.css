@@ -120,9 +120,9 @@ body {
 
 .radioDiv label input {
     outline: none;
-    /* width: 14px;
-    height: 14px;
-    margin: 4px; */
+    width: auto;
+    height: auto;
+    margin: 5px;
 }
 
 #orgName {
