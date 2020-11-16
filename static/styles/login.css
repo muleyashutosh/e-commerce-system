@@ -19,6 +19,7 @@ body {
     font-family: 'Poppins', sans-serif;
     background-image: url(https://ik.imagekit.io/milyzn5unt/e-commerce-system/3_fQJe59KvGJ.jpeg);
     background-size: cover;
+    background-position: left;
     overflow: hidden;
     margin: 0px;
 }
