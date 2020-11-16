@@ -13,7 +13,6 @@ from datetime import date
 
 mysql_pwd = "root"
 
-
 myapp = Flask(__name__)
 # ui = WebUI(myapp, debug= True)
 myapp.secret_key = 'ABCDEF'
@@ -21,7 +20,7 @@ myapp.secret_key = 'ABCDEF'
 @myapp.route('/', methods = ['GET', 'POST'])
 def index():
     login_status=None
-    if(request.method == 'POST'):
+    if request.method == 'POST':
         payload = request.form
         # print(payload)
         payload = payload.copy()
@@ -37,12 +36,12 @@ def index():
             idPrefix = 'S-'
         payload.pop('user')
         dB = Workbench(database = 'minProj', password = mysql_pwd)
-        if('login' in payload):
+        if 'login' in payload :
             whereClause = dict([x for x in payload.items() if 'login' not in x])
             # print(userDat)
             userData = dB.select_from(tableName, where_clause = whereClause)
             # print(userData)
-            if(userData):
+            if userData :
                 login_status = True 
                 if payload['email'] not in session:
                     session['email'] = payload['email']
@@ -83,7 +82,7 @@ def home():
     if 'email' in session:
         user = session['email']
     else:
-        return redirect(url_for('index'));
+        return redirect(url_for('index'))
     
     return render_template('home.html',user = user, login_status = True)
 
@@ -92,7 +91,7 @@ def sellerHome():
     if 'email' in session:
         user = session['email']
     else:
-        return redirect(url_for('index'));
+        return redirect(url_for('index'))
     
     return render_template('sellerHome.html',user = user, login_status = True)
 
