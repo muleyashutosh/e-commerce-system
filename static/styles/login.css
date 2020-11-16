@@ -155,13 +155,13 @@ body {
     transition: 0.5s;
 }
 
-.inputClass:focus ~ .moveLabel,.inputClass:valid ~ .moveLabel {
+.inputClass:focus ~ label,.inputClass:valid ~ label {
     top: -18px;
     z-index: 1;
     color: #f2a305;
     font-weight: bold;
 }
-.inputClass:not(:focus):valid ~ .moveLabel {
+.inputClass:not(:focus):valid ~ label {
     top: -18px;
     z-index: 1;
     color: #3f3f3f;

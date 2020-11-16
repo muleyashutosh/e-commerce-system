@@ -52,7 +52,7 @@
                         <label class = 'moveLabel'>Password</label>
                     </div>
                     <div class = 'inputContain'>
-                        <input class = 'inputClass' id = 'mob' type = 'tel' onfocusout='checker1(this)' onfocus="checker2(this);hide()" pattern = '[1-9][0-9]{9}' title= 'Mobile no must contain 10 digits' value="" name = 'pno' required>
+                        <input class = 'inputClass' id = 'mob' type = 'tel' onfocusout='checker1(this)' onfocus="checker2(this); hide()" pattern = '[1-9][0-9]{9}' title= 'Mobile no must contain 10 digits' value="" name = 'pno' required>
                         <label class = 'moveLabel' for = 'mob_no' id = 'mobLab'>Mobile No.</label>
                     </div>
                     <input type = 'hidden' name = 'signup'>
@@ -69,7 +69,7 @@
                 <br>
                 <form name = 'loginform' action = "/" id = 'loginform' method="POST"> 
                     <div class = 'inputContain'>
-                        <input id = 'emailLog' class = 'inputClass' onfocusout='checker1(this)' onfocus="checker2(this); hide()" type = 'email' name = 'email' value='' required>
+                        <input id = 'emailLog' class = 'inputClass' onfocus="checker2(this); hide()" onfocusout='checker1(this)' type = 'email' name = 'email' value='' required>
                         <label class = 'moveLabel' for = 'email' id = 'emailLogLab'>Email</label>
                     </div>
                     <div class = 'inputContain'>
@@ -155,8 +155,8 @@
             label.style.top = '-18px';
        }
        else if(x.value == '') {
-            x.style.transform = 'scale(1,1)'
             x.style.border = '2px solid #3f3f3f';
+            x.style.transform = 'scale(1,1)'
             var label = document.getElementById(x.id +'Lab')
             label.zIndex = '-1'
             label.style.color = '#999999';
@@ -172,19 +172,14 @@
     }
 
     function checker2(x) {
-
         var label = document.getElementById(x.id +'Lab')
-        // console.log(label.style.color)
+        // console.log(x.style.transform)
         label.style.zIndex = 1;
-        if(label.style.color != 'rgb(211, 39, 16)') {
-            label.style.color = '#f2a305';
-            label.style.fontWeight = 'bold';
-            label.style.top = '-18px';
-            x.style.border = '2px solid #f2a305'
-            x.style.transform = 'scale(1.05,1.05);'
-        }
-            
-        
+        label.style.fontWeight = 'bold';
+        label.style.top = '-18px';
+        x.style.border = '2px solid #f2a305'
+        x.style.transform = 'scale(1.05,1.05);'
+        label.style.color = '#f2a305';
     }
 
     document.getElementById('selloption').addEventListener('change', function() {
