@@ -22,7 +22,7 @@ def index():
     login_status=None
     if request.method == 'POST':
         payload = request.form
-        # print(payload)
+        print(payload)
         payload = payload.copy()
         if payload['user'] == 'customer':
                 tableName = "Customers"
@@ -45,6 +45,7 @@ def index():
                 login_status = True 
                 if payload['email'] not in session:
                     session['email'] = payload['email']
+                    session['firstname'] = userData[0]['firstname']
                 if idPrefix == 'C-':
                     return redirect(url_for('home'))
                 else:
@@ -62,6 +63,7 @@ def index():
                 dB.insert_into(tableName, values)  
                 if payload['email'] not in session:
                     session['email'] = payload['email']
+                    session['firstname'] = payload['firstName']
                     if idPrefix == 'C-':
                         return redirect(url_for('Customerhome'))
                     else:
@@ -81,20 +83,58 @@ def index():
 def home():
     if 'email' in session:
         user = session['email']
+        firstname = session['firstname']
     else:
         return redirect(url_for('index'))
     
-    return render_template('home.html',user = user, login_status = True)
+    return render_template('home.html',user = user, firstname = firstname, login_status = True)
 
 @myapp.route('/sellerHome')
 def sellerHome():
     if 'email' in session:
         user = session['email']
+        firstname = session['firstname']
     else:
         return redirect(url_for('index'))
     
-    return render_template('sellerHome.html',user = user, login_status = True)
+    return render_template('sellerHome.html',user = user, firstname = firstname, login_status = True)
 
+@myapp.route('/Profile')
+def profile():
+    if 'email' in session:
+        user = session['email']
+        firstname = session['firstname']
+    else:
+        return redirect(url_for('index'))
+    return render_template('profile.html',user = user, firstname = firstname, login_status = True)
+
+
+@myapp.route('/cart')
+def cart():
+    if 'email' in session:
+        user = session['email']
+        firstname = session['firstname']
+    else:
+        return redirect(url_for('index'))
+    return render_template('cart.html',user = user, firstname = firstname, login_status = True)
+
+
+
+@myapp.route('/sellerProfile')
+def sellerProfile():
+    pass    
+
+@myapp.route('/myOrders')
+def myOrders():
+    pass
+
+@myapp.route('/productPage')
+def productPage():
+    pass
+
+@myapp.route('/payment')
+def payment():
+    pass
 
 @myapp.route('/logout')
 def logout():

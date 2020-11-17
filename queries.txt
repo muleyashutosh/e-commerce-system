@@ -58,8 +58,29 @@ CREATE TABLE Suppliers (
 CREATE TABLE SupplierDet (
     supplierID VARCHAR(20) NOT NULL,
     prodID INT NOT NULL,
+    sellprice INT NOT NULL,
     PRIMARY KEY(supplierID, prodID),
     FOREIGN KEY (supplierID) REFERENCES Suppliers(supplierID),
     FOREIGN KEY (prodID) REFERENCES Products(prodID)
 );
+
+
+
+delimiter //
+CREATE TRIGGER minPriceUpdate1 
+AFTER INSERT 
+ON SupplierDet FOR EACH ROW
+begin
+    declare pID int;
+    declare mP int;
+    SET pID = new.prodID;
+    SELECT minPrice INTO mP FROM Products WHERE Products.prodID = pID;
+    if (mP > new.sellprice) then
+        SET mP = new.sellprice
+    endif;
+end //
+delimiter ;
+
+
+
 

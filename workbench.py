@@ -157,7 +157,7 @@ class Workbench(Column):
             where = " WHERE " + key.join(where_clause) + ';'
         search = 'SELECT ' + attr + ' FROM ' + tablename + where
         # print(search)
-        curr = self.conn.cursor()
+        curr = self.conn.cursor(dictionary=True)
         curr.execute(search)
         return curr.fetchall()
 

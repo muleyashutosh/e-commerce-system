@@ -144,17 +144,19 @@
         document.getElementById('error1').style.display = 'none';
     }
 
+    function checker2(x) {
+        x.style.border = '2px solid #f2a305'
+        x.style.transform = 'scale(1.05,1.05)'
+        var label = document.getElementById(x.id +'Lab')
+        // console.log(x.style.transform)
+        label.style.zIndex = 1;
+        label.style.fontWeight = 'bold';
+        label.style.top = '-18px';
+        label.style.color = '#f2a305';
+    }
+
     function checker1(x) {
-       if(x.value != '' && !x.checkValidity()) {
-            x.style.transform = 'scale(1.05,1.05)'
-            x.style.border = '2px solid #d32710';
-            var label = document.getElementById(x.id +'Lab')
-            label.style.zIndex = 1;
-            label.style.color = '#d32710';
-            label.style.fontWeight = 'bold';
-            label.style.top = '-18px';
-       }
-       else if(x.value == '') {
+        if(x.value == '') {
             x.style.border = '2px solid #3f3f3f';
             x.style.transform = 'scale(1,1)'
             var label = document.getElementById(x.id +'Lab')
@@ -163,23 +165,21 @@
             label.style.fontWeight = 'normal';
             label.style.top = '5px';
        }
-       else if(x.value != '' && x.checkValidity()) {
+       else if(!x.checkValidity()) {
+            x.style.transform = 'scale(1.05,1.05)'
+            x.style.border = '2px solid #d32710';
+            var label = document.getElementById(x.id +'Lab')
+            label.style.zIndex = 1;
+            label.style.color = '#d32710';
+            label.style.fontWeight = 'bold';
+            label.style.top = '-18px';
+       }
+       else if(x.checkValidity()) {
             x.style.border = '2px solid #3f3f3f';
             var label = document.getElementById(x.id +'Lab')
             label.style.color = '#3f3f3f';
-            label.style.transform = 'scale(1.05,1.05);'
+            label.style.transform = 'scale(1.05,1.05)'
        }
-    }
-
-    function checker2(x) {
-        var label = document.getElementById(x.id +'Lab')
-        // console.log(x.style.transform)
-        label.style.zIndex = 1;
-        label.style.fontWeight = 'bold';
-        label.style.top = '-18px';
-        x.style.border = '2px solid #f2a305'
-        x.style.transform = 'scale(1.05,1.05);'
-        label.style.color = '#f2a305';
     }
 
     document.getElementById('selloption').addEventListener('change', function() {
