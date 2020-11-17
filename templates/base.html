@@ -1,0 +1,42 @@
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>{% block title %} {% endblock %}</title>
+        <link rel="icon" href="https://ik.imagekit.io/milyzn5unt/e-commerce-system/shopping-cart_g2lAzjYlj.svg" type="image/x-icon">
+        <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="{{url_for('static', filename = 'styles/base.css')}}">
+        <script src="https://kit.fontawesome.com/d591665a2d.js" crossorigin="anonymous"></script>
+    <body>
+        <div class = 'headerClass col-12'>   
+            <h2><a href='{{ url_for('home') }}'>El Carto</a></h2>
+            <a title= 'Logout' href="{{ url_for('logout')}}"><div class = 'logout'></div></a>
+            <div class='dropDown'>
+                <a id = 'dropbtn' title= 'Profile' onclick='myFunction();'><div id='dropbtn' onclick='myFunction();' class="fas fa-user profile"></div></a>
+                <div class = 'dropdown-content' id = 'drop-content'>
+                    <a href="{{ url_for('profile') }}">Hello, {{ firstname }}</a>
+                    <a href="#">My Orders</a>
+                </div>
+            </div>
+            <a title= 'Cart' href="{{ url_for('cart') }}"><div class = 'cart'></div></a>
+            <!-- <p>Hello world</p> -->
+        </div>
+        {% block body %} {% endblock %}
+    </body>
+</html>
+
+<script>
+function myFunction() {
+    document.getElementById('drop-content').style.display = 'block';
+}
+
+window.onclick = function(e) {
+  if (!e.target.matches('#dropbtn')) {
+    var myDropdown = document.getElementById("drop-content");
+    myDropdown.style.display = 'none';
+  }
+}
+
+
+{% block scripts %} {% endblock %}
+</script>

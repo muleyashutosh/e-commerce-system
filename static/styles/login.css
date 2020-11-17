@@ -1,0 +1,286 @@
+* {
+  box-sizing: border-box;
+}
+
+.headerClass {
+    /* background-color: #3c5c83; */
+    background-color: #2d2d2d;
+    color:#fdc100;
+    padding: 1px 0px;
+    margin: 0;
+    pointer-events: none;
+    user-select: none;
+}
+
+.headerClass h2 {
+    margin:15px;
+}
+body {
+    font-family: 'Poppins', sans-serif;
+    background-image: url(https://ik.imagekit.io/milyzn5unt/e-commerce-system/3_fQJe59KvGJ.jpeg);
+    background-size: cover;
+    background-position: left;
+    overflow: hidden;
+    margin: 0px;
+}
+
+.switcHead {
+    width:80%;
+}
+
+.formsClass {
+    background-color: #e1e6e2;
+    border-radius: 18px;
+    width: 200%;
+    -webkit-transition:all 0.3s ease-in-out;
+    -moz-transition:all 0.3s ease-in-out;
+    -o-transition:all 0.3s ease-in-out;
+    transition:all 0.3s ease-in-out;
+    transform: translateX(-50%);
+}
+
+.mainClass {
+    display: block;
+    position: relative;
+    float: right;
+    width: 25%;
+    overflow:hidden;
+    height: 100%;
+    background-color: #e1e6e2;
+}
+
+#login-btn {
+    background-color:#e1e6e2;;
+    float:left;
+    width: 50%;
+    font-weight: bold;
+}
+
+#signup-btn {
+    background-color: #a4a6a6;
+    float: right;
+    width: 50%;
+    box-shadow: inset 10px -10px 5px 0px#888888;
+}
+
+#login-btn, #signup-btn {
+    transition: 0.3s;
+    padding:13px 0px 13px;
+    user-select: none;
+}
+#login-btn, #signup-btn:hover {
+    cursor: pointer;
+    user-select: none;
+}
+
+.signupClass,.loginClass {
+    padding:10px;
+    width:50%;
+    float: left;
+    margin:auto;
+    box-sizing: border-box;
+    border-radius: 18px;
+    user-select: none;
+}
+.inputContain {
+    position: relative;
+    z-index: 1;
+    margin: 10px;
+    font-size: 12px;
+    width: 90%;
+}
+
+.moveLabel {
+    position: absolute;
+    z-index: -1;
+    top:5px;
+    left:15px;
+    font-size: 15px;
+    margin:5px;
+    padding:1px 2px;
+    float:left;
+    color: #999999;
+    transition: 0.3s;
+    background-color: #e1e6e2;
+    pointer-events: none;
+}
+
+.radioDiv {
+    width: 90%;
+    display: flex;
+    margin: 0px 10 0px 10%;
+    font-size: 15px;
+    padding: 0px 10px;
+}
+
+.radioDiv label {
+    width: 50%;
+    display: flex;
+    padding: 10px 0px;
+}
+
+.radioDiv label input {
+    outline: none;
+    width: auto;
+    height: auto;
+    margin: 5px;
+}
+
+#orgName {
+    display: none;
+}
+
+#eye {
+    position: absolute;
+    z-index: 1;
+    width:15px;
+    top:15px;
+    right: 21px;
+    user-select: none;
+    cursor: pointer;
+    -webkit-user-drag: none;
+    transition: all 0.5s;
+}
+
+.inputClass  {
+    padding:12px;
+    margin-bottom: 10px;
+    border: 2px solid #3f3f3f;
+    border-radius: 24px;
+    width:95%;
+    background-color:transparent;
+    outline:none;
+    font-family: 'Poppins', sans-serif;
+    font-size: 12.5px;
+    transition: 0.5s;
+}
+
+.inputClass:focus ~ label,.inputClass:valid ~ label {
+    top: -18px;
+    z-index: 1;
+    color: #f2a305;
+    font-weight: bold;
+}
+.inputClass:not(:focus):valid ~ label {
+    top: -18px;
+    z-index: 1;
+    color: #3f3f3f;
+    font-weight: bold;
+}
+
+.inputClass:focus, .inputClass:valid {
+    border-radius: 24px;
+    border: 2px solid #f2a305;
+    transform: scale(1.05, 1.05);
+}
+
+.inputClass:not(:focus):valid {
+    border-radius: 24px;
+    border: 2px solid #3f3f3f;
+    transform: scale(1.05, 1.05);
+    color: #3f3f3f;
+}
+
+.inputClass:focus ~ #eye {
+    position: absolute;
+    z-index: 1;
+    width:15px;
+    top:16px;
+    right: 17px;
+}
+
+
+.submit {
+    font-family: 'Poppins', sans-serif;
+    padding:10px;
+    margin:10px;
+    cursor:pointer;
+    border:1px transparent;
+    outline:none;
+    border-radius: 20px;
+    background-color:#3c5c83;
+    color:white;
+    width:90%;
+    background-color: #2d2d2d;
+    transition: 0.5s;
+}
+.submit:hover {
+    background-color:#131921;
+    transform: scale(1.05,1.05);
+}
+
+.errMsg {
+    color: #d32710;
+    float: none;
+    font-size: small;   
+    font-weight: bold;
+    padding: 10px;
+    margin: 10px;
+    display: none;
+}
+
+.col-1 {width: 8.33%;}
+.col-2 {width: 16.66%;}
+.col-3 {width: 25%;}
+.col-4 {width: 33.33%;}
+.col-5 {width: 41.66%;}
+.col-6 {width: 50%;}
+.col-7 {width: 58.33%;}
+.col-8 {width: 66.66%;}
+.col-9 {width: 75%;}
+.col-10 {width: 83.33%;}
+.col-11 {width: 91.66%;}
+.col-12 {width: 100%;}
+
+@media screen and (max-width: 1000px) {
+    .mainClass{
+        width: 30%;
+        height: 100vh;
+    }
+    .radioDiv {
+        margin: 0px 10 0px 30px;
+    }
+    .radioDiv label {
+        margin: 0;
+        padding: 0;
+    }
+
+}
+@media screen and (max-width: 800px) {
+    .radioDiv {
+        margin: 0px 0px 10px 0px ;
+        display: block;
+    }
+    .radioDiv label {
+        margin: 0px 0px 0px 30px;
+        padding: 0;
+        width: 100%;
+    }
+
+}
+
+  
+@media screen and (max-width: 600px) {
+    .mainClass{
+        width: auto;
+        height: 100vh;
+    }
+    .radioDiv {
+        display: flex;
+        margin: 0px 10 0px 5%;
+    }
+    .radioDiv label {
+        padding: 10px 0px;
+        width: 50%;
+    }
+    
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus, 
+input:-webkit-autofill:active  {
+    box-shadow: 0 0 0 30px #e1e1e2 inset !important;
+    -webkit-box-shadow: 0 0 0 30px #e1e1e2 inset !important;
+}
+
