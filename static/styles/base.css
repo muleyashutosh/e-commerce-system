@@ -13,8 +13,13 @@
 .headerClass h2 {
     margin:16px;
     width: 25%;
-    pointer-events: none;
+    /* pointer-events: none; */
     user-select: none;
+    float: left;
+}
+.headerClass h2 a {
+    color:#fdc100;
+    text-decoration: none;
     float: left;
 }
 
