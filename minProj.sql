@@ -35,6 +35,7 @@ CREATE TABLE `Category` (
 
 LOCK TABLES `Category` WRITE;
 /*!40000 ALTER TABLE `Category` DISABLE KEYS */;
+INSERT INTO `Category` VALUES (1,'Mobiles'),(2,'Televisions'),(3,'Laptops'),(4,'Earphones'),(5,'Cameras'),(6,'Fridges'),(7,'Washing machines'),(8,'Microwaves');
 /*!40000 ALTER TABLE `Category` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -83,7 +84,7 @@ CREATE TABLE `Products` (
   `prodID` int NOT NULL,
   `prodName` varchar(50) NOT NULL,
   `prodDesc` varchar(255) NOT NULL,
-  `unitPrice` int NOT NULL,
+  `minPrice` int NOT NULL,
   `unitStock` int NOT NULL,
   `prodAvail` tinyint(1) NOT NULL,
   `img` varchar(255) NOT NULL,
@@ -102,6 +103,7 @@ CREATE TABLE `Products` (
 
 LOCK TABLES `Products` WRITE;
 /*!40000 ALTER TABLE `Products` DISABLE KEYS */;
+INSERT INTO `Products` VALUES (91457,'iPhone','Bhott mehnga',50000,45,1,'asdasd',5,NULL,NULL);
 /*!40000 ALTER TABLE `Products` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -115,6 +117,7 @@ DROP TABLE IF EXISTS `SupplierDet`;
 CREATE TABLE `SupplierDet` (
   `supplierID` varchar(20) NOT NULL,
   `prodID` int NOT NULL,
+  `sellprice` int NOT NULL,
   PRIMARY KEY (`supplierID`,`prodID`),
   KEY `prodID` (`prodID`),
   CONSTRAINT `SupplierDet_ibfk_1` FOREIGN KEY (`supplierID`) REFERENCES `Suppliers` (`supplierID`),
@@ -128,6 +131,7 @@ CREATE TABLE `SupplierDet` (
 
 LOCK TABLES `SupplierDet` WRITE;
 /*!40000 ALTER TABLE `SupplierDet` DISABLE KEYS */;
+INSERT INTO `SupplierDet` VALUES ('S-5709556',91457,60000),('S-8703969',91457,50000);
 /*!40000 ALTER TABLE `SupplierDet` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -162,7 +166,7 @@ CREATE TABLE `Suppliers` (
 
 LOCK TABLES `Suppliers` WRITE;
 /*!40000 ALTER TABLE `Suppliers` DISABLE KEYS */;
-INSERT INTO `Suppliers` VALUES ('S-5709556','Yadav Enterprises','Saksham','Yadav',NULL,NULL,NULL,NULL,'9145774142','sakshamyadavpune@gmail.com','Saksham@123','2020-11-15',NULL);
+INSERT INTO `Suppliers` VALUES ('S-5709556','Yadav Enterprises','Saksham','Yadav',NULL,NULL,NULL,NULL,'9145774142','sakshamyadavpune@gmail.com','Saksham@123','2020-11-15',NULL),('S-8703969','Paliwal Enterprises','Monica','Paliwal',NULL,NULL,NULL,NULL,'8456123456','monicapaliwal17@gmail.com','Monica@123','2020-11-17',NULL);
 /*!40000 ALTER TABLE `Suppliers` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -175,4 +179,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-11-15 21:49:05
+-- Dump completed on 2020-11-17 17:34:51
