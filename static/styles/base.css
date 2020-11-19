@@ -10,6 +10,19 @@
     overflow: hidden;
 }
 
+.sticky {
+    position: sticky;
+    top:0;
+    z-index: 1;
+}
+.content {
+    padding: 16px;
+}
+
+.sticky + .content {
+    padding-top: 102px;
+}
+
 .headerClass h2 {
     margin:16px;
     width: 25%;
@@ -94,6 +107,6 @@ body {
     font-family: 'Poppins', sans-serif;
     /* background-image: url(3.jpeg); */
     background-size: contain;
-    overflow: hidden;
+    /* overflow: hidden; */
     margin: 0px;
 }

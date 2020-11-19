@@ -23,13 +23,13 @@ def index():
         print(payload)
         payload = payload.copy()
         if payload['user'] == 'customer':
-                tableName = "Customers"
+                tableName = "customers"
                 idName = 'custID'
                 idPrefix = 'C-'
                 if 'orgname' in payload: 
                     payload.pop('orgname')
         else:
-            tableName = 'Suppliers'
+            tableName = 'suppliers'
             idName = 'supplierID'
             idPrefix = 'S-'
         payload.pop('user')
@@ -63,7 +63,7 @@ def index():
                     session['email'] = payload['email']
                     session['firstname'] = payload['firstName']
                     if idPrefix == 'C-':
-                        return redirect(url_for('Customerhome'))
+                        return redirect(url_for('home'))
                     else:
                         return redirect(url_for('sellerHome'))
                 else:
@@ -77,15 +77,18 @@ def index():
     else:    
         return render_template("index.html")
 
-@myapp.route('/Customerhome')
-def home():
+@myapp.route('/Customerhome/')
+@myapp.route('/Customerhome/<int:items>')
+def home(items = 20):
     if 'email' in session:
         user = session['email']
         firstname = session['firstname']
+        db = Workbench('minProj', password=mysql_pwd)
+        products = db.select_from('products')
     else:
         return redirect(url_for('index'))
     
-    return render_template('home.html',user = user, firstname = firstname, login_status = True)
+    return render_template('home.html',user = user, firstname = firstname, products=products , items=items, login_status = True)
 
 @myapp.route('/sellerHome')
 def sellerHome():
@@ -97,7 +100,7 @@ def sellerHome():
     
     return render_template('sellerHome.html',user = user, firstname = firstname, login_status = True)
 
-@myapp.route('/Profile')
+@myapp.route('/profile')
 def profile():
     if 'email' in session:
         user = session['email']
