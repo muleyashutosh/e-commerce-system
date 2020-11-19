@@ -99,14 +99,23 @@ def sellerHome():
     
     return render_template('sellerHome.html',user = user, firstname = firstname, login_status = True)
 
-@myapp.route('/Profile')
+@myapp.route('/Profile',methods=['POST','GET'])
 def profile():
     if 'email' in session:
+        db = Workbench(database = 'minProj', password = mysql_pwd)
+        if request.method == 'POST':
+            payload = request.form
+            session['email']=payload['email']
+            payload=payload.copy()
+            del payload["paymentId"]
+            print(payload)
+            db.update_table("customers",updates=payload)
         user = session['email']
-        firstname = session['firstname']
+        userdata={"email":user}
+        userinfo = db.select_from("customers", where_clause = userdata)
     else:
         return redirect(url_for('index'))
-    return render_template('profile.html',user = user, firstname = firstname, login_status = True)
+    return render_template('profile.html',user = userinfo, login_status = True)
 
 
 @myapp.route('/cart')

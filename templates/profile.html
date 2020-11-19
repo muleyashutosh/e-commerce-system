@@ -1,6 +1,103 @@
 {% extends "base.html" %}
 {% block title %}
-User Profile
+Profile
 {% endblock %}
-{% block body %} {% endblock %}
-{% block scripts %} {% endblock %}
+{% block body %}
+<link rel="stylesheet" href="{{url_for('static', filename = 'styles/profile.css')}}">
+<div id='main'>
+<h1>Account Details</h1>
+<hr>
+<div id='forms'>
+<form name = 'profile' action="/Profile" id = 'profdet' method = "POST">
+  <div class='inputl'>
+  <label for="fname">First name:</label><br>
+  <input type="text" id="fname" class='input2a' name="firstname"><br><br>
+  </div>
+  <div class='inputr'>
+  <label for="lname" >Last name:</label><br>
+  <input type="text" id="lname" class='input2a' name="lastname"><br><br>
+  </div>
+  <div class='inputl'>
+  <label for="mno">Mobile No:</label><br>
+  <input type="tel" id="mno" class='input2b' name="pno"><br><br>
+  </div>
+  <div class='inputr'>
+  <label for="email">Email:</label><br>
+  <input type="email" id="email" class='input2b' name="email"><br><br>
+  </div>
+  <div class='inputl'>
+  <label for="address" >Address:</label><br>
+  <input type="text" id="add" class='input2a' name="address"><br><br>
+  </div>
+  <div class='inputr'>
+  <label for="pinCode" >Pincode:</label><br>
+  <input type="text" id="pcode" class='input2a' name="pinCode"><br><br>
+  </div>
+  <div class='inputl'>
+  <label for="state">State:</label><br>
+  <input type="text" id="state" class='input2b' name="state"><br><br>
+  </div>
+  <div class='inputr'>
+  <label for="city">City:</label><br>
+  <input type="text" id="city" class='input2b' name="city"><br><br>
+  </div>
+  <div class='inputl'>
+  <label for="joinDate" >Join Date:</label><br>
+  <input type="text" id="jdate" class='input2a' name="joinDate"><br><br>
+  </div>
+  <div class='inputr'>
+  <label for="pwd">Password:</label><br>
+  <input type="password" id="pwd" class='input2b' name="pwd">
+  </div>
+  <div class='inputl'>
+  <label for="paymentId">Payement Id:</label><br>
+  <input type="text" id="payid" class='input2a' name="paymentId">
+  </div>
+  <button type="submit" id='button'>Submit</button>
+</form>
+</div>
+</div>
+{% endblock %}
+{% block scripts %} 
+  window.onload=function(){
+    document.getElementById('fname').value ='{{user[0]['firstname']}}';
+    document.getElementById('lname').value='{{user[0]['lastname']}}';
+    document.getElementById('mno').value='{{user[0]['pno']}}';
+    document.getElementById('email').value='{{user[0]['email']}}';
+    document.getElementById('pwd').value='{{user[0]['pwd']}}';
+    document.getElementById('jdate').value='{{user[0]['joinDate']}}';
+    if('{{user[0]['address']}}'==='None'){
+      document.getElementById('add').value='';
+    }
+    else{
+      document.getElementById('add').value='{{user[0]['address']}}';
+    }
+    if('{{user[0]['state']}}'==='None'){
+      document.getElementById('state').value='';
+    }
+    else{
+      document.getElementById('state').value='{{user[0]['state']}}';
+    }
+    if('{{user[0]['pinCode']}}'==='None'){
+      document.getElementById('pcode').value='';
+    }
+    else{
+      document.getElementById('pcode').value='{{user[0]['pinCode']}}';
+    }
+    if('{{user[0]['city']}}'==='None'){
+      document.getElementById('city').value='';
+    }
+    else{
+      document.getElementById('city').value='{{user[0]['city']}}';
+    }
+    if('{{user[0]['paymentid']}}'==='None'){
+      <!-- document.getElementById('payid').value=''; -->
+    }
+    else{
+      document.getElementById('payid').value='{{user[0]['paymentid']}}';
+    }
+  }
+  function Submit(){
+
+  }
+{% endblock %}
