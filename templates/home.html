@@ -1,8 +1,33 @@
 {% extends "base.html" %}
-{% block title %} Home {% endblock %}
+{% block title %}
+Home
+{% endblock %}
+{% block head %} 
+<link rel="stylesheet" href="{{ url_for('static', filename='styles/customerHome.css')}}">
+{% endblock %}
+{% block body %} 
+    <div class = 'category-filter'>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+    </div>
+    <div class='grid-container'>
+        {% for x in range(0, items): %}
+        <div class='grid-item'>
+            <img src="{{ products[x]['img'] }}" alt="">
+            <div>{{ products[x]['prodName'] }}</div>
+            <div><strong>&#x20B9; {{ products[x]['minPrice'] }}.00</strong></div>
+        </div>
+        {% endfor %}
+    </div>
+<button id = 'viewMore'>View More</button>
 
+{% endblock %}
 
-{% block body %} {% endblock %}
-
-
-{% block scripts %} {% endblock %}
+{% block scripts %} 
+<script>
+    var x = {{ request.path }};
+    y = parsInt(x);
+    alert(y)
+</script>
+    
+    
+{% endblock %}
