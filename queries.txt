@@ -24,16 +24,15 @@ CREATE TABLE Category (
 
 
 CREATE TABLE Products (
-    prodID INT PRIMARY KEY NOT NULL,
-    prodName VARCHAR(50) NOT NULL,
-    prodDesc VARCHAR(255) NOT NULL,
-    unitPrice INT NOT NULL,
-    unitStock INT NOT NULL,
-    prodAvail bool NOT NULL,
-    img VARCHAR(255) NOT NULL,
+    prodID VARCHAR(50) PRIMARY KEY NOT NULL,
+    prodName VARCHAR(255) NOT NULL,
+    prodDesc TEXT NOT NULL,
+    minPrice INT NOT NULL,
+    img TEXT NOT NULL,
     rating INT,
-    Note VARCHAR(255),
+    unitStock INT NOT NULL,
     categoryID INT,
+    prodAvail bool NOT NULL,
     FOREIGN KEY (categoryID) REFERENCES Category(categoryID)
 );
 
@@ -57,7 +56,7 @@ CREATE TABLE Suppliers (
 
 CREATE TABLE SupplierDet (
     supplierID VARCHAR(20) NOT NULL,
-    prodID INT NOT NULL,
+    prodID VARCHAR(50) NOT NULL,
     sellprice INT NOT NULL,
     PRIMARY KEY(supplierID, prodID),
     FOREIGN KEY (supplierID) REFERENCES Suppliers(supplierID),
