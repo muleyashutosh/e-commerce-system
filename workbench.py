@@ -2,6 +2,8 @@
 MySQL Workbench Module
 """
 
+from configparser import Error
+from os import error
 import mysql.connector
 
 class Column:
@@ -206,3 +208,12 @@ class Workbench(Column):
         curr = self.conn.cursor()
         curr.execute(query)
         self.conn.commit()
+
+    def select_from_custom(self, query):
+        curr = self.conn.cursor(dictionary=True)
+        
+        try:
+            curr.execute(query)
+            return curr.fetchall()
+        except Error as e:
+            return e

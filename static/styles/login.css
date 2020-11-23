@@ -12,8 +12,14 @@
     user-select: none;
 }
 
-.headerClass h2 {
-    margin:15px;
+.headerClass div {
+    background-image: url(logo.png);
+    background-size: contain;
+    background-position: 50%;
+    background-repeat: no-repeat;
+    width: 50%;
+    height: 75px;
+    margin:0px auto;
 }
 body {
     font-family: 'Poppins', sans-serif;
