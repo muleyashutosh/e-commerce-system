@@ -44,6 +44,7 @@ def index():
                 if payload['email'] not in session:
                     session['email'] = payload['email']
                     session['firstname'] = userData[0]['firstname']
+                    session['userID'] = userData[0][idName]
                 if idPrefix == 'C-':
                     return redirect(url_for('home'))
                 else:
@@ -62,6 +63,7 @@ def index():
                 if payload['email'] not in session:
                     session['email'] = payload['email']
                     session['firstname'] = payload['firstName']
+                    session['userID'] = payload[idName]
                     if idPrefix == 'C-':
                         return redirect(url_for('home'))
                     else:
@@ -77,28 +79,78 @@ def index():
     else:    
         return render_template("index.html")
 
-@myapp.route('/Customerhome/')
-@myapp.route('/Customerhome/<int:items>')
-def home(items = 20):
+@myapp.route('/Customerhome/', methods = ['GET', 'POST'])
+@myapp.route('/Customerhome/<int:page>', methods = ['GET', 'POST'])
+def home(page = 1):
     if 'email' in session:
+        perPage = 20
+        startAt = perPage * page - perPage
         user = session['email']
         firstname = session['firstname']
         db = Workbench('minProj', password=mysql_pwd)
-        products = db.select_from('products')
+        if request.method == 'POST' and request.form:
+            payload = request.form
+            # print(payload)
+            query = 'SELECT * FROM products'
+            filters = []
+            if (len(payload) >= 1 and 'price' not in payload) or len(payload) > 1:
+                categoryIDs = []
+                for k,v in payload.items():
+                    if k != 'price':
+                        categoryIDs.append(v)
+                print(categoryIDs)
+                cat = ['categoryID = ' + x for x in categoryIDs]
+                cat = '(' + ' OR '.join(cat) + ')'
+                filters.append(cat)
+            
+            if('price' in payload):
+                priceconstraint = '(minPrice'
+                if payload['price'] == '1':
+                    priceconstraint += '< 1000)'
+                elif payload['price'] == '2':
+                    priceconstraint += '>= 1000 AND minPrice<= 5000)'
+                elif payload['price'] == '3':
+                    priceconstraint += '>= 5000 AND minPrice<= 10000)'
+                elif payload['price'] == '4':
+                    priceconstraint += '>= 10000 AND minPrice<= 20000)'
+                else :
+                    priceconstraint += '> 20000)'
+                filters.append(priceconstraint)
+
+            filters = ' AND '.join(filters)
+            filters += ';'
+            query = ' WHERE '.join([query, filters])
+            print(query)
+            products = db.select_from_custom(query)
+            filter = True
+            return render_template('home.html',user = user, firstname = firstname, products=products, page = page, filter=filter, login_status = True)
+        else:
+            products = db.select_from('products')
+            totalPages = len(products) // 20 + 1
+            # print(totalPages)
+            products = products[startAt:startAt + perPage]
+            filter = False
+            return render_template('home.html',user = user, firstname = firstname, products=products, page = page,totalPages=totalPages, filter=filter, login_status = True)
     else:
         return redirect(url_for('index'))
     
-    return render_template('home.html',user = user, firstname = firstname, products=products , items=items, login_status = True)
+    
 
 @myapp.route('/sellerHome')
 def sellerHome():
     if 'email' in session:
         user = session['email']
         firstname = session['firstname']
+        db = Workbench('minProj',password=mysql_pwd)
+        uid = session['userID']
+        productdetails = db.select_from('supplierdet',where_clause={'supplierID':uid})
+        productlist = [db.select_from('products',where_clause={'prodID':x['prodID']})[0] for x in productdetails]
+        # print(productlist[0])
+         
     else:
         return redirect(url_for('index'))
     
-    return render_template('sellerHome.html',user = user, firstname = firstname, login_status = True)
+    return render_template('sellerHome.html',user = user, firstname = firstname, productdetails=productdetails, productlist=productlist, login_status = True)
 
 @myapp.route('/profile')
 def profile():
