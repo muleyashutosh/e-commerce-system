@@ -1,12 +1,15 @@
 from configparser import Error
-from os import terminal_size
-from flask import Flask, render_template, request, session, url_for
+
+from flask import Flask, render_template, request, session, url_for, jsonify
 # from livereload import Server
 from mysql.connector import Error
 from werkzeug.utils import redirect
 from workbench import Workbench
 from random import randint
 from datetime import date
+import re
+from re import I
+import webbrowser
 # from webui import WebUI
 
 mysql_pwd = "Ashu@12345"
@@ -14,6 +17,8 @@ mysql_pwd = "Ashu@12345"
 myapp = Flask(__name__)
 # ui = WebUI(myapp, debug= True)
 myapp.secret_key = 'ABCDEF'
+
+allproducts = []
 
 @myapp.route('/', methods = ['GET', 'POST'])
 def index():
@@ -126,6 +131,8 @@ def home(page = 1):
             return render_template('home.html',user = user, firstname = firstname, products=products, page = page, filter=filter, login_status = True)
         else:
             products = db.select_from('products')
+            global allproducts
+            allproducts = products
             totalPages = len(products) // 20 + 1
             # print(totalPages)
             products = products[startAt:startAt + perPage]
@@ -194,6 +201,19 @@ def logout():
     session.clear()
     return redirect(url_for('index'))
 
+@myapp.route('/getproducts')
+def api():
+    search = request.args['search']
+    print(search)
+    products = []
+    products = [ x for x in allproducts if re.search(search, x['prodName'], I) ]
+    # db = Workbench('minProj', password=mysql_pwd)
+    # products = db.select_from_custom(f"SELECT * FROM products WHERE REGEXP_LIKE(prodName,'{search}')")
+    print(len(products))
+    return (jsonify(products),search)
+    
+
+
 if __name__ == "__main__":
     myapp.run(debug=True)
-
+    

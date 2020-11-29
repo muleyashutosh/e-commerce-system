@@ -4,6 +4,7 @@ Home
 {% endblock %}
 {% block head %} 
 <link rel="stylesheet" href="{{ url_for('static', filename='styles/customerHome.css')}}">
+<script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
 {% endblock %}
 {% block body %} 
     <div class = 'category-filter'>
@@ -29,24 +30,38 @@ Home
         </form>
     </div>
     <div class="main">
+        {% if products|length == 0: %}
+        <div class="noItemsFound">
+            <h2>Oops, No Items matching your search were found!</h2>
+            <hr>
+        </div>
+        {% endif %}
         <div class='grid-container'>
             {% for x in products: %}
-            <div class='grid-item'>
+            <div class='grid-item' id="{{ x['prodID'] }}"">
                 <img src="{{ x['img'] }}" alt="">
                 <div>{{ x['prodName'] }}</div>
-                <div><strong>&#x20B9; {{ x['minPrice'] }}.00</strong></div>
+                <div class='priceTag'>&#x20B9; {{ x['minPrice'] }}.00</div>
+                <button class= 'addToCart'>Add to Cart</button>
             </div>
             {% endfor %}
         </div>
-        {% if filter == False: %}
+        
+        {% if filter == False or totalPages: %}
             <div class="pageswitcher">
+                {% if page != 1 %}
+                <a href="{{url_for('home', page=page-1)}}"><button class='pageNo' id='prevPage'><i class="fas fa-arrow-left"></i> Prev Page</button></a>
+                {% endif %}
                 {% for x in range(1, totalPages + 1) %}
                     {% if x != page: %}
                         <a href="{{url_for('home', page=x)}}"><button class='pageNo'>{{ x }}</button></a>
                     {% else %}
-                        <a href="{{url_for('home', page=x)}}"><button class='pageNo' style="background-color: #fdb100; transform:scale(1.3,1.3)">{{ x }}</button></a>
+                        <a href="{{url_for('home', page=x)}}"><button class='pageNo' style="background-color: #fdb100;">{{ x }}</button></a>
                     {% endif %}
                 {% endfor %}
+                {% if page != totalPages %}
+                <a href="{{url_for('home', page=page+1)}}"><button class='pageNo' id = 'nextPage'>Next Page <i class="fas fa-arrow-right"></i></button></a>	
+                {% endif %}
             </div>
         {% endif %}
     </div>
@@ -58,6 +73,82 @@ Home
     document.getElementById('reset').addEventListener('click', function(event) {
         document.getElementById('filter').reset();
         return false;
+    })
+    $(document).ready(function() {
+        function QuerySearch(query, callback) {
+            $.ajax({
+                url: '/getproducts',
+                data: {
+                    search: query
+                },
+                success: callback
+        })}
+        var allproducts = $('.grid-container').contents();
+        // console.log(allproducts)
+        $('#search').keyup(function() {
+            if ($('#search').val().trim() == '') {
+                if(allproducts.length == 0) {
+                    console.log('val empty, productslist empty')
+                    var error = '<div class="noItemsFound"><h2>Oops, No Items matching your search were found!</h2><hr></div>'
+                    $('.main').append(error);
+                    $('.grid-container').empty()
+                }
+                else {
+                    console.log('val empty, productslist not empty')
+                    $('.noItemsFound').remove();
+                    if(! $('.grid-container').contents().length)
+                        $('.grid-container').append(allproducts);
+                    $('.pageswitcher').slideDown();
+                }
+                
+            }
+            else {
+                
+                QuerySearch($('#search').val().trim(), function(res) {
+                    console.log(res)
+                    if(res.length == 0) {
+                        console.log('val ' + $("#search").val().trim() + ', res empty')
+                        var error = '<div class="noItemsFound"><h2>Oops, No Items matching your search were found!</h2><hr></div>'
+                        if( ! $('.main').has('.noItemsFound').length)
+                            $('.main').append(error)
+                        $(".grid-container").empty()
+                    }
+                    else {
+                        console.log('val ' + $("#search").val().trim() + ', res not empty')
+                        html = ''   
+                        for (let x=0; x < res.length; x++) {
+                            html += "<div class='grid-item' id='" + res[x]['prodID'] + "'>"
+                            html += '<img src="' + res[x]['img'] + '" alt="">'
+                            html +=  "<div>"+ res[x]['prodName'] + "</div>"
+                            html += "<div class='priceTag'>&#x20B9; " + res[x]['minPrice'] + ".00</div><button class= 'addToCart'>Add to Cart</button></div>"
+                        }
+                        $('.noItemsFound').remove()
+                        $('.grid-container').empty();
+                        $('.grid-container').append(html);
+                        $('.pageswitcher').hide();
+                        
+                        $('.grid-item').mouseenter(function() {
+                            $(this).children('.addToCart').fadeIn('fast');
+                        })
+
+                        $('.grid-item').mouseleave(function() {
+                            $(this).children('.addToCart').fadeOut('fast');
+                        })
+                    }
+                }) 
+            }
+        })
+
+        $('.grid-item').mouseenter(function() {
+            $(this).children('.addToCart').fadeIn('fast');
+        })
+
+        $('.grid-item').mouseleave(function() {
+            $(this).children('.addToCart').fadeOut('fast');
+        })
+        
+
+
     })
 </script>
     
