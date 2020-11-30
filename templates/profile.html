@@ -69,6 +69,7 @@ Profile
           src='https://ik.imagekit.io/milyzn5unt/e-commerce-system/showPassNormal_hI4WkY3i2z.svg'>
       </div>
       <hr>
+      <br>
       <div>
         <div>
           <label style="font-weight: bold;" for="paymentId">Payments:</label>
@@ -76,8 +77,8 @@ Profile
             <div id='dropbtn1' class="fas fa-plus-circle" onclick='myFunction1();'>
             </div>
             <div class='dropdown-content1' id='drop-content1'>
-              <a id='card' onclick="Card('card')">Card</a>
-              <a id='upi' onclick="Card('upi')">UPI</a>
+              <a id='card' class='far fa-credit-card cardClass' onclick="Card('card')"></a>
+              <a id='upi' class='upiCLass' onclick="Card('upi')"></a>
             </div>
           </div>
         </div>
@@ -319,7 +320,7 @@ Profile
       document.getElementById("upi").style.display = '';
     }
     document.getElementById("addpay").style.display = '';
-    document.getElementById("paymentseparator").style.display = 'block';
+    document.getElementById("paymentseparator").style.display = 'none';
     if (document.getElementById("Card").style.display == 'none' && document.getElementById("UPI").style.display == 'none') {
       document.getElementById("status").style.display = '';
     }

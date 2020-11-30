@@ -14,7 +14,7 @@ import webbrowser
 
 
 
-mysql_pwd = "root"
+mysql_pwd = "Ashu@12345"
 
 myapp = Flask(__name__)
 # ui = WebUI(myapp, debug= True)
@@ -40,7 +40,7 @@ def index():
             idName = 'supplierID'
             idPrefix = 'S-'
         payload.pop('user')
-        dB = Workbench(database = 'minproj', password = mysql_pwd)
+        dB = Workbench(database = 'minProj', password = mysql_pwd)
         if 'login' in payload :
             whereClause = dict([x for x in payload.items() if 'login' not in x])
             # print(userDat)
@@ -165,7 +165,7 @@ def sellerHome():
 def profile():
     if 'email' in session:
         login_status=True
-        db = Workbench(database = 'minproj', password = mysql_pwd)
+        db = Workbench(database = 'minProj', password = mysql_pwd)
         session['paymentdetailID']=db.select_from("customers",attributes=['paymentID'] ,where_clause = {'custID':session['userID']})[0]['paymentID']
         if request.method == 'POST':
             payload = request.form
@@ -294,7 +294,7 @@ def cart():
 def sellerProfile():
     if 'email' in session:
         login_status=True
-        db = Workbench(database = 'minproj', password = mysql_pwd)
+        db = Workbench(database = 'minProj', password = mysql_pwd)
         print(session)
         session['paymentdetailID']=db.select_from("suppliers",attributes=['paymentID'] ,where_clause = {'supplierID':session['userID']})[0]['paymentID']
         if request.method == 'POST':
