@@ -1,7 +1,7 @@
 CREATE DATABASE minProj;
 
 
-CREATE TABLE Customers (
+CREATE TABLE customers (
     custID VARCHAR(20) PRIMARY KEY NOT NULL,
     firstname VARCHAR(20) NOT NULL,
     lastname VARCHAR(20) NOT NULL,
@@ -9,21 +9,21 @@ CREATE TABLE Customers (
     city VARCHAR(20),
     state VARCHAR(20),
     pinCode VARCHAR(6),
-    pno VARCHAR(10) NOT NULL,
-    email VARCHAR(40) NOT NULL,
+    pno VARCHAR(10) NOT NULL UNIQUE,
+    email VARCHAR(40) NOT NULL UNIQUE,
     pwd VARCHAR(14) NOT NULL,
     joinDate date NOT NULL,
     paymentID INT,
-    -- FOREIGN KEY (paymentID) REFERENCES PaymentDet(paymentdetailID),
+    -- FOREIGN KEY (paymentID) REFERENCES paymentdet(paymentdetailID),
 );
 
-CREATE TABLE Category (
+CREATE TABLE category (
     categoryID INT PRIMARY NOT NULL,
     categoryName VARCHAR(50) NOT NULL
 );
 
 
-CREATE TABLE Products (
+CREATE TABLE products (
     prodID VARCHAR(50) PRIMARY KEY NOT NULL,
     prodName VARCHAR(255) NOT NULL,
     prodDesc TEXT NOT NULL,
@@ -33,10 +33,10 @@ CREATE TABLE Products (
     unitStock INT NOT NULL,
     categoryID INT,
     prodAvail bool NOT NULL,
-    FOREIGN KEY (categoryID) REFERENCES Category(categoryID)
+    FOREIGN KEY (categoryID) REFERENCES category(categoryID)
 );
 
-CREATE TABLE Suppliers (
+CREATE TABLE suppliers (
     supplierID VARCHAR(20) PRIMARY KEY NOT NULL,
     orgname VARCHAR(50) NOT NULL,
     firstname VARCHAR(20) NOT NULL,
@@ -50,35 +50,53 @@ CREATE TABLE Suppliers (
     pwd VARCHAR(14) NOT NULL,
     joinDate date NOT NULL,
     paymentID INT,
-    -- FOREIGN KEY (paymentID) REFERENCES PaymentDet(paymentdetailID),
+    -- FOREIGN KEY (paymentID) REFERENCES paymentdet(paymentdetailID),
 );
 
 
-CREATE TABLE SupplierDet (
+CREATE TABLE supplierdet (
     supplierID VARCHAR(20) NOT NULL,
     prodID VARCHAR(50) NOT NULL,
     sellprice INT NOT NULL,
     PRIMARY KEY(supplierID, prodID),
-    FOREIGN KEY (supplierID) REFERENCES Suppliers(supplierID),
-    FOREIGN KEY (prodID) REFERENCES Products(prodID)
+    FOREIGN KEY (supplierID) REFERENCES suppliers(supplierID),
+    FOREIGN KEY (prodID) REFERENCES products(prodID)
 );
 
 
 
 delimiter //
-CREATE TRIGGER minPriceUpdate1 
+CREATE TRIGGER minPriceUpdate 
 AFTER INSERT 
-ON SupplierDet FOR EACH ROW
+ON supplierdet FOR EACH ROW
 begin
-    declare pID int;
+    declare pID varchar(50);
     declare mP int;
     SET pID = new.prodID;
-    SELECT minPrice INTO mP FROM Products WHERE Products.prodID = pID;
+    SELECT minPrice INTO mP FROM products WHERE products.prodID = pID;
     if (mP > new.sellprice) then
-        SET mP = new.sellprice
-    endif;
+        SET mP = new.sellprice;
+    end if;
+    UPDATE products SET minPrice = mP WHERE prodId = pID;
 end //
 delimiter ;
+
+
+delimiter //
+CREATE TRIGGER stockCountUpdate 
+AFTER INSERT 
+ON supplierdet FOR EACH ROW
+begin
+    declare pID varchar(50);
+    declare currStock int;
+    SET pID = new.prodID;
+    SELECT unitStock INTO currStock from products WHERE prodID = pID;
+    SET currStock = currStock + new.stock;
+    UPDATE products SET unitStock = currStock WHERE prodID = pID;
+end //
+delimiter ;
+
+
 
 
 

@@ -1,3 +1,37 @@
 #cart {
     display:none !important;
 }
+.Main{
+    background-color: #e1e2e6;
+    display: flex;
+    width: 100%;
+    height : 100%
+}
+
+ .RightContainer{
+    width: 80%;
+ }
+ .Statistics{
+    border: 2px solid #fdc100;
+    background-color:#e1e6e2;
+    float: left;
+    width: 20%;
+    height: 98.5%;
+    align-items: center;
+    text-align: center;
+    margin:10px;
+    border-radius: 5px;
+         
+}  
+.StockDetails{
+    border: 2px solid #e1e6e2;
+    /* background-color: #fdc100; */
+    float: left;
+    width: 98%;
+    height: 44.5%;
+    align-items: center;
+    text-align: center;
+    margin:10px;
+    border-radius: 5px;
+    
+}
