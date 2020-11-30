@@ -1,52 +1,182 @@
 body{
-    background-color: #ebe6e6;
+    background-color: #e1e6e2;
 }
 #main{
-    background-color: white;
+    background-color: #efefef;
     width: 50%;
-    height: 90%;
-    margin-left: 25%;
+    height: auto;
+    margin: auto;
     padding: 10px;
-    margin-top: 10px;
-    margin-bottom: 10px;
-    border:3px outset #999;
-    -webkit-box-shadow: 5px 5px 15px rgba(0,0,0,0.4);
-    -moz-box-shadow: 5px 5px 15px rgba(0,0,0,0.4);
+    box-shadow: 0px 0px 11px 1px rgba(136,136,136,1);
 }
 h1{
     text-align: left;
-    margin:0px;
+    margin:0px 20px;
+    display: inline;
 }
 .inputl{
     display: inline-block;
-    width: 40%;
+    width: 45%;
+    font-family:'Open Sans', sans-serif;
+}
+#Card.inputr{
+    font-family:'Open Sans', sans-serif;
+    float:right;
+    width: 45%;
+    height: 150px !important;
 }
 .inputr{
+    font-family:'Open Sans', sans-serif;
     float:right;
-    width: 40%;
+    width: 45%;
 }
 .input2b{
-    font-size: 10px;
-    height: 30px;
+    margin-top: 10px;
+    font-family:'Open Sans', sans-serif;
+    background-color: #efefef;
+    height: 35px;
     width: 100%;
     font-size: 15px;
     display: inline-block;
     margin-right: 5%;
+    border-radius: 8px;
+    border: 1px solid #3f3f3f;
+    padding: 10px;
+}
+#cvv{
+    background-color: #efefef;
+    font-family:'Open Sans', sans-serif;
+    font-size: 15px;
+    border-radius: 8px;
+    border: 1px solid #3f3f3f;
+    padding: 10px;
+    width: 12%; height: 35px; margin-left: 8%;
+    outline: none;
+}
+.input2b:read-only,.input2a:read-only,#cvv:read-only{
+    opacity: 0.5;
+}
+.input2a:focus,.input2b:focus{
+    border:2px solid #fdc100 ;
+    border-radius: 10px;
+    outline: none;
+    transform: scale(1.05,1.15);
 }
 .input2a{
-    font-size: 10px;
-    height: 30px;
+    margin-top: 10px;
+    font-family:'Open Sans', sans-serif;
+    background-color: #efefef;
+    border:1px solid #3f3f3f;
+    border-radius: 8px;
+    height: 35px;
     width: 100%;
     font-size: 15px;
     display: inline-block;
+    padding: 10px;
 }
+
 #button{
-    height: 5%;
-    width: 20%;
+    font-family: 'Poppins', sans-serif;
+    font-weight: bold;
+    height: 6%;
+    width: 21%;
+    font-size: 18px;
     margin-left: 40%;
     margin-top: 5%;
+    border-radius: 10px;
     cursor: pointer;
+    background-color:#e9b50d; 
+    outline: none;
+    border:transparent
+}
+#icon{
+    float: right;
+    display: inline;
+    position: relative;
+    top: 10px;
+    right: 10px;
+}
+#logo{
+    font-size: 30px !important;
+    color: #3f3f3f !important;
+}
+#eye {
+    position: relative;
+    z-index: 1;
+    width:15px;
+    top:-23px;
+    right: 9px;
+    user-select: none;
+    cursor: pointer;
+    float: right;
+}
+#addpay{
+    border:1px solid black;
+    border-radius: 23px;
+    color: black;
+    text-align: center;
+    font-size: 19px;
+    float:right;
+    cursor: pointer;
+    border: transparent;
+}
+.save:focus{
+    outline: none;
+}
+.close{
+    text-align: center;
+    font-size: 17px;
+    float:right;
+    margin:2px 4px;
+    outline: none;
+    cursor: pointer;
+    color:#D80032;
+}
+
+#error1,#error2{
+    font-size: 12px;
+    color: red;
+}
+#dropbtn1{
+    color:#1E555C;
+    margin-right: 2.5px;
+    font-size: 22px;
 }
 #forms{
     padding: 2%;
+    width: 95%;
+    margin: auto;
+}
+.dropDown1 {
+    float: right;
+    overflow: hidden;
+}
+
+.dropdown-content1 {
+    display: none;
+    position: absolute;
+    width: 100px;
+    z-index: 1;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+}
+
+.dropdown-content1 a {
+    float: none;
+    color: black;
+    padding: 2px 5px;
+    text-decoration: none;
+    display: block;
+    font-size: 15px;
+    text-align: left;
+  }
+  
+  .dropdown-content1 a:hover {
+    background-color: #ddd;
+  }
+  .errMsg,.errMsg2{
+    color: #d32710;
+    float: none;
+    font-size: small;   
+    font-weight: bold;
+    display: none;
 }

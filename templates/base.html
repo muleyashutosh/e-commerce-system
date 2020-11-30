@@ -15,7 +15,7 @@
             <div class='dropDown'>
                 <a id = 'dropbtn' title= 'Profile' onclick='myFunction();'><div id='dropbtn' onclick='myFunction();' class="fas fa-user profile"></div></a>
                 <div class = 'dropdown-content' id = 'drop-content'>
-                    <a href="{{ url_for('profile') }}">Hello, {{ firstname }}</a>
+                    <a id="route" href="{{ url_for('profile') }}">Hello, {{ firstname }}</a>
                     <a href="#">My Orders</a>
                 </div>
             </div>

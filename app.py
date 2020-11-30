@@ -35,7 +35,7 @@ def index():
             idName = 'supplierID'
             idPrefix = 'S-'
         payload.pop('user')
-        dB = Workbench(database = 'minProj', password = mysql_pwd)
+        dB = Workbench(database = 'minproj', password = mysql_pwd)
         if 'login' in payload :
             whereClause = dict([x for x in payload.items() if 'login' not in x])
             # print(userDat)
@@ -46,6 +46,7 @@ def index():
                 if payload['email'] not in session:
                     session['email'] = payload['email']
                     session['firstname'] = userData[0]['firstname']
+                    session['userID']=userData[0][idName]
                 if idPrefix == 'C-':
                     return redirect(url_for('home'))
                 else:
@@ -102,23 +103,122 @@ def sellerHome():
     
     return render_template('sellerHome.html',user = user, firstname = firstname, login_status = True)
 
-@myapp.route('/profile')
+@myapp.route('/Profile',methods=['GET','POST'])
 def profile():
     if 'email' in session:
-        db = Workbench(database = 'minProj', password = mysql_pwd)
+        login_status=True
+        db = Workbench(database = 'minproj', password = mysql_pwd)
+        session['paymentdetailID']=db.select_from("customers",attributes=['paymentID'] ,where_clause = {'custID':session['userID']})[0]['paymentID']
         if request.method == 'POST':
             payload = request.form
-            session['email']=payload['email']
-            payload=payload.copy()
-            del payload["paymentId"]
-            print(payload)
-            db.update_table("customers",updates=payload)
-        user = session['email']
-        userdata={"email":user}
-        userinfo = db.select_from("customers", where_clause = userdata)
+            card=['cardName','bankName','cardNum','cvv','expDate']
+            payloads=dict([x for x in payload.items() if x[0] not in card and x[0]!='upiID'])
+            cardinfo=dict([x for x in payload.items() if x[0] in card and x[1]!=''])
+            upiinfo=dict([x for x in payload.items() if x[0]=='upiID' and x[1]!=''])
+            def dataenter():
+                if session['paymentdetailID'] is None:
+                    payinfo=dict()
+                    payinfo['paymentdetailID'] = 'Pay-' + str(randint(1,9999999) + randint(1,999999))
+                    if bool(cardinfo) != False:
+                        cardinfo['carddetailID'] = 'Ca-' + str(randint(1,9999999) + randint(1,999999))
+                        payinfo['carddetailID']=cardinfo['carddetailID']
+                        try:
+                            db.insert_into("carddet",values=cardinfo)
+                        except Error as e:
+                            print(e)
+                            return 'carddet.CardNum'
+                    if bool(upiinfo) != False:
+                        upiinfo['upidetailID'] = 'U-' + str(randint(1,9999999) + randint(1,999999))
+                        payinfo['upidetailID']=upiinfo['upidetailID']
+                        try:
+                            db.insert_into("upidet",values=upiinfo)
+                        except Error as e:
+                            print(e)
+                            return 'upidet.upiID'
+                    if 'upidetailID' in payinfo or 'carddetailID' in payinfo:
+                        session['paymentdetailID']=payinfo['paymentdetailID']
+                        payloads['paymentID']=payinfo['paymentdetailID']
+                        db.insert_into("paymentdet",values=payinfo)
+                else:
+                    print(session)
+                    payinfo = db.select_from("paymentdet", where_clause = {'paymentdetailID':session['paymentdetailID']})
+                    print(payinfo)
+                    if payinfo[0]['carddetailID'] != None:
+                        if bool(cardinfo) != False:
+                            try:
+                                db.update_table("carddet",updates=cardinfo,where_clause={'carddetailID':payinfo[0]['carddetailID']})
+                            except Error as e:
+                                return 'carddet.CardNum'
+                        else:
+                            db.delete_from("carddet",where_clause={'carddetailID':payinfo[0]['carddetailID']})
+                    elif bool(cardinfo) != False:
+                        cardinfo['carddetailID'] = 'Ca-' + str(randint(1,9999999) + randint(1,999999))
+                        payinfo[0]['carddetailID']=cardinfo['carddetailID']
+                        try:
+                            db.insert_into("carddet",values=cardinfo)
+                        except Error as e:
+                            print(e)
+                            return 'carddet.CardNum'
+                        try:
+                            db.update_table("paymentdet",updates=payinfo[0],where_clause={'paymentdetailID':session['paymentdetailID']})
+                        except Error as e:
+                            print(e)
+                            return 
+                    if payinfo[0]['upidetailID'] != None:
+                        if bool(upiinfo) != False:
+                            try:
+                                db.update_table("upidet",updates=upiinfo,where_clause={'upidetailID':payinfo[0]['upidetailID']})
+                            except Error as e:
+                                print(e)
+                                return 'upidet.upiID'
+                        else:
+                            try:
+                                db.delete_from("upidet",where_clause={'upidetailID':payinfo[0]['upidetailID']})
+                            except Error as e:
+                                print(e)
+                                return
+                    elif bool(upiinfo) != False:
+                        upiinfo['upidetailID'] = 'U-' + str(randint(1,9999999) + randint(1,999999))
+                        payinfo[0]['upidetailID']=upiinfo['upidetailID']
+                        try:
+                            db.insert_into("upidet",values=upiinfo)
+                        except Error as e:
+                            print(e)
+                            return 'upidet.upiID'
+                        try:
+                            db.update_table("paymentdet",updates=payinfo[0],where_clause={'paymentdetailID':session['paymentdetailID']})
+                        except Error as e:
+                            print(e)
+                            return
+            login_status= dataenter()
+            try:
+                db.update_table("customers",updates=payloads,where_clause={'custID':session['userID']})
+            except Error as e:
+                if 'customers.pno_UNIQUE' in str(e):
+                    print(e)
+                    login_status = 'customers.pno_UNIQUE'
+                if 'customers.email_UNIQUE' in str(e):
+                    print(e)
+                    login_status = 'customers.email_UNIQUE'
+                else:
+                    print(e)
+        userinfo = db.select_from("customers", where_clause = {'custID':session['userID']})
+        result=None
+        print(session)
+        if session['paymentdetailID'] is not None:
+            paymentdet=db.select_from("paymentdet", where_clause = {'paymentdetailID':session['paymentdetailID']})[0]
+            if paymentdet['carddetailID'] is not None:
+                result=db.select_from("carddet", where_clause = {'carddetailID':paymentdet['carddetailID']})[0]
+            if paymentdet['upidetailID'] is not None:
+                if result is not None:
+                    print(result)
+                    print(paymentdet)
+                    result.update(db.select_from("upidet", where_clause = {'upidetailID':paymentdet['upidetailID']})[0])
+                else:
+                    result=db.select_from("upidet", where_clause = {'upidetailID':paymentdet['upidetailID']})[0]
     else:
         return redirect(url_for('index'))
-    return render_template('profile.html',user = userinfo, login_status = True)
+    return render_template('profile.html',user = userinfo,firstname=userinfo[0]['firstname'],payinfo=result ,login_status = login_status)
 
 
 @myapp.route('/cart')
@@ -132,9 +232,126 @@ def cart():
 
 
 
-@myapp.route('/sellerProfile')
+@myapp.route('/sellerProfile',methods=['GET','POST'])
 def sellerProfile():
-    pass    
+    if 'email' in session:
+        login_status=True
+        db = Workbench(database = 'minproj', password = mysql_pwd)
+        print(session)
+        session['paymentdetailID']=db.select_from("suppliers",attributes=['paymentID'] ,where_clause = {'supplierID':session['userID']})[0]['paymentID']
+        if request.method == 'POST':
+            payload = request.form
+            card=['cardName','bankName','cardNum','cvv','expDate']
+            payloads=dict([x for x in payload.items() if x[0] not in card and x[0]!='upiID'])
+            cardinfo=dict([x for x in payload.items() if x[0] in card and x[1]!=''])
+            upiinfo=dict([x for x in payload.items() if x[0]=='upiID' and x[1]!=''])
+            def dataenter():
+                if session['paymentdetailID'] is None:
+                    payinfo=dict()
+                    payinfo['paymentdetailID'] = 'Pay-' + str(randint(1,9999999) + randint(1,999999))
+                    if bool(cardinfo) != False:
+                        cardinfo['carddetailID'] = 'Ca-' + str(randint(1,9999999) + randint(1,999999))
+                        payinfo['carddetailID']=cardinfo['carddetailID']
+                        try:
+                            db.insert_into("carddet",values=cardinfo)
+                        except Error as e:
+                            print(e)
+                            return 'carddet.CardNum'
+                    if bool(upiinfo) != False:
+                        upiinfo['upidetailID'] = 'U-' + str(randint(1,9999999) + randint(1,999999))
+                        payinfo['upidetailID']=upiinfo['upidetailID']
+                        try:
+                            db.insert_into("upidet",values=upiinfo)
+                        except Error as e:
+                            print(e)
+                            return 'upidet.upiID'
+                    if 'upidetailID' in payinfo or 'carddetailID' in payinfo:
+                        session['paymentdetailID']=payinfo['paymentdetailID']
+                        payloads['paymentID']=payinfo['paymentdetailID']
+                        db.insert_into("paymentdet",values=payinfo)
+                else:
+                    print(session)
+                    payinfo = db.select_from("paymentdet", where_clause = {'paymentdetailID':session['paymentdetailID']})
+                    print(payinfo)
+                    if payinfo[0]['carddetailID'] != None:
+                        if bool(cardinfo) != False:
+                            try:
+                                db.update_table("carddet",updates=cardinfo,where_clause={'carddetailID':payinfo[0]['carddetailID']})
+                            except Error as e:
+                                print(e)
+                                return 'carddet.CardNum'
+                        else:
+                            db.delete_from("carddet",where_clause={'carddetailID':payinfo[0]['carddetailID']})
+                    elif bool(cardinfo) != False:
+                        cardinfo['carddetailID'] = 'Ca-' + str(randint(1,9999999) + randint(1,999999))
+                        payinfo[0]['carddetailID']=cardinfo['carddetailID']
+                        try:
+                            db.insert_into("carddet",values=cardinfo)
+                        except Error as e:
+                            print(e)
+                            return 'carddet.CardNum'
+                        try:
+                            db.update_table("paymentdet",updates=payinfo[0],where_clause={'paymentdetailID':session['paymentdetailID']})
+                        except Error as e:
+                            print(e)
+                            return 
+                    if payinfo[0]['upidetailID'] != None:
+                        if bool(upiinfo) != False:
+                            try:
+                                db.update_table("upidet",updates=upiinfo,where_clause={'upidetailID':payinfo[0]['upidetailID']})
+                            except Error as e:
+                                print(e)
+                                return 'upidet.upiID'
+                        else:
+                            try:
+                                db.delete_from("upidet",where_clause={'upidetailID':payinfo[0]['upidetailID']})
+                            except Error as e:
+                                print(e)
+                                return
+                    elif bool(upiinfo) != False:
+                        upiinfo['upidetailID'] = 'U-' + str(randint(1,9999999) + randint(1,999999))
+                        payinfo[0]['upidetailID']=upiinfo['upidetailID']
+                        try:
+                            db.insert_into("upidet",values=upiinfo)
+                        except Error as e:
+                            print(e)
+                            return 'upidet.upiID'
+                        try:
+                            db.update_table("paymentdet",updates=payinfo[0],where_clause={'paymentdetailID':session['paymentdetailID']})
+                        except Error as e:
+                            print(e)
+                            return
+            login_status= dataenter()
+            try:
+                db.update_table("suppliers",updates=payloads,where_clause={'supplierID':session['userID']})
+            except Error as e:
+                if 'suppliers.pno_UNIQUE' in str(e):
+                    print(e)
+                    login_status = 'suppliers.pno_UNIQUE'
+                if 'suppliers.email_UNIQUE' in str(e):
+                    print(e)
+                    login_status = 'suppliers.email_UNIQUE'
+                else:
+                    print(e)
+        userinfo = db.select_from("suppliers", where_clause = {'supplierID':session['userID']})
+        result=None
+        print(session)
+        if session['paymentdetailID'] is not None:
+            paymentdet=db.select_from("paymentdet", where_clause = {'paymentdetailID':session['paymentdetailID']})[0]
+            if paymentdet['carddetailID'] is not None:
+                result=db.select_from("carddet", where_clause = {'carddetailID':paymentdet['carddetailID']})[0]
+            if paymentdet['upidetailID'] is not None:
+                if result is not None:
+                    print(result)
+                    print(paymentdet)
+                    result.update(db.select_from("upidet", where_clause = {'upidetailID':paymentdet['upidetailID']})[0])
+                else:
+                    result=db.select_from("upidet", where_clause = {'upidetailID':paymentdet['upidetailID']})[0]
+    else:
+        return redirect(url_for('index'))
+    return render_template('sellerprofile.html',user = userinfo,firstname=userinfo[0]['firstname'],payinfo=result ,login_status = login_status)
+
+        
 
 @myapp.route('/myOrders')
 def myOrders():
@@ -155,4 +372,6 @@ def logout():
 
 if __name__ == "__main__":
     myapp.run(debug=True)
+    # server=Server(myapp.wsgi_app)
+    # server.serve()
 

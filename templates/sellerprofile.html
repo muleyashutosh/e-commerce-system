@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% block title %}
-Profile
+SellerProfile
 {% endblock %}
 {% block head %}
 <link rel="stylesheet" href="{{url_for('static', filename = 'styles/profile.css')}}">
@@ -19,7 +19,7 @@ Profile
 </div>
 <hr>
 <div id='forms'>
-<form name = 'profile' action="/Profile" id = 'profdet' method = "POST">
+<form name = 'profile' action="/sellerProfile" id = 'profdet' method = "POST">
   <div class='inputl'>
   <label for="fname">First name:</label><br>
   <input type="text" id="fname" class='input2a' name="firstname" required><br><br>
@@ -59,13 +59,17 @@ Profile
   <input type="text" id="city" class='input2b' name="city"><br><br>
   </div>
   <div class='inputl'>
-  <label for="joinDate" >Join Date:</label><br>
-  <input type="text" id="jdate" class='input2a' name="joinDate" readOnly><br><br>
+  <label for="joinDate" >Organization:</label><br>
+  <input type="text" id="org" class='input2a' name="orgname"><br><br>
   </div>
   <div class='inputr'>
   <label for="pwd">Password:</label><br>
   <input type="password" id="pwd" class='input2b' name="pwd">
-  <img id = 'eye' onclick="showPass()" src = 'https://ik.imagekit.io/milyzn5unt/e-commerce-system/showPassNormal_hI4WkY3i2z.svg'>
+  <img id = 'eye' onclick="showPass()" alt='' src = 'https://ik.imagekit.io/milyzn5unt/e-commerce-system/showPassNormal_hI4WkY3i2z.svg'>
+  </div>
+  <div class='inputl'>
+  <label for="joinDate" >joinDate:</label><br>
+  <input type="text" id="jdate" class='input2a' name="joinDate" readOnly><br><br>
   </div>
   <hr>
   <div>
@@ -86,14 +90,16 @@ Profile
 </div>
 <div id='Card' style="display: none;">
   <label>Card Details</label>
-  <div  type="button" onclick="Close('Card')" id="closec" class="close close fas fa-times-circle"></div><br>
+  <div  type="button" onclick="Close('Card')" id="closec" class="close fas fa-times-circle"></div>
+<br>
   <div class='inputl'>
     <input type='text' id="acctname" placeholder="Name on Card" class='input2a' name="cardName">
   </div>
   <div class='inputr'>
     <input type='text' id="bname" placeholder="Name of Bank" class='input2b' name="bankName">
   </div>
-  <br><br>
+  <br>
+  <br>
   <label id='error5' class = 'errMsg2'>
     Already registered.
   </label>
@@ -114,7 +120,7 @@ Profile
     <label id='error6' class = 'errMsg2'>
       Already registered.
     </label>
-    <div  type="button" onclick="Close('UPI')" id="closeu" class="close close fas fa-times-circle"></div>
+    <div  type="button" onclick="Close('UPI')" id="closeu" class="close fas fa-times-circle"></div>
     <br>
     <div class='inputl'>
       <input type='email' id="upiid" placeholder="UPI Id" class='input2a' name="upiID">
@@ -127,12 +133,12 @@ Profile
 </div>
 {% endblock %}
 {% block scripts %} 
-{% if login_status == 'customers.pno_UNIQUE' %}
+{% if login_status == 'suppliers.pno_UNIQUE' %}
     <script>
         document.getElementById('error3').style.display = 'inline'
     </script>
 {% endif %}
-{% if login_status == 'customers.email_UNIQUE' %}
+{% if login_status == 'suppliers.email_UNIQUE' %}
 <script>
     document.getElementById('error4').style.display = 'inline';
 </script>
@@ -146,7 +152,7 @@ Profile
 {% endif %}
 {% if login_status == 'carddet.CardNum' %}
 <script>
-    document.getElementById('error5').style.display = 'inline';
+    document.getElementById('error5').style.display = 'block';
     document.getElementById("Card").style.display='';
 </script>
 {% endif %}
@@ -181,6 +187,7 @@ Profile
     document.getElementById('mno').value="{{user[0]['pno']}}";
     document.getElementById('email').value="{{user[0]['email']}}";
     document.getElementById('pwd').value="{{user[0]['pwd']}}";
+    document.getElementById('org').value="{{user[0]['orgname']}}";
     document.getElementById('jdate').value="{{user[0]['joinDate']}}";
     if("{{payinfo['cardName']}}"==='None'){
       document.getElementById('acctname').value='';
@@ -317,7 +324,7 @@ Profile
       document.getElementById("upi").style.display='';
     }
     document.getElementById("addpay").style.display='';
-    document.getElementById("paymentseparator").style.display='block';
+    document.getElementById("paymentseparator").style.display='none';
     if(document.getElementById("Card").style.display=='none'&&document.getElementById("UPI").style.display=='none')
     {
       document.getElementById("status").style.display='';
