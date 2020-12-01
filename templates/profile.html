@@ -64,7 +64,7 @@ Profile
       </div>
       <div class='inputr'>
         <label for="pwd">Password:</label><br>
-        <input type="password" id="pwd" class='input2b' name="pwd">
+        <input type="password" id="pwd" class='input2b' name="pwd" required>
         <img id='eye' onclick="showPass()"
           src='https://ik.imagekit.io/milyzn5unt/e-commerce-system/showPassNormal_hI4WkY3i2z.svg'>
       </div>
@@ -74,7 +74,7 @@ Profile
         <div>
           <label style="font-weight: bold;" for="paymentId">Payments:</label>
           <div id='addpay' class="dropDown1">
-            <div id='dropbtn1' class="fas fa-plus-circle" onclick='myFunction1();'>
+            <div id='dropbtn1' class="fas fa-plus-circle">
             </div>
             <div class='dropdown-content1' id='drop-content1'>
               <a id='card' class='far fa-credit-card cardClass' onclick="Card('card')"></a>
@@ -180,7 +180,8 @@ Profile
 <script>
   var checkc = true, checku = true;
   window.onload = function () {
-    console.log(document.getElementById('route').value)
+    $('#dropbtn').prop('click', 'null').off('click')
+    $('#drop-btn').removeClass('profile')
     document.getElementById('fname').value = "{{user[0]['firstname']}}";
     document.getElementById('lname').value = "{{user[0]['lastname']}}";
     document.getElementById('mno').value = "{{user[0]['pno']}}";
@@ -247,23 +248,27 @@ Profile
     else {
       document.getElementById('city').value = "{{user[0]['city']}}";
     }
-    if ("{{user[0]['paymentid']}}" === 'None') {
-      document.getElementById('payid').value = '';
+
+
+    window.onclick = function (e) {
+      // console.log(e.target)
+      if (!e.target.matches('#dropbtn1')) {
+        $('#drop-content1').slideUp();
+      }
     }
-    else {
-      document.getElementById('payid').value = "{{user[0]['paymentid']}}";
-    }
-  }
-  function myFunction1() {
-    document.getElementById('drop-content1').style.display = 'block';
+
   }
 
-  window.onclick = function (e) {
-    if (!e.target.matches('#dropbtn1')) {
-      var myDropdown = document.getElementById("drop-content1");
-      myDropdown.style.display = 'none';
-    }
-  }
+  
+
+  $('#dropbtn1').click(function() {
+    $('#drop-content1').slideToggle();    
+  })
+
+
+  
+
+
   function Card(id) {
     document.getElementById("status").style.display = 'none';
     if (id == 'card') {
@@ -338,9 +343,6 @@ Profile
     }
   }
 
-  $(document).ready(function() {
-      $('#dropbtn').prop('click', 'null').off('click')
-  })
 </script>
 
 {% endblock %}

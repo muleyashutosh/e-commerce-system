@@ -46,22 +46,24 @@
     width: 70%;
     margin: auto;
     position: relative;
-    left: 20px;
+    left: 50px;
+    
 }
 
 #searchfield div {
     background-image:url(https://ik.imagekit.io/milyzn5unt/e-commerce-system/search_t6RuJ5Yrj.png);
     background-repeat: no-repeat;
     background-size: 25px 25px;
-    background-position: 70% 50%;
+    background-position: 45% 50%;
     width: 40px;
     height: 40px;
     margin:13px 0px;
     float: left;
     background-color: #efefef;
-    border-top-left-radius: 20px;
-    border-bottom-left-radius: 20px;
-    padding-left: 30px;
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+    cursor: pointer;
+    transition: all 0.3s ease;
 }
 
 #search {
@@ -75,14 +77,17 @@
     width: 80%;
     border:transparent;
     border-left:1px solid lightgrey;
-    border-top-right-radius: 20px;
-    border-bottom-right-radius: 20px;
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
     color: #2d2d2d;
+    transition: all 0.3s ease;
 }
 
 #search:focus{
     outline:none;
+    
 }
+
 
 
 .headerClass a {

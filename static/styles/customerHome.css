@@ -14,7 +14,9 @@
 
 .category-filter div {
     font-family: 'Poppins', 'sans-serif';
-    color: #2d2d2d;
+    font-size: 20px;
+    color: #3f3f3f;
+    text-decoration: underline;
 }
 
 .category-filter form {

@@ -274,6 +274,7 @@ def profile():
                     result.update(db.select_from("upidet", where_clause = {'upidetailID':paymentdet['upidetailID']})[0])
                 else:
                     result=db.select_from("upidet", where_clause = {'upidetailID':paymentdet['upidetailID']})[0]
+        print(userinfo)
     else:
         return redirect(url_for('index'))
     return render_template('profile.html',user = userinfo,firstname=userinfo[0]['firstname'],payinfo=result ,login_status = login_status)

@@ -19,11 +19,11 @@ Home
             <label for="washing-machines"><input type="checkbox" name="washing-machines" id="washing-machines" value="7">Washing machines</label><br>
             <label for="microwaves"><input type="checkbox" name="microwaves" id="microwaves" value="8">Microwaves</label><br>
             <br>By Price:<br>
-            <label for="price"><input type="radio" name="price" value="1" >Under &#x20B9;1000</label><br>
-            <label for="price"><input type="radio" name="price" value="2">&#x20B9;1000 - &#x20B9;5000</label><br>
-            <label for="price"><input type="radio" name="price" value="3">&#x20B9;5000 - &#x20B9;10000</label><br>
-            <label for="price"><input type="radio" name="price" value="4">&#x20B9;10000 - &#x20B9;20000</label><br>
-            <label for="price"><input type="radio" name="price" value="5">Over &#x20B9;20000</label><br>
+            <label for="value1"><input type="radio" id='value1' name="price" value="1" >Under &#x20B9;1000</label><br>
+            <label for="value2"><input type="radio" id='value2' name="price" value="2">&#x20B9;1000 - &#x20B9;5000</label><br>
+            <label for="value3"><input type="radio" id='value3' name="price" value="3">&#x20B9;5000 - &#x20B9;10000</label><br>
+            <label for="value4"><input type="radio" id='value4' name="price" value="4">&#x20B9;10000 - &#x20B9;20000</label><br>
+            <label for="value5"><input type="radio" id='value5' name="price" value="5">Over &#x20B9;20000</label><br>
             <input type="submit" value ='Apply Filter'>
             <button id ='reset'>Reset</button>
         </form>
@@ -84,16 +84,16 @@ Home
         })}
         var allproducts = $('.grid-container').contents();
         // console.log(allproducts)
-        $('#search').keyup(function() {
+        $('#search-icon').click(function() {
             if ($('#search').val().trim() == '') {
                 if(allproducts.length == 0) {
-                    console.log('val empty, productslist empty')
+                    // console.log('val empty, productslist empty')
                     var error = '<div class="noItemsFound"><h2>Oops, No Items matching your search were found!</h2><hr></div>'
                     $('.main').append(error);
                     $('.grid-container').empty()
                 }
                 else {
-                    console.log('val empty, productslist not empty')
+                    // console.log('val empty, productslist not empty')
                     $('.noItemsFound').remove();
                     if(! $('.grid-container').contents().length)
                         $('.grid-container').append(allproducts);
@@ -104,16 +104,16 @@ Home
             else {
                 
                 QuerySearch($('#search').val().trim(), function(res) {
-                    console.log(res)
+                    // console.log(res)
                     if(res.length == 0) {
-                        console.log('val ' + $("#search").val().trim() + ', res empty')
+                        // console.log('val ' + $("#search").val().trim() + ', res empty')
                         var error = '<div class="noItemsFound"><h2>Oops, No Items matching your search were found!</h2><hr></div>'
                         if( ! $('.main').has('.noItemsFound').length)
                             $('.main').append(error)
                         $(".grid-container").empty()
                     }
                     else {
-                        console.log('val ' + $("#search").val().trim() + ', res not empty')
+                        // console.log('val ' + $("#search").val().trim() + ', res not empty')
                         html = ''   
                         for (let x=0; x < res.length; x++) {
                             html += "<div class='grid-item' id='" + res[x]['prodID'] + "'>"
@@ -145,9 +145,13 @@ Home
         $('.grid-item').mouseleave(function() {
             $(this).children('.addToCart').fadeOut('fast');
         })
-        
 
-
+        $('#search').keypress(function(e) {
+            if(e.keyCode == 13) {
+                $('#search-icon').click()
+            }
+        })
+    
     })
 </script>
     
