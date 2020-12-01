@@ -64,11 +64,12 @@ Profile
       </div>
       <div class='inputr'>
         <label for="pwd">Password:</label><br>
-        <input type="password" id="pwd" class='input2b' name="pwd">
+        <input type="password" id="pwd" class='input2b' name="pwd" required>
         <img id='eye' onclick="showPass()"
           src='https://ik.imagekit.io/milyzn5unt/e-commerce-system/showPassNormal_hI4WkY3i2z.svg'>
       </div>
       <hr>
+      <br>
       <div>
         <div>
           <label style="font-weight: bold;" for="paymentId">Payments:</label>
@@ -319,7 +320,7 @@ Profile
       document.getElementById("upi").style.display = '';
     }
     document.getElementById("addpay").style.display = '';
-    document.getElementById("paymentseparator").style.display = 'block';
+    document.getElementById("paymentseparator").style.display = 'none';
     if (document.getElementById("Card").style.display == 'none' && document.getElementById("UPI").style.display == 'none') {
       document.getElementById("status").style.display = '';
     }
