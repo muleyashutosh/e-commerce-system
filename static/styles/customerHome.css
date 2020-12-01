@@ -129,8 +129,9 @@ input[type='submit'] {
     color: #e1e6e2;
 }
 
-.pageswitcher a {
-    margin: 2px;
+.pageswitcher a:link {
+    color: #3d3d3d;
+    text-decoration: none;
 }
 
 .pageNo:hover {
@@ -159,3 +160,13 @@ input[type='submit'] {
     font-family: 'Open Sans', 'sans-serif';
     text-decoration: #999999;
 }
+
+.selectedPage {
+    background-color: #fdc100;
+}
+
+.pageDot {
+    font-size: small;
+    
+}
+

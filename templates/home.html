@@ -49,17 +49,59 @@ Home
         {% if filter == False or totalPages: %}
             <div class="pageswitcher">
                 {% if page != 1 %}
-                <a href="{{url_for('home', page=page-1)}}"><button class='pageNo' id='prevPage'><i class="fas fa-arrow-left"></i> Prev Page</button></a>
+                <a href="{{url_for('home', page=page-1)}}"><button class='pageNo' id='prevPage'><i class="fas fa-arrow-left"></i></button></a>
                 {% endif %}
                 {% for x in range(1, totalPages + 1) %}
-                    {% if x != page: %}
-                        <a href="{{url_for('home', page=x)}}"><button class='pageNo'>{{ x }}</button></a>
+                    {% if x == 1 or x == totalPages %}
+                        {% if x == page %}
+                            <a href="{{url_for('home', page=x)}}"><button class='pageNo selectedPage'>{{ x }}</button></a>
+                        {% else %}
+                            <a href="{{url_for('home', page=x)}}"><button class='pageNo'>{{ x }}</button></a>
+                        {% endif %}
+                    {% elif page == 1 %}
+                        {% if x == page %}
+                            <a href="{{url_for('home', page=x)}}"><button class='pageNo selectedPage'>{{ x }}</button></a>
+                        {% elif (page+2) <= totalPages and x <= page+2 %}
+                            <a href="{{url_for('home', page=x)}}"><button class='pageNo'>{{ x }}</button></a>
+                        {% else %}
+                            <a href="{{url_for('home', page=x)}}" class='pageDot'>.</a>
+                        {% endif %}
+                    {% elif page == 2 %}
+                        {% if x == page %}
+                            <a href="{{url_for('home', page=x)}}"><button class='pageNo selectedPage'>{{ x }}</button></a>
+                        {% elif (page-1)>= 1 and (page+2) <= totalPages and x <= page+2 %}
+                            <a href="{{url_for('home', page=x)}}"><button class='pageNo'>{{ x }}</button></a>
+                        {% else %}
+                            <a href="{{url_for('home', page=x)}}" class='pageDot'>.</a>
+                        {% endif %}
+                    {% elif (page >= 3 and page <= (totalPages-2)) and (page-2)>= 1 and (page+2)<=totalPages and x >= (page-2) and x <= (page+2): %}
+                        {% if x == page %}
+                            <a href="{{url_for('home', page=x)}}"><button class='pageNo selectedPage'>{{ x }}</button></a>
+                        {% else %}
+                            <a href="{{url_for('home', page=x)}}"><button class='pageNo'>{{ x }}</button></a>
+                        {% endif %}
+                    {% elif page == (totalPages-1) %}
+                        {% if x == page %}
+                            <a href="{{url_for('home', page=x)}}"><button class='pageNo selectedPage'>{{ x }}</button></a>
+                        {% elif (page-2) >= 1 and x >= (page-2) and x <= (page+1) %}
+                            <a href="{{url_for('home', page=x)}}"><button class='pageNo'>{{ x }}</button></a>
+                        {% else %}
+                            <a href="{{url_for('home', page=x)}}" class='pageDot'>.</a>
+                        {% endif %}
+                    {% elif page == totalPages %} 
+                        {% if x == page %}
+                            <a href="{{url_for('home', page=x)}}"><button class='pageNo selectedPage'>{{ x }}</button></a>
+                        {% elif (page-2) >= 1 and x >= (page-2) %}
+                            <a href="{{url_for('home', page=x)}}"><button class='pageNo'>{{ x }}</button></a>
+                        {% else %}
+                            <a href="{{url_for('home', page=x)}}" class='pageDot'>.</a>
+                        {% endif %}
                     {% else %}
-                        <a href="{{url_for('home', page=x)}}"><button class='pageNo' style="background-color: #fdb100;">{{ x }}</button></a>
+                        <a href="{{url_for('home', page=x)}}" class='pageDot'>.</a>
                     {% endif %}
                 {% endfor %}
                 {% if page != totalPages %}
-                <a href="{{url_for('home', page=page+1)}}"><button class='pageNo' id = 'nextPage'>Next Page <i class="fas fa-arrow-right"></i></button></a>	
+                <a href="{{url_for('home', page=page+1)}}"><button class='pageNo' id = 'nextPage'><i class="fas fa-arrow-right"></i></button></a>	
                 {% endif %}
             </div>
         {% endif %}
@@ -74,6 +116,31 @@ Home
         return false;
     })
     $(document).ready(function() {
+        pages = $('.pageswitcher').children('a')
+        dot_count = 0;
+        for (x of pages) {
+            if(x.text == '.') {
+                dot_count++;
+                x.style.display = 'none'
+            }
+        }
+        dots = 0;
+        for (x of pages) {
+            if(x.text == '.' && dots < 5) {
+                x.style.display = ''
+                dots++;
+            }
+        }
+        dots = 0
+        for (x of pages.get().reverse()) {
+            if(x.text == '.' && dots < 5) {
+                x.style.display = ''
+                dots++;
+            }
+        }
+        // console.log(pages.get().reverse())
+
+
         function QuerySearch(query, callback) {
             $.ajax({
                 url: '/getproducts',
