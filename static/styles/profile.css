@@ -164,23 +164,42 @@ h1{
 
 .dropdown-content1 {
     position: absolute;
-    right: 27%;
+    right: 26.65%;
     display: none;
     z-index: 2;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-    background-color: #2d2d2d;
+    /* box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2); */
+    /* background-color: #2d2d2d; */
 }
 
 .dropdown-content1 a {
     float: none;
     color: #eceff2;
-    padding: 2px 5px;
+    padding: 4px 5px 0px;
     display: block;
     text-align: center;
-  }
+    width: 60.8px;
+    height: 35px;
+    transition: all 0.3s ease;
+}
+
+.cardClass {
+    font-size: 26px;
+    color: #3f3f3f !important;
+}
+
+.upiCLass {
+    background-image: url(https://www.vectorlogo.zone/logos/upi/upi-ar21.svg);
+    background-size: 80% 80%;
+    background-position-x: 50%;
+    background-repeat: no-repeat;
+    width: 67.8px;
+    height: 35px;
+}
+
 .dropdown-content1 > a:hover {
-    background-color: #eceff2;
-    color: #2d2d2d;
+    /* background-color: #eceff2; */
+    /* color: #2d2d2d; */
+    transform: scale(1.1);
 }
 
   .errMsg,.errMsg2{
