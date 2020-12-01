@@ -13,26 +13,14 @@
         {% block head %} {% endblock %}
     <body>
         <div id='header' class = 'headerClass'>   
-            <h2><a 
-                {% if 'C' in session['userID'] %}
-                    href="{{ url_for('home') }}"
-                {% else %}
-                    href = "{{ url_for('sellerHome') }}"
-                {% endif %}
-                ></a>
+            <h2><a href="{{ url_for('home') if 'C' in session['userID'] else url_for('sellerHome') }}"></a>
             </h2>
             <div id = 'searchfield'><input type="search" name="search" id="search" placeholder="Search for a Product"><div id='search-icon'></div></div>
             <a title= 'Logout' href="{{ url_for('logout')}}"><div class = 'logout'></div></a>
             <div class='dropDown'>
                 <a id = 'dropbtn' title= 'Profile'><div id='drop-btn' class="fas fa-user profile"></div></a>
                 <div class = 'dropdown-content' id = 'drop-content'>
-                    <a 
-                    {% if 'C' in session['userID'] %}
-                        href="{{ url_for('profile') }}"
-                    {% else %}
-                        href="{{ url_for('sellerProfile') }}"
-                    {% endif %}
-                    >Hello, {{ firstname }}<hr> <span>Edit Profile</span></a>
+                    <a href="{{ url_for('profile') if 'C' in session['userID'] else url_for('sellerProfile') }}">Hello, {{ firstname }}<hr> <span>Edit Profile</span></a>
                     <a href="#">My Orders</a>
                 </div>
             </div>
