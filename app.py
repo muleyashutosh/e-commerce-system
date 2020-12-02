@@ -430,15 +430,20 @@ def logout():
     return redirect(url_for('index'))
 
 @myapp.route('/getproducts')
-def api():
+def searchApi():
     search = request.args['search']
+    cat = int(request.args['category'])
     print(search)
-    products = []
-    products = [ x for x in allproducts if re.search(search, x['prodName'], I) ]
     # db = Workbench('minProj', password=mysql_pwd)
-    # products = db.select_from_custom(f"SELECT * FROM products WHERE REGEXP_LIKE(prodName,'{search}')")
+    if(cat != 0):
+        products = [ x for x in allproducts if (re.search(search, x['prodName'], I) or re.search(search, x['prodDesc'], I)) and x['categoryID'] == cat ]
+        # products = db.select_from_custom(f"SELECT * FROM products WHERE (REGEXP_LIKE(prodName,'{search}') OR REGEXP_LIKE(prodDesc,'{search}')) AND categoryID= {cat}")
+    else:
+        products = [ x for x in allproducts if re.search(search, x['prodName'], I) ]
+        # products = db.select_from_custom(f"SELECT * FROM products WHERE (REGEXP_LIKE(prodName,'{search}') OR REGEXP_LIKE(prodDesc,'{search}'))")
+
     print(len(products))
-    return (jsonify(products),search)
+    return (jsonify(products))
     
 
 

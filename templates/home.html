@@ -41,7 +41,7 @@ Home
                 <img src="{{ x['img'] }}" alt="">
                 <div>{{ x['prodName'] }}</div>
                 <div class='priceTag'>&#x20B9; {{ x['minPrice'] }}.00</div>
-                <button class= 'addToCart'>Add to Cart</button>
+                <button class= 'addToCart'><i class="fas fa-cart-plus"></i>Add to Cart</button>
             </div>
             {% endfor %}
         </div>
@@ -141,11 +141,12 @@ Home
         // console.log(pages.get().reverse())
 
 
-        function QuerySearch(query, callback) {
+        function QuerySearch(query, category, callback) {
             $.ajax({
                 url: '/getproducts',
                 data: {
-                    search: query
+                    search: query,
+                    category: category
                 },
                 success: callback
         })}
@@ -170,7 +171,7 @@ Home
             }
             else {
                 
-                QuerySearch($('#search').val().trim(), function(res) {
+                QuerySearch($('#search').val().trim(), $('#category').val(), function(res) {
                     // console.log(res)
                     if(res.length == 0) {
                         // console.log('val ' + $("#search").val().trim() + ', res empty')
@@ -194,11 +195,11 @@ Home
                         $('.pageswitcher').hide();
                         
                         $('.grid-item').mouseenter(function() {
-                            $(this).children('.addToCart').fadeIn('fast');
+                            $(this).children('.addToCart').slideDown('fast');
                         })
 
                         $('.grid-item').mouseleave(function() {
-                            $(this).children('.addToCart').fadeOut('fast');
+                            $(this).children('.addToCart').slideUp('fast');
                         })
                     }
                 }) 

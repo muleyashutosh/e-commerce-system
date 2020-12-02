@@ -15,7 +15,24 @@
         <div id='header' class = 'headerClass'>   
             <h2><a href="{{ url_for('home') if 'C' in session['userID'] else url_for('sellerHome') }}"></a>
             </h2>
-            <div id = 'searchfield'><input type="search" name="search" id="search" placeholder="Search for a Product"><div id='search-icon'></div></div>
+            <div id = 'searchfield'>
+                <select name="resizer" id="resizerSelect">
+                    <option id='resizerOption' value="width"></option>
+                </select>
+                <select name="searchCategory" id="category">
+                    <option value="0">All</option>
+                    <option value="1">Mobiles</option>
+                    <option value="2">Televisions</option>
+                    <option value="3">Laptops</option>
+                    <option value="4">Earphones</option>
+                    <option value="5">Cameras</option>
+                    <option value="6">Fridges</option>
+                    <option value="7">Washing Machines</option>
+                    <option value="8">Microwaves</option>
+                </select>
+                <input type="search" name="search" id="search" placeholder="Search for a Product">
+                <div id='search-icon' class='fas fa-search'></div>
+            </div>
             <a title= 'Logout' href="{{ url_for('logout')}}"><div class = 'logout'></div></a>
             <div class='dropDown'>
                 <a id = 'dropbtn' title= 'Profile'><div id='drop-btn' class="fas fa-user profile"></div></a>
@@ -50,20 +67,20 @@
         })
 
         $('#search').focusin(function() {
-            $('#search').css('border', '3px solid #fdc100')
-            $('#search').css('border-right', 'none')
-            $('#search-icon').css('border', '3px solid #fdc100')
-            $('#search-icon').css('border-left', 'none')
-            
+            $('#category').css("border", '2px solid #fdc100')
+            $('#category').css("border-right", 'none')
         })
         $('#search').focusout(function() {
-            $('#search').css('border', 'none')
-            $('#search-icon').css('border', 'none')
+            $('#category').css("border", 'none')
+            $('#search').css("border", 'none')
         })
-
-        // $('#search-icon').click(function() {
-        //     $('#search').focus();
-        // }) 
+        $('#category').focusin(function() {
+            $('#search').css('border', '2px solid #fdc100')
+            $('#search').css('border-left', 'none')
+            $('#search').css('border-right', 'none')
+            $('#category').css("border", '2px solid #fdc100')
+            $('#category').css("border-right", 'none')
+        })
 
         window.onclick = function(e) {
             if (!e.target.matches('#dropbtn') && !e.target.matches('#drop-btn')) {
@@ -85,6 +102,14 @@
                 header.classList.remove('sticky');
             }
         }
+
+        $('#category').change(function() {
+            // console.log('resizing')
+            $('#resizerOption').html($('#category option:selected').text())
+            // console.log($('#resizerOption').width())
+            $('#category').width($('#resizerSelect').width())
+        })
+
 
     })
 
