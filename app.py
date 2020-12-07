@@ -9,7 +9,7 @@ from random import randint
 from datetime import date
 # from webui import WebUI
 
-mysql_pwd = "Ashu@12345"
+mysql_pwd = "1234"
 
 myapp = Flask(__name__)
 # ui = WebUI(myapp, debug= True)
@@ -43,6 +43,7 @@ def index():
                 login_status = True 
                 if payload['email'] not in session:
                     session['email'] = payload['email']
+                    session['userid'] = userData[0][idName]
                     session['firstname'] = userData[0]['firstname']
                 if idPrefix == 'C-':
                     return redirect(url_for('home'))
@@ -61,6 +62,7 @@ def index():
                 dB.insert_into(tableName, values)  
                 if payload['email'] not in session:
                     session['email'] = payload['email']
+                    session['userid'] = payload[idName]
                     session['firstname'] = payload['firstName']
                     if idPrefix == 'C-':
                         return redirect(url_for('home'))
@@ -95,10 +97,18 @@ def sellerHome():
     if 'email' in session:
         user = session['email']
         firstname = session['firstname']
+        db = Workbench('minproj',password='1234')
+        uid = session['userid']
+        productdetails = db.select_from('supplierdet',where_clause={'supplierID':uid})
+        productlist = []
+        for x in productdetails:
+            product=db.select_from('products',where_clause={'prodID':x['prodID']})[0]
+            productlist.append(product)
+         
     else:
         return redirect(url_for('index'))
     
-    return render_template('sellerHome.html',user = user, firstname = firstname, login_status = True)
+    return render_template('sellerHome.html',user = user, firstname = firstname, productdetails=productdetails, productlist=productlist, login_status = True)
 
 @myapp.route('/profile')
 def profile():
