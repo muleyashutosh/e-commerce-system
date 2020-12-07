@@ -5,17 +5,39 @@
         <title>{% block title %} {% endblock %}</title>
         <link rel="icon" href="https://ik.imagekit.io/milyzn5unt/e-commerce-system/shopping-cart_g2lAzjYlj.svg" type="image/x-icon">
         <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="{{url_for('static', filename = 'styles/base.css')}}">
         <script src="https://kit.fontawesome.com/d591665a2d.js" crossorigin="anonymous"></script>
+        <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
         {% block head %} {% endblock %}
     <body>
-        <div id='header' class = 'headerClass col-12'>   
-            <h2><a href='{{ url_for('home') }}'>El Carto</a></h2>
+        <div id='header' class = 'headerClass'>   
+            <h2><a href="{{ url_for('home') if 'C' in session['userID'] else url_for('sellerHome') }}"></a>
+            </h2>
+            <div id = 'searchfield'>
+                <select name="resizer" id="resizerSelect">
+                    <option id='resizerOption' value="width"></option>
+                </select>
+                <select name="searchCategory" id="category">
+                    <option value="0">All</option>
+                    <option value="1">Mobiles</option>
+                    <option value="2">Televisions</option>
+                    <option value="3">Laptops</option>
+                    <option value="4">Earphones</option>
+                    <option value="5">Cameras</option>
+                    <option value="6">Fridges</option>
+                    <option value="7">Washing Machines</option>
+                    <option value="8">Microwaves</option>
+                </select>
+                <input type="search" name="search" id="search" placeholder="Search for a Product">
+                <div id='search-icon' class='fas fa-search'></div>
+            </div>
             <a title= 'Logout' href="{{ url_for('logout')}}"><div class = 'logout'></div></a>
             <div class='dropDown'>
-                <a id = 'dropbtn' title= 'Profile' onclick='myFunction();'><div id='dropbtn' onclick='myFunction();' class="fas fa-user profile"></div></a>
+                <a id = 'dropbtn' title= 'Profile'><div id='drop-btn' class="fas fa-user profile"></div></a>
                 <div class = 'dropdown-content' id = 'drop-content'>
-                    <a href="{{ url_for('profile') }}">Hello, {{ firstname }}</a>
+                    <a href="{{ url_for('profile') if 'C' in session['userID'] else url_for('sellerProfile') }}">Hello, {{ firstname }}<hr> <span>Edit Profile</span></a>
                     <a href="#">My Orders</a>
                 </div>
             </div>
@@ -29,29 +51,67 @@
 
 
     <script>
-    function myFunction() {
-        document.getElementById('drop-content').style.display = 'block';
-    }
-
-    window.onclick = function(e) {
-    if (!e.target.matches('#dropbtn')) {
-        var myDropdown = document.getElementById("drop-content");
-        myDropdown.style.display = 'none';
-    }
-    }
-
-    window.onscroll = function(){makeSticky();}
-    var header = document.getElementById('header')
-    var sticky = header.offsetTop;
-    function makeSticky() {
-        if(window.pageYOffset > sticky) {
-            header.classList.add('sticky');
+    $(document).ready(function() {
+        function switchClass() {
+            if($('#drop-btn').hasClass('fas fa-user profile')) {
+                $('#drop-btn').removeClass('fas fa-user profile').addClass('fas fa-user')
+            }
+            else {
+                $('#drop-btn').removeClass('fas fa-user').addClass('fas fa-user profile')
+            }
+        
         }
-        else {
-            header.classList.remove('sticky');
-        }
-    }
+        $('#dropbtn').click(function() {
+            $('#drop-content').slideToggle();    
+            switchClass();
+        })
 
+        $('#search').focusin(function() {
+            $('#category').css("border", '2px solid #fdc100')
+            $('#category').css("border-right", 'none')
+        })
+        $('#search').focusout(function() {
+            $('#category').css("border", 'none')
+            $('#search').css("border", 'none')
+        })
+        $('#category').focusin(function() {
+            $('#search').css('border', '2px solid #fdc100')
+            $('#search').css('border-left', 'none')
+            $('#search').css('border-right', 'none')
+            $('#category').css("border", '2px solid #fdc100')
+            $('#category').css("border-right", 'none')
+        })
+
+        window.onclick = function(e) {
+            if (!e.target.matches('#dropbtn') && !e.target.matches('#drop-btn')) {
+                $('#drop-content').slideUp();
+                if($('#drop-content').css('display') == 'block')
+                    switchClass();
+            }
+            
+        }
+
+        window.onscroll = function(){makeSticky();}
+        var header = document.getElementById('header')
+        var sticky = header.offsetTop;
+        function makeSticky() {
+            if(window.pageYOffset > sticky) {
+                header.classList.add('sticky');
+            }
+            else {
+                header.classList.remove('sticky');
+            }
+        }
+
+        $('#category').change(function() {
+            // console.log('resizing')
+            $('#resizerOption').html($('#category option:selected').text())
+            // console.log($('#resizerOption').width())
+            $('#category').width($('#resizerSelect').width())
+        })
+
+
+    })
 
 
     </script>

@@ -24,14 +24,32 @@ Suppliers Home
             {% endfor %}
             <button class="More">Read more</button>
         </div>
-        <div class="AddProducts">
+        <!-- <div class="AddProducts">
+            <table style="width: 100%;">
+                <tr>
+                   <th>No</th>
+                   <th>Product-Id</th>
+                   <th>Product-Name</th>
+                   <th>Stocks Provided</th>
+                </tr>
+                {% for x in range(10): %}
+                <tr>
+                    <td>{{ x + 1 }}</td>
+                    <td>{{ productlist[x]['prodID'] }}</td>
+                    <td>{{ productlist[x]['prodName']}}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div> -->
+        <div class="Stockdetails">
             hi
         </div>
     </div>
     
 </div>
 
-
 {% endblock %}
 
-{% block scripts %} {% endblock %}
+{% block scripts %} 
+
+{% endblock %}

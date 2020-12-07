@@ -1,6 +1,348 @@
 {% extends "base.html" %}
 {% block title %}
-User Profile
+Profile
 {% endblock %}
-{% block body %} {% endblock %}
-{% block scripts %} {% endblock %}
+{% block head %}
+<link rel="stylesheet" href="{{url_for('static', filename = 'styles/profile.css')}}">
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+{% endblock %}
+{% block body %}
+<div id='main'>
+  <div>
+    <h1>Account Details</h1>
+    <div id='icon'>
+      <i class="fas fa-user-cog" id='logo'></i>
+    </div>
+  </div>
+  <hr>
+  <div id='forms'>
+    <form name='profile' action="/Profile" id='profdet' method="POST">
+      <div class='inputl'>
+        <label for="fname">First name:</label><br>
+        <input type="text" id="fname" class='input2a' name="firstname" required><br><br>
+      </div>
+      <div class='inputr'>
+        <label for="lname">Last name:</label><br>
+        <input type="text" id="lname" class='input2a' name="lastname" required><br><br>
+      </div>
+      <div class='inputl'>
+        <label for="mno">Mobile No:</label>
+        <label id='error3' class='errMsg'>
+          Already registered.
+        </label><br>
+        <input type="tel" id="mno" pattern='[1-9][0-9]{9}' class='input2b' name="pno" required><br><br>
+      </div>
+      <div class='inputr'>
+        <label for="email">Email:</label>
+        <label id='error4' class='errMsg2'>
+          Already registered.
+        </label><br>
+        <input type='email' id="email" class='input2b' name="email" required><br><br>
+      </div>
+      <div class='inputl'>
+        <label for="address">Address:</label><br>
+        <input type="text" id="add" class='input2a' name="address"><br><br>
+      </div>
+      <div class='inputr'>
+        <label for="pinCode">Pincode:</label><br>
+        <input type="text" id="pcode" class='input2a' name="pinCode"><br><br>
+      </div>
+      <div class='inputl'>
+        <label for="state">State:</label><br>
+        <input type="text" id="state" class='input2b' name="state"><br><br>
+      </div>
+      <div class='inputr'>
+        <label for="city">City:</label><br>
+        <input type="text" id="city" class='input2b' name="city"><br><br>
+      </div>
+      <div class='inputl'>
+        <label for="joinDate">Join Date:</label><br>
+        <input type="text" id="jdate" class='input2a' name="joinDate" readOnly><br><br>
+      </div>
+      <div class='inputr'>
+        <label for="pwd">Password:</label><br>
+        <input type="password" id="pwd" class='input2b' name="pwd" required>
+        <img id='eye' onclick="showPass()"
+          src='https://ik.imagekit.io/milyzn5unt/e-commerce-system/showPassNormal_hI4WkY3i2z.svg'>
+      </div>
+      <hr>
+      <br>
+      <div>
+        <div>
+          <label style="font-weight: bold;" for="paymentId">Payments:</label>
+          <div id='addpay' class="dropDown1">
+            <div id='dropbtn1' class="fas fa-plus-circle">
+            </div>
+            <div class='dropdown-content1' id='drop-content1'>
+              <a id='card' class='far fa-credit-card cardClass' onclick="Card('card')"></a>
+              <a id='upi' class='upiCLass' onclick="Card('upi')"></a>
+            </div>
+          </div>
+        </div>
+        <br>
+        <div style="text-align: center;" id='status'>
+          <label style="color: #888888 ;">No Payment Methods Selected</label>
+        </div>
+        <div id='Card' style="display: none;">
+          <label>Card Details</label>
+          <div type="button" onclick="Close('Card')" id="closec" class="close close fas fa-times-circle"></div><br>
+          <div class='inputl'>
+            <input type='text' id="acctname" placeholder="Name on Card" class='input2a' name="cardName">
+          </div>
+          <div class='inputr'>
+            <input type='text' id="bname" placeholder="Name of Bank" class='input2b' name="bankName">
+          </div>
+          <br><br>
+          <label id='error5' class='errMsg2'>
+            Already registered.
+          </label>
+          <div class='inputl'>
+            <input type='tel' pattern='[0-9]{16}' title="Enter 16 Digit Number" id="cardnum" placeholder="Card Number"
+              class='input2a' name="cardNum">
+          </div>
+          <div style="display: inline;">
+            <input type='tel' pattern="[1-9][0-9]{2}" title="Enter 3 digit CVV" id="cvv" class="temp" placeholder="CVV"
+              name="cvv">
+          </div>
+          <div class='inputr' style="width: 25%;">
+            <input type='text' onfocusout="(this.type='text')" onfocus="(this.type='date')" id="expdate"
+              placeholder="Expiry Date" class='input2b' name="expDate">
+          </div>
+          <br><br>
+        </div>
+        <hr id='paymentseparator' style="opacity: 0.5;display: none;">
+        <div id='UPI' style="display: none;">
+          <label>UPI Details</label>
+          <label id='error6' class='errMsg2'>
+            Already registered.
+          </label>
+          <div type="button" onclick="Close('UPI')" id="closeu" class="close close fas fa-times-circle"></div>
+          <br>
+          <div class='inputl'>
+            <input type='email' id="upiid" placeholder="UPI Id" class='input2a' name="upiID">
+          </div>
+        </div>
+      </div>
+      <button type="submit" id='button'>Submit</button>
+    </form>
+  </div>
+</div>
+{% endblock %}
+{% block scripts %}
+{% if login_status == 'customers.pno_UNIQUE' %}
+<script>
+  document.getElementById('error3').style.display = 'inline'
+</script>
+{% endif %}
+{% if login_status == 'customers.email_UNIQUE' %}
+<script>
+  document.getElementById('error4').style.display = 'inline';
+</script>
+
+{% endif %}
+{% if login_status == 'upidet.upiID' %}
+<script>
+  document.getElementById('error6').style.display = 'inline';
+  document.getElementById("UPI").style.display = '';
+</script>
+{% endif %}
+{% if login_status == 'carddet.CardNum' %}
+<script>
+  document.getElementById('error5').style.display = 'inline';
+  document.getElementById("Card").style.display = '';
+</script>
+{% endif %}
+{% if payinfo is not none %}
+{% if 'carddetailID' in payinfo %}
+<script>
+  document.getElementById("status").style.display = 'none';
+  document.getElementById("Card").style.display = '';
+  document.getElementById("card").style.display = 'none';
+</script>
+{% endif %}
+{% if 'upidetailID' in payinfo %}
+<script>
+  document.getElementById("status").style.display = 'none';
+  document.getElementById("UPI").style.display = '';
+  document.getElementById("upi").style.display = 'none';
+</script>
+{% endif %}
+{% if 'carddetailID' in payinfo and 'upidetailID' in payinfo %}
+<script>
+  document.getElementById("addpay").style.display = 'none';
+  document.getElementById("paymentseparator").style.display = 'block';
+</script>
+{% endif %}
+{% endif %}
+<script>
+  var checkc = true, checku = true;
+  window.onload = function () {
+    $('#dropbtn').prop('click', 'null').off('click')
+    $('#drop-btn').removeClass('profile')
+    document.getElementById('fname').value = "{{user[0]['firstname']}}";
+    document.getElementById('lname').value = "{{user[0]['lastname']}}";
+    document.getElementById('mno').value = "{{user[0]['pno']}}";
+    document.getElementById('email').value = "{{user[0]['email']}}";
+    document.getElementById('pwd').value = "{{user[0]['pwd']}}";
+    document.getElementById('jdate').value = "{{user[0]['joinDate']}}";
+    if ("{{payinfo['cardName']}}" === 'None') {
+      document.getElementById('acctname').value = '';
+    }
+    else {
+      document.getElementById('acctname').value = "{{payinfo['cardName']}}";
+    }
+    if ("{{payinfo['bankName']}}" === 'None') {
+      document.getElementById('bname').value = '';
+    }
+    else {
+      document.getElementById('bname').value = "{{payinfo['bankName']}}";
+    }
+    if ("{{payinfo['cardNum']}}" === 'None') {
+      document.getElementById('cardnum').value = '';
+    }
+    else {
+      document.getElementById('cardnum').value = "{{payinfo['cardNum']}}";
+    }
+    if ("{{payinfo['cvv']}}" === 'None') {
+      document.getElementById('cvv').value = '';
+    }
+    else {
+      document.getElementById('cvv').value = "{{payinfo['cvv']}}";
+    }
+    if ("{{payinfo['expDate']}}" === 'None') {
+      document.getElementById('expdate').value = '';
+    }
+    else {
+      document.getElementById('expdate').value = "{{payinfo['expDate']}}";
+    }
+    if ("{{payinfo['upiID']}}" === 'None') {
+      document.getElementById('upiid').value = '';
+    }
+    else {
+      document.getElementById('upiid').value = "{{payinfo['upiID']}}";
+    }
+    if ("{{user[0]['address']}}" === 'None') {
+      document.getElementById('add').value = '';
+    }
+    else {
+      document.getElementById('add').value = "{{user[0]['address']}}";
+    }
+    if ("{{user[0]['state']}}" === 'None') {
+      document.getElementById('state').value = '';
+    }
+    else {
+      document.getElementById('state').value = "{{user[0]['state']}}";
+    }
+    if ("{{user[0]['pinCode']}}" === 'None') {
+      document.getElementById('pcode').value = '';
+    }
+    else {
+      document.getElementById('pcode').value = "{{user[0]['pinCode']}}";
+    }
+    if ("{{user[0]['city']}}" === 'None') {
+      document.getElementById('city').value = '';
+    }
+    else {
+      document.getElementById('city').value = "{{user[0]['city']}}";
+    }
+
+
+    window.onclick = function (e) {
+      // console.log(e.target)
+      if (!e.target.matches('#dropbtn1')) {
+        $('#drop-content1').slideUp();
+      }
+    }
+
+  }
+
+  
+
+  $('#dropbtn1').click(function() {
+    $('#drop-content1').slideToggle();    
+  })
+
+
+  
+
+
+  function Card(id) {
+    document.getElementById("status").style.display = 'none';
+    if (id == 'card') {
+      document.getElementById("Card").style.display = '';
+      for (i = 0; i < 2; i++) {
+        document.getElementById("Card").getElementsByClassName("input2a")[i].required = true;
+        document.getElementById("Card").getElementsByClassName("input2b")[i].required = true;
+      }
+      document.getElementById('cvv').required = true;
+      document.getElementById("card").style.display = 'none';
+      if (document.getElementById("UPI").style.display != 'none') {
+        document.getElementById("addpay").style.display = 'none';
+        document.getElementById("paymentseparator").style.display = 'block';
+      }
+    }
+    else if (id == 'upi') {
+      if (checkc) {
+        for (i = 0; i < 1; i++) {
+          document.getElementById("UPI").getElementsByClassName("input2a")[i].required = true;
+        }
+        document.getElementById("upi").style.display = 'none';
+      }
+      document.getElementById("UPI").style.display = '';
+      if (document.getElementById("Card").style.display != 'none') {
+        document.getElementById("addpay").style.display = 'none';
+        document.getElementById("paymentseparator").style.display = 'block';
+      }
+    }
+  }
+  function Close(id) {
+    if (id == "Card") {
+      t1 = true;
+      for (i = 0; i < 2; i++) {
+        var x = document.getElementById("Card").getElementsByClassName("input2a")[i];
+        var y = document.getElementById("Card").getElementsByClassName("input2b")[i];
+        x.required = false;
+        y.required = false;
+        x.value = '';
+        y.value = '';
+      }
+      document.getElementById('cvv').required = false;
+      document.getElementById('cvv').value = '';
+      document.getElementById("Card").style.display = 'none';
+      document.getElementById("card").style.display = '';
+    }
+    else {
+      t2 = true;
+      document.getElementById("UPI").style.display = 'none';
+      for (i = 0; i < 1; i++) {
+        var y = document.getElementById("UPI").getElementsByClassName("input2a")[i];
+        y.required = false;
+        y.value = '';
+      }
+      document.getElementById("upi").style.display = '';
+    }
+    document.getElementById("addpay").style.display = '';
+    document.getElementById("paymentseparator").style.display = 'none';
+    if (document.getElementById("Card").style.display == 'none' && document.getElementById("UPI").style.display == 'none') {
+      document.getElementById("status").style.display = '';
+    }
+  }
+  function showPass() {
+    var x = document.getElementById('pwd')
+    var eye = document.getElementById('eye')
+    if (x.type === 'password') {
+      x.type = 'text';
+      eye.src = "https://ik.imagekit.io/milyzn5unt/e-commerce-system/showPassSelected_Z472MnFZm.svg"
+    }
+    else {
+      x.type = 'password';
+      eye.src = "https://ik.imagekit.io/milyzn5unt/e-commerce-system/showPassNormal_hI4WkY3i2z.svg"
+    }
+  }
+
+</script>
+
+{% endblock %}

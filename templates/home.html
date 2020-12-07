@@ -7,26 +7,220 @@ Home
 {% endblock %}
 {% block body %} 
     <div class = 'category-filter'>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+        <div>Refine By</div>
+        <form id = 'filter' action="" method="post">
+            By Category:<br>
+            <label for="mobiles"><input type="checkbox" name="mobiles" id="mobiles" value="1">Mobiles</label><br>
+            <label for="televisions"><input type="checkbox" name="televisions" id="televisions" value="2">Televisions</label><br>
+            <label for="laptops"><input type="checkbox" name="laptops" id="laptops" value="3">Laptops</label><br>
+            <label for="earphones"><input type="checkbox" name="earphones" id="earphones" value="4">Earphones</label><br>
+            <label for="cameras"><input type="checkbox" name="cameras" id="cameras" value="5">Cameras</label><br>
+            <label for="fridges"><input type="checkbox" name="fridges" id="fridges" value="6">Fridges</label><br>
+            <label for="washing-machines"><input type="checkbox" name="washing-machines" id="washing-machines" value="7">Washing machines</label><br>
+            <label for="microwaves"><input type="checkbox" name="microwaves" id="microwaves" value="8">Microwaves</label><br>
+            <br>By Price:<br>
+            <label for="value1"><input type="radio" id='value1' name="price" value="1" >Under &#x20B9;1000</label><br>
+            <label for="value2"><input type="radio" id='value2' name="price" value="2">&#x20B9;1000 - &#x20B9;5000</label><br>
+            <label for="value3"><input type="radio" id='value3' name="price" value="3">&#x20B9;5000 - &#x20B9;10000</label><br>
+            <label for="value4"><input type="radio" id='value4' name="price" value="4">&#x20B9;10000 - &#x20B9;20000</label><br>
+            <label for="value5"><input type="radio" id='value5' name="price" value="5">Over &#x20B9;20000</label><br>
+            <input type="submit" value ='Apply Filter'>
+            <button id ='reset'>Reset</button>
+        </form>
     </div>
-    <div class='grid-container'>
-        {% for x in range(0, items): %}
-        <div class='grid-item'>
-            <img src="{{ products[x]['img'] }}" alt="">
-            <div>{{ products[x]['prodName'] }}</div>
-            <div><strong>&#x20B9; {{ products[x]['minPrice'] }}.00</strong></div>
+    <div class="main">
+        {% if products|length == 0: %}
+        <div class="noItemsFound">
+            <h2>Oops, No Items matching your search were found!</h2>
+            <hr>
         </div>
-        {% endfor %}
+        {% endif %}
+        <div class='grid-container'>
+            {% for x in products: %}
+            <div class='grid-item' id="{{ x['prodID'] }}"">
+                <img src="{{ x['img'] }}" alt="">
+                <div>{{ x['prodName'] }}</div>
+                <div class='priceTag'>&#x20B9; {{ x['minPrice'] }}.00</div>
+                <button class= 'addToCart'><i class="fas fa-cart-plus"></i>Add to Cart</button>
+            </div>
+            {% endfor %}
+        </div>
+        
+        {% if filter == False or totalPages: %}
+            <div class="pageswitcher">
+                {% if page != 1 %}
+                <a href="{{url_for('home', page=page-1)}}"><button class='pageNo' id='prevPage'><i class="fas fa-arrow-left"></i></button></a>
+                {% endif %}
+                {% for x in range(1, totalPages + 1) %}
+                    {% if x == 1 or x == totalPages %}
+                        {% if x == page %}
+                            <a href="{{url_for('home', page=x)}}"><button class='pageNo selectedPage'>{{ x }}</button></a>
+                        {% else %}
+                            <a href="{{url_for('home', page=x)}}"><button class='pageNo'>{{ x }}</button></a>
+                        {% endif %}
+                    {% elif page == 1 %}
+                        {% if x == page %}
+                            <a href="{{url_for('home', page=x)}}"><button class='pageNo selectedPage'>{{ x }}</button></a>
+                        {% elif (page+2) <= totalPages and x <= page+2 %}
+                            <a href="{{url_for('home', page=x)}}"><button class='pageNo'>{{ x }}</button></a>
+                        {% else %}
+                            <a href="{{url_for('home', page=x)}}" class='pageDot'>.</a>
+                        {% endif %}
+                    {% elif page == 2 %}
+                        {% if x == page %}
+                            <a href="{{url_for('home', page=x)}}"><button class='pageNo selectedPage'>{{ x }}</button></a>
+                        {% elif (page-1)>= 1 and (page+2) <= totalPages and x <= page+2 %}
+                            <a href="{{url_for('home', page=x)}}"><button class='pageNo'>{{ x }}</button></a>
+                        {% else %}
+                            <a href="{{url_for('home', page=x)}}" class='pageDot'>.</a>
+                        {% endif %}
+                    {% elif (page >= 3 and page <= (totalPages-2)) and (page-2)>= 1 and (page+2)<=totalPages and x >= (page-2) and x <= (page+2): %}
+                        {% if x == page %}
+                            <a href="{{url_for('home', page=x)}}"><button class='pageNo selectedPage'>{{ x }}</button></a>
+                        {% else %}
+                            <a href="{{url_for('home', page=x)}}"><button class='pageNo'>{{ x }}</button></a>
+                        {% endif %}
+                    {% elif page == (totalPages-1) %}
+                        {% if x == page %}
+                            <a href="{{url_for('home', page=x)}}"><button class='pageNo selectedPage'>{{ x }}</button></a>
+                        {% elif (page-2) >= 1 and x >= (page-2) and x <= (page+1) %}
+                            <a href="{{url_for('home', page=x)}}"><button class='pageNo'>{{ x }}</button></a>
+                        {% else %}
+                            <a href="{{url_for('home', page=x)}}" class='pageDot'>.</a>
+                        {% endif %}
+                    {% elif page == totalPages %} 
+                        {% if x == page %}
+                            <a href="{{url_for('home', page=x)}}"><button class='pageNo selectedPage'>{{ x }}</button></a>
+                        {% elif (page-2) >= 1 and x >= (page-2) %}
+                            <a href="{{url_for('home', page=x)}}"><button class='pageNo'>{{ x }}</button></a>
+                        {% else %}
+                            <a href="{{url_for('home', page=x)}}" class='pageDot'>.</a>
+                        {% endif %}
+                    {% else %}
+                        <a href="{{url_for('home', page=x)}}" class='pageDot'>.</a>
+                    {% endif %}
+                {% endfor %}
+                {% if page != totalPages %}
+                <a href="{{url_for('home', page=page+1)}}"><button class='pageNo' id = 'nextPage'><i class="fas fa-arrow-right"></i></button></a>	
+                {% endif %}
+            </div>
+        {% endif %}
     </div>
-<button id = 'viewMore'>View More</button>
 
 {% endblock %}
 
 {% block scripts %} 
 <script>
-    var x = {{ request.path }};
-    y = parsInt(x);
-    alert(y)
+    document.getElementById('reset').addEventListener('click', function(event) {
+        document.getElementById('filter').reset();
+        return false;
+    })
+    $(document).ready(function() {
+        pages = $('.pageswitcher').children('a')
+        dot_count = 0;
+        for (x of pages) {
+            if(x.text == '.') {
+                dot_count++;
+                x.style.display = 'none'
+            }
+        }
+        dots = 0;
+        for (x of pages) {
+            if(x.text == '.' && dots < 5) {
+                x.style.display = ''
+                dots++;
+            }
+        }
+        dots = 0
+        for (x of pages.get().reverse()) {
+            if(x.text == '.' && dots < 5) {
+                x.style.display = ''
+                dots++;
+            }
+        }
+        // console.log(pages.get().reverse())
+
+
+        function QuerySearch(query, category, callback) {
+            $.ajax({
+                url: '/getproducts',
+                data: {
+                    search: query,
+                    category: category
+                },
+                success: callback
+        })}
+        var allproducts = $('.grid-container').contents();
+        // console.log(allproducts)
+        $('#search-icon').click(function() {
+            if ($('#search').val().trim() == '') {
+                if(allproducts.length == 0) {
+                    // console.log('val empty, productslist empty')
+                    var error = '<div class="noItemsFound"><h2>Oops, No Items matching your search were found!</h2><hr></div>'
+                    $('.main').append(error);
+                    $('.grid-container').empty()
+                }
+                else {
+                    // console.log('val empty, productslist not empty')
+                    $('.noItemsFound').remove();
+                    if(! $('.grid-container').contents().length)
+                        $('.grid-container').append(allproducts);
+                    $('.pageswitcher').slideDown();
+                }
+                
+            }
+            else {
+                
+                QuerySearch($('#search').val().trim(), $('#category').val(), function(res) {
+                    // console.log(res)
+                    if(res.length == 0) {
+                        // console.log('val ' + $("#search").val().trim() + ', res empty')
+                        var error = '<div class="noItemsFound"><h2>Oops, No Items matching your search were found!</h2><hr></div>'
+                        if( ! $('.main').has('.noItemsFound').length)
+                            $('.main').append(error)
+                        $(".grid-container").empty()
+                    }
+                    else {
+                        // console.log('val ' + $("#search").val().trim() + ', res not empty')
+                        html = ''   
+                        for (let x=0; x < res.length; x++) {
+                            html += "<div class='grid-item' id='" + res[x]['prodID'] + "'>"
+                            html += '<img src="' + res[x]['img'] + '" alt="">'
+                            html +=  "<div>"+ res[x]['prodName'] + "</div>"
+                            html += "<div class='priceTag'>&#x20B9; " + res[x]['minPrice'] + ".00</div><button class= 'addToCart'>Add to Cart</button></div>"
+                        }
+                        $('.noItemsFound').remove()
+                        $('.grid-container').empty();
+                        $('.grid-container').append(html);
+                        $('.pageswitcher').hide();
+                        
+                        $('.grid-item').mouseenter(function() {
+                            $(this).children('.addToCart').slideDown('fast');
+                        })
+
+                        $('.grid-item').mouseleave(function() {
+                            $(this).children('.addToCart').slideUp('fast');
+                        })
+                    }
+                }) 
+            }
+        })
+
+        $('.grid-item').mouseenter(function() {
+            $(this).children('.addToCart').fadeIn('fast');
+        })
+
+        $('.grid-item').mouseleave(function() {
+            $(this).children('.addToCart').fadeOut('fast');
+        })
+
+        $('#search').keypress(function(e) {
+            if(e.keyCode == 13) {
+                $('#search-icon').click()
+            }
+        })
+
+    })
 </script>
     
     

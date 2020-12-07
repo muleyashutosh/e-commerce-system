@@ -2,7 +2,10 @@
 MySQL Workbench Module
 """
 
+from configparser import Error
+from os import error
 import mysql.connector
+from mysql.connector import Error
 
 class Column:
     def __init__(self, name, datatype=None, constraints=[False, False, False], length=None):
@@ -195,7 +198,7 @@ class Workbench(Column):
         RETURNS: None
         """
         key = ' ' + key + ' '
-        updates = [k + ' = "' + v + '"' for k, v in updates.items()]
+        updates = [k + ' = "' + v + '"' if v != None else k + '=NULL' for k, v in updates.items()]
         updates = ', '.join(updates)
         if where_clause is not None:
             where = [k + ' = "' + v + '"' for k, v in where_clause.items()]
@@ -206,3 +209,22 @@ class Workbench(Column):
         curr = self.conn.cursor()
         curr.execute(query)
         self.conn.commit()
+    
+    def custom_query(self, query):
+        curr = self.conn.cursor(dictionary=True)
+        try:
+            curr.execute(query)
+            self.conn.commit()
+            return "executed succesfully"
+        except Error as e:
+            return e
+
+    def select_from_custom(self, query):
+        curr = self.conn.cursor(dictionary=True)
+        try:
+            curr.execute(query)
+            return curr.fetchall()
+        except Error as e:
+            return e
+
+
