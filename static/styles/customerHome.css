@@ -1,6 +1,9 @@
 #searchfield {
     display:inline-block;
 }
+body {
+    background-color: #edf2f4;
+}
 
 .category-filter {
     position: fixed;
@@ -14,7 +17,9 @@
 
 .category-filter div {
     font-family: 'Poppins', 'sans-serif';
-    color: #2d2d2d;
+    font-size: 20px;
+    color: #3f3f3f;
+    text-decoration: underline;
 }
 
 .category-filter form {
@@ -67,13 +72,13 @@ input[type='submit'] {
 .grid-item {
     /* border: 10px solid #efefef; */
     background-color: white;
-    box-shadow: 0px 0px 7px 1px white;
+    /* box-shadow: 0px 0px 7px 1px white; */
     height: auto;
     align-items: center;
     text-align: center;
     margin:10px;
     height: fit-content;
-    border-radius: 5px;
+    /* border-radius: 5px; */
     transition: all 0.2s;
 }
 
@@ -103,6 +108,27 @@ input[type='submit'] {
     box-shadow: 0px 0px 7px 1px rgba(133,116,133,1);
 }
 
+input[type="search"]::-webkit-search-cancel-button {
+    -webkit-appearance: none;
+    height: 1em;
+    width: 1em;
+    border-radius: 50em;
+    background: url(https://pro.fontawesome.com/releases/v5.10.0/svgs/solid/times.svg) no-repeat 50% 50%;
+    background-size: contain;
+    opacity: 0;
+    pointer-events: none;
+}
+  
+input[type="search"]:focus::-webkit-search-cancel-button {
+    opacity: 0.5;
+    pointer-events: all;
+}
+
+#category {
+    display: inline-block;
+}
+
+
 .pageswitcher {
     width: fit-content;
     position: relative;
@@ -127,8 +153,9 @@ input[type='submit'] {
     color: #e1e6e2;
 }
 
-.pageswitcher a {
-    margin: 2px;
+.pageswitcher a:link {
+    color: #3d3d3d;
+    text-decoration: none;
 }
 
 .pageNo:hover {
@@ -140,10 +167,15 @@ input[type='submit'] {
     border: transparent;
     margin: 10px auto;
     padding: 10px;
-    background-color: #e3ae02;
+    background-color: #FFA400;
     border-radius: 3px;
     color: #2d2d2d;
     display: none;
+}
+
+.addToCart i {
+    font-size: 18px;
+    margin: 2px 5px 2px 0px;
 }
 
 
@@ -157,3 +189,13 @@ input[type='submit'] {
     font-family: 'Open Sans', 'sans-serif';
     text-decoration: #999999;
 }
+
+.selectedPage {
+    background-color: #fdc100;
+}
+
+.pageDot {
+    font-size: small;
+    
+}
+

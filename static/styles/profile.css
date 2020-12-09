@@ -1,6 +1,9 @@
 body{
     background-color: #e1e6e2;
 }
+.cart{
+    display: none;
+}
 #main{
     background-color: #efefef;
     width: 50%;
@@ -202,10 +205,14 @@ h1{
     transform: scale(1.1);
 }
 
-  .errMsg,.errMsg2{
+.errMsg,.errMsg2 {
     color: #d32710;
     float: none;
     font-size: small;   
     font-weight: bold;
     display: none;
+}
+
+#dropbtn:hover div {
+    transform: scale(1);
 }
