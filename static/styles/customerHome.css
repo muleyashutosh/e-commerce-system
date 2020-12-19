@@ -13,6 +13,7 @@ body {
     background-color:  #e1e6e2;
     padding: 10px;
     margin-right: 10px;
+    box-shadow: inset -3px 0px 5px -1px rgba(136,136,136,1);
 }
 
 .category-filter div {
@@ -28,7 +29,7 @@ body {
 
 .category-filter label {
     margin: 10px;
-    font-size: 15px;
+    font-size: 13.5px;
 }
 
 input[type='checkbox'] {
@@ -79,7 +80,10 @@ input[type='submit'] {
     margin:10px;
     height: fit-content;
     /* border-radius: 5px; */
+    position: relative;
     transition: all 0.2s;
+    box-shadow: 1px 1px 4px -1px rgba(153,153,153,1);
+
 }
 
 .grid-item img {
@@ -100,12 +104,15 @@ input[type='submit'] {
     font-size: 17px !important;
     font-weight: bold;
     height: 28px !important;
+    margin: 0px 10px 10px !important;
 }
 
 .grid-item:hover {
     transform: scale(1.01);
     cursor: pointer;
-    box-shadow: 0px 0px 7px 1px rgba(133,116,133,1);
+    /* box-shadow: 0px 0px 7px 1px rgba(133,116,133,1); */
+    box-shadow: 2px 2px 5px 0px rgba(63,63,63,1);
+
 }
 
 input[type="search"]::-webkit-search-cancel-button {
@@ -170,7 +177,10 @@ input[type="search"]:focus::-webkit-search-cancel-button {
     background-color: #FFA400;
     border-radius: 3px;
     color: #2d2d2d;
+    position: absolute;
+    opacity: 1 !important;
     display: none;
+    /* transition: all 0.05s ease; */
 }
 
 .addToCart i {

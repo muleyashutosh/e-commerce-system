@@ -195,11 +195,19 @@ Home
                         $('.pageswitcher').hide();
                         
                         $('.grid-item').mouseenter(function() {
-                            $(this).children('.addToCart').slideDown('fast');
+                            $(this).children('div').css('opacity', '0.5');
+                            $(this).children('img').css('opacity', '0.5');
+                            $(this).css('z-index', '0')
+                            $(this).children('.addToCart').fadeIn(100).css('display', 'block');
+                            $(this).children('.addToCart').css('top', '50%');
+                            $(this).children('.addToCart').css('left', '50%');
+                            $(this).children('.addToCart').css('transform', 'translate(-50%,-68%)');
+                            
                         })
-
                         $('.grid-item').mouseleave(function() {
-                            $(this).children('.addToCart').slideUp('fast');
+                            $(this).children('.addToCart').fadeOut(100).css('display', 'block');
+                            $(this).children('div').css('opacity', '1');
+                            $(this).children('img').css('opacity', '1');
                         })
                     }
                 }) 
@@ -207,11 +215,19 @@ Home
         })
 
         $('.grid-item').mouseenter(function() {
-            $(this).children('.addToCart').fadeIn('fast');
+            $(this).children('div').css('opacity', '0.5');
+            $(this).children('img').css('opacity', '0.5');
+            $(this).css('z-index', '0')
+            $(this).children('.addToCart').fadeIn(100).css('display', 'block');
+            $(this).children('.addToCart').css('top', '50%');
+            $(this).children('.addToCart').css('left', '50%');
+            $(this).children('.addToCart').css('transform', 'translate(-50%,-68%)');
+            
         })
-
         $('.grid-item').mouseleave(function() {
-            $(this).children('.addToCart').fadeOut('fast');
+            $(this).children('.addToCart').fadeOut(100).css('display', 'block');
+            $(this).children('div').css('opacity', '1');
+            $(this).children('img').css('opacity', '1');
         })
 
         $('#search').keypress(function(e) {
