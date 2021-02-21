@@ -4,6 +4,7 @@ Home
 {% endblock %}
 {% block head %} 
 <link rel="stylesheet" href="{{ url_for('static', filename='styles/customerHome.css')}}">
+<link rel="stylesheet" href="{{ url_for('static', filename='styles/waves.min.css') }}">
 {% endblock %}
 {% block body %} 
     <div class = 'category-filter'>
@@ -24,7 +25,7 @@ Home
             <label for="value3"><input type="radio" id='value3' name="price" value="3">&#x20B9;5000 - &#x20B9;10000</label><br>
             <label for="value4"><input type="radio" id='value4' name="price" value="4">&#x20B9;10000 - &#x20B9;20000</label><br>
             <label for="value5"><input type="radio" id='value5' name="price" value="5">Over &#x20B9;20000</label><br>
-            <input type="submit" value ='Apply Filter'>
+            <button type="submit" id='apply' >Apply</button>
             <button id ='reset'>Reset</button>
         </form>
     </div>
@@ -110,7 +111,14 @@ Home
 {% endblock %}
 
 {% block scripts %} 
+<script src="{{ url_for('static', filename='styles/waves.min.js') }}"></script>
 <script>
+    Waves.attach('#reset')
+    Waves.attach('#apply')
+    Waves.attach('#menu')
+    Waves.attach('#category')
+    Waves.init();
+
     document.getElementById('reset').addEventListener('click', function(event) {
         document.getElementById('filter').reset();
         return false;
@@ -187,7 +195,7 @@ Home
                             html += "<div class='grid-item' id='" + res[x]['prodID'] + "'>"
                             html += '<img src="' + res[x]['img'] + '" alt="">'
                             html +=  "<div>"+ res[x]['prodName'] + "</div>"
-                            html += "<div class='priceTag'>&#x20B9; " + res[x]['minPrice'] + ".00</div><button class= 'addToCart'>Add to Cart</button></div>"
+                            html += "<div class='priceTag'>&#x20B9; " + res[x]['minPrice'] + ".00</div><button class= 'addToCart'><i class='fas fa-cart-plus'></i>Add to Cart</button></div>"
                         }
                         $('.noItemsFound').remove()
                         $('.grid-container').empty();
@@ -195,17 +203,17 @@ Home
                         $('.pageswitcher').hide();
                         
                         $('.grid-item').mouseenter(function() {
-                            $(this).children('div').css('opacity', '0.5');
-                            $(this).children('img').css('opacity', '0.5');
+                            $(this).children('div').css('opacity', '0.55');
+                            $(this).children('img').css('opacity', '0.55');
                             $(this).css('z-index', '0')
-                            $(this).children('.addToCart').fadeIn(100).css('display', 'block');
+                            $(this).children('.addToCart').fadeIn(50).css('display', 'block');
                             $(this).children('.addToCart').css('top', '50%');
                             $(this).children('.addToCart').css('left', '50%');
                             $(this).children('.addToCart').css('transform', 'translate(-50%,-68%)');
                             
                         })
                         $('.grid-item').mouseleave(function() {
-                            $(this).children('.addToCart').fadeOut(100).css('display', 'block');
+                            $(this).children('.addToCart').fadeOut(50).css('display', 'block');
                             $(this).children('div').css('opacity', '1');
                             $(this).children('img').css('opacity', '1');
                         })
@@ -215,17 +223,17 @@ Home
         })
 
         $('.grid-item').mouseenter(function() {
-            $(this).children('div').css('opacity', '0.5');
-            $(this).children('img').css('opacity', '0.5');
+            $(this).children('div').css('opacity', '0.55');
+            $(this).children('img').css('opacity', '0.55');
             $(this).css('z-index', '0')
-            $(this).children('.addToCart').fadeIn(100).css('display', 'block');
+            $(this).children('.addToCart').fadeIn(50).css('display', 'block');
             $(this).children('.addToCart').css('top', '50%');
             $(this).children('.addToCart').css('left', '50%');
             $(this).children('.addToCart').css('transform', 'translate(-50%,-68%)');
             
         })
         $('.grid-item').mouseleave(function() {
-            $(this).children('.addToCart').fadeOut(100).css('display', 'block');
+            $(this).children('.addToCart').fadeOut(50).css('display', 'block');
             $(this).children('div').css('opacity', '1');
             $(this).children('img').css('opacity', '1');
         })
@@ -234,6 +242,26 @@ Home
             if(e.keyCode == 13) {
                 $('#search-icon').click()
             }
+        })
+
+
+        $('#menu').click(function() {
+            if($('.category-filter').css('display') === 'none') {
+                $('.grid-container').css('grid-template-columns', '25% 25% 25% 25%')
+                $('.main').css('left', '15%')
+                $('.main').css('width', '83%')
+
+            }
+            else {
+                $('.grid-container').css('grid-template-columns', '20% 20% 20% 20% 20%')
+                $('.main').css('left', '2%')
+                $('.main').css('width', '95%')
+                
+            }
+            $('.category-filter').animate({
+                width: 'toggle'
+            })
+                
         })
 
     })

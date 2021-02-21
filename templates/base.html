@@ -13,7 +13,8 @@
         <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
         {% block head %} {% endblock %}
     <body>
-        <div id='header' class = 'headerClass'>   
+        <div id='header' class = 'headerClass'> 
+            <button id='menu' class="fas fa-bars" ></button>  
             <h2><a href="{{ url_for('home') if 'C' in session['userID'] else url_for('sellerHome') }}"></a>
             </h2>
             <div id = 'searchfield'>
@@ -70,15 +71,18 @@
         $('#search').focusin(function() {
             $('#category').css("border", '2.5px solid #fdc100')
             $('#category').css("border-right", 'none')
+            $('#search').css('border-top', '2.5px solid #fdc100')
+            $('#search').css('border-bottom', '2.5px solid #fdc100')
         })
         $('#search').focusout(function() {
             $('#category').css("border", 'none')
+            $('#search').css('border', 'none')
         })
         $('#category').focusin(function() {
-            $('#search').css('border', '2px solid #fdc100')
+            $('#search').css('border', '2.5px solid #fdc100')
             $('#search').css('border-left', 'none')
             $('#search').css('border-right', 'none')
-            $('#category').css("border", '2px solid #fdc100')
+            $('#category').css("border", '2.5px solid #fdc100')
             $('#category').css("border-right", 'none')
         })
 

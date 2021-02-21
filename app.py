@@ -1,5 +1,3 @@
-from configparser import Error
-
 from flask import Flask, render_template, request, session, url_for, jsonify
 # from livereload import Server
 from mysql.connector import Error

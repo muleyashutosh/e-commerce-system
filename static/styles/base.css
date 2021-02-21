@@ -19,6 +19,24 @@
     
 }
 
+#menu {
+    float: left;
+    height: 40px;
+    width: 35px;
+    background-color: #3f3f3f;
+    border-radius: 3px;
+    color: #fdc100;
+    box-shadow: 1px 1px 3px 0px #1d1d1d;
+    font-size: 18px;
+    display: block;
+    margin: 13px 0px 13px 10px;
+    border: transparent;
+}
+
+#menu:focus {
+    outline: none;
+}
+
 .headerClass h2 {
     width: 15%;
     height: 67px;
@@ -27,7 +45,7 @@
     user-select: none;
     float: left;
     background-image: url(logo.png);
-    background-size: contain;
+    background-size: cover;
     /* background-position: 25%; */
     background-repeat: no-repeat;
 }
@@ -59,7 +77,7 @@
     border-top-right-radius: 5px;
     border-bottom-right-radius: 5px;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: all 0.1s ease;
 }
 
 #search {
@@ -73,7 +91,7 @@
     width: 80%;
     border:transparent;
     color: #2d2d2d;
-    transition: all 0.3s ease;
+    transition: all 0.1s ease;
 }
 
 
@@ -95,7 +113,7 @@
     cursor: pointer;
     border: transparent;
     padding:3px 0px 5px 8px;
-    transition: all 0.3s ease;
+    transition: all 0.1s ease;
 }
 
 
@@ -163,7 +181,7 @@
 
 .dropdown-content a {
     float: none;
-    color: #eceff2;
+    color: #eceff2 !important;
     padding: 12px 16px;
     text-decoration: none;
     display: block;
@@ -185,7 +203,7 @@ hr {
 
 .dropdown-content > a:hover {
     background-color: #eceff2;
-    color: #2d2d2d;
+    color: #2d2d2d !important;
     border-bottom-left-radius: 5px;
     border-bottom-right-radius: 5px;
 }
