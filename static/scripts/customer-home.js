@@ -1,14 +1,58 @@
-Waves.attach('#reset')
-Waves.attach('#apply')
-Waves.attach('#menu')
-Waves.attach('#category')
-Waves.init();
+// const {MDCRipple} = mdc.ripple;
+const { MDCCheckbox } = mdc.checkbox;
+const { MDCFormField } = mdc.formField;
+const { MDCRadio } = mdc.radio;
+
+
+const filterRipples = [].map.call(document.querySelectorAll('.filter-button'), (el) => {
+    new MDCRipple(el);
+})
+
 
 document.getElementById('reset').addEventListener('click', function (event) {
     document.getElementById('filter').reset();
     return false;
 })
+
 $(document).ready(function () {
+
+    const checkboxes = [].map.call(document.querySelectorAll('.mdc-checkbox'), (el) => {
+        return new MDCCheckbox(el);
+    })
+
+    const formFieldsCheckboxes = [].map.call(document.querySelectorAll('.mdc-form-field-checkboxes'), (el) => {
+        return new MDCFormField(el);
+    })
+
+    formFieldsCheckboxes.map((el, index) => {
+        el.input = checkboxes[index];
+    })
+
+    const radios = [].map.call(document.querySelectorAll('.mdc-radio'), (el) => {
+        return new MDCRadio(el);
+    })
+    
+    const formFieldsRadios = [].map.call(document.querySelectorAll('.mdc-form-field-radios'), (el) => {
+        return new MDCFormField(el);
+    })
+    
+    formFieldsRadios.map((el, index) => {
+        el.input = radios[index];
+    })
+
+
+    const filterRipples = [].map.call(document.querySelectorAll('.filter-button'), (el) => {
+        new MDCRipple(el);
+    })
+
+    const initialize_button_Ripples = () => {
+        const ripples = [].map.call(document.querySelectorAll('.addToCart'), (el) => {
+            new MDCRipple(el);
+        })
+    }
+    initialize_button_Ripples();
+
+
     pages = $('.pageswitcher').children('a')
     dot_count = 0;
     for (x of pages) {
@@ -81,48 +125,30 @@ $(document).ready(function () {
                         html += "<div class='grid-item' id='" + res[x]['prodID'] + "'>"
                         html += '<img src="' + res[x]['img'] + '" alt="">'
                         html += "<div>" + res[x]['prodName'] + "</div>"
-                        html += "<div class='priceTag'>&#x20B9; " + res[x]['minPrice'] + ".00</div><button class= 'addToCart'><i class='fas fa-cart-plus'></i>Add to Cart</button></div>"
+                        html += `<div class='priceTag'>&#x20B9; ` + res[x]['minPrice'] + `.00</div>
+                                    <span class="addCartButtonContainer">
+                                        <button class="addToCart mdc-button mdc-button--raised">
+                                            <span class="mdc-button__ripple"></span>
+                                            <i class="material-icons mdc-button__icon" aria-hidden="true">
+                                                add_shopping_cart
+                                            </i>
+                                            <span class="mdc-button__label">Add to Cart</span>
+                                        </button>
+                                    </span>
+                                </div>`
                     }
                     $('.noItemsFound').remove()
                     $('.grid-container').empty();
                     $('.grid-container').append(html);
                     $('.pageswitcher').hide();
 
-                    $('.grid-item').mouseenter(function () {
-                        $(this).children('div').css('opacity', '0.55');
-                        $(this).children('img').css('opacity', '0.55');
-                        $(this).css('z-index', '0')
-                        $(this).children('.addToCart').fadeIn(50).css('display', 'block');
-                        $(this).children('.addToCart').css('top', '50%');
-                        $(this).children('.addToCart').css('left', '50%');
-                        $(this).children('.addToCart').css('transform', 'translate(-50%,-68%)');
+                    initialize_button_Ripples();
 
-                    })
-                    $('.grid-item').mouseleave(function () {
-                        $(this).children('.addToCart').fadeOut(50).css('display', 'block');
-                        $(this).children('div').css('opacity', '1');
-                        $(this).children('img').css('opacity', '1');
-                    })
                 }
             })
         }
     })
 
-    $('.grid-item').mouseenter(function () {
-        $(this).children('div').css('opacity', '0.55');
-        $(this).children('img').css('opacity', '0.55');
-        $(this).css('z-index', '0')
-        $(this).children('.addToCart').fadeIn(50).css('display', 'block');
-        $(this).children('.addToCart').css('top', '50%');
-        $(this).children('.addToCart').css('left', '50%');
-        $(this).children('.addToCart').css('transform', 'translate(-50%,-68%)');
-
-    })
-    $('.grid-item').mouseleave(function () {
-        $(this).children('.addToCart').fadeOut(50).css('display', 'block');
-        $(this).children('div').css('opacity', '1');
-        $(this).children('img').css('opacity', '1');
-    })
 
     $('#search').keypress(function (e) {
         if (e.keyCode == 13) {
@@ -133,16 +159,12 @@ $(document).ready(function () {
 
     $('#menu').click(function () {
         if ($('.category-filter').css('display') === 'none') {
-            $('.grid-container').css('grid-template-columns', '25% 25% 25% 25%')
             $('.main').css('left', '15%')
             $('.main').css('width', '83%')
-
         }
         else {
-            $('.grid-container').css('grid-template-columns', '20% 20% 20% 20% 20%')
             $('.main').css('left', '2%')
             $('.main').css('width', '95%')
-
         }
         $('.category-filter').animate({
             width: 'toggle'
