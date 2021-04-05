@@ -83,8 +83,6 @@ button:focus {
     outline: none;
 }
 
-
-
 #search {
     float: left;
     background-color: #efefef;
@@ -146,6 +144,11 @@ button:focus {
     font-size: 24px;
     user-select: none;
     -webkit-user-drag: none;
+}
+
+.navButtons {
+    display: flex;
+    margin-left: auto;
 }
 
 .logout {
