@@ -23,8 +23,8 @@
 
 <body>
     <div id='header' class='headerClass'>
-        <button id='menu' class="material-icons material-icons-round">
-            filter_alt
+        <button id='menu' class="material-icons mdc-icon-button material-icons-round">
+            menu
         </button>
         <h2><a href="{{ url_for('home') if 'C' in session['userID'] else url_for('sellerHome') }}"></a>
         </h2>
@@ -44,7 +44,9 @@
                 <option value="8">Microwaves</option>
             </select>
             <input type="search" name="search" id="search" placeholder="Search for a Product">
-            <div id='search-icon' class='material-icons'>search</div>
+            <button id='search-icon' class='material-icons'>
+                search
+            </button>
         </div>
         <a id='cart' title='Cart' href="{{ url_for('cart')}}">
             <div class="mdc-icon-button navButton material-icons icon-button material-icons-round cart">
@@ -71,9 +73,8 @@
             </div>
         </a>
     </div>
-    <div id='content'>
-        {% block body %} {% endblock %}
-    </div>
+    {% block body %} {% endblock %}
+    
 
 </body>
 

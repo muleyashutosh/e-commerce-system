@@ -21,20 +21,23 @@
 
 body {
     background-color: #e1e1e1;
+    margin: 0;
+}
+
+.mdc-drawer-app-content {
+    flex: auto;
+    position: relative;
+}
+
+
+.mdc-form-field {
+    margin-left: 18px;
 }
 
 .category-filter {
     position: fixed;
-    top:67px;
-    width: 15%;
-    height: 100%;
-    background-color:  #e1e6e2;
-    padding: 10px 10px 75px 10px;
-    margin-right: 10px;
-    box-shadow: inset -3px 0px 5px -1px rgba(136,136,136,1);
-    z-index: 0;
-    display: none;
-    overflow-x: hidden;
+    background-color:  #e1e6e2; 
+    padding: 0px 0px 75px 0px;
 }
 
 .category-filter .subHead {
@@ -68,17 +71,12 @@ input[type='checkbox'] {
     outline: none;
 }
 
-.main {
-    position: relative;
-    left:2%;
-    width: 95%;
-    transition: all 0.4s ease ;
-}
+
 
 .grid-container {
     display: grid;
     position: relative;
-    grid-template-columns: repeat(auto-fill, minmax(260px,1fr));
+    grid-template-columns: repeat(auto-fill, minmax(250px,1fr));
     gap: 15px;
     margin: 8px;
 }
@@ -106,6 +104,7 @@ input[type='checkbox'] {
     user-select: none;
     -webkit-user-drag: none;
     /* z-index: 0; */
+    padding: 10px 0;
 }
 .grid-item div {
     overflow: hidden;

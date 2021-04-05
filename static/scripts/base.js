@@ -2,6 +2,11 @@ const {MDCRipple} = mdc.ripple;
 const ripples = new MDCRipple(document.querySelector('.navButton'))
 ripples.unbounded = true;
 
+const ripple = new MDCRipple(document.querySelector('.mdc-icon-button'))
+ripple.unbounded = true;
+
+new MDCRipple(document.querySelector('#search-icon'))
+
 $(document).ready(() => {
     
     $('#dropbtn').click(function() {

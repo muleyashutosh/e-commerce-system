@@ -2,17 +2,22 @@
 const { MDCCheckbox } = mdc.checkbox;
 const { MDCFormField } = mdc.formField;
 const { MDCRadio } = mdc.radio;
+const { MDCList } = mdc.list;
+const { MDCDrawer } = mdc.drawer;
 
+const list = new MDCList(document.querySelector('.mdc-list'));
+// list.wrapFocus = true;
+const drawer = new MDCDrawer(document.querySelector('.mdc-drawer'));
+const button = document.querySelector('#menu');
+button.addEventListener('click', () => {
+    drawer.open = !drawer.open;
+})
 
 const filterRipples = [].map.call(document.querySelectorAll('.filter-button'), (el) => {
     new MDCRipple(el);
 })
 
 
-document.getElementById('reset').addEventListener('click', function (event) {
-    document.getElementById('filter').reset();
-    return false;
-})
 
 $(document).ready(function () {
 
@@ -28,18 +33,22 @@ $(document).ready(function () {
         el.input = checkboxes[index];
     })
 
-    const radios = [].map.call(document.querySelectorAll('.mdc-radio'), (el) => {
-        return new MDCRadio(el);
-    })
-    
-    const formFieldsRadios = [].map.call(document.querySelectorAll('.mdc-form-field-radios'), (el) => {
-        return new MDCFormField(el);
-    })
-    
-    formFieldsRadios.map((el, index) => {
-        el.input = radios[index];
-    })
+    // const radios = [].map.call(document.querySelectorAll('.mdc-radio'), (el) => {
+    //     return new MDCRadio(el);
+    // })
 
+    // const formFieldsRadios = [].map.call(document.querySelectorAll('.mdc-form-field-radios'), (el) => {
+    //     return new MDCFormField(el);
+    // })
+
+    // formFieldsRadios.map((el, index) => {
+    //     el.input = radios[index];
+    // })
+
+    document.getElementById('reset').addEventListener('click', function (event) {
+        document.getElementById('filter').reset();
+        return false;
+    })
 
     const filterRipples = [].map.call(document.querySelectorAll('.filter-button'), (el) => {
         new MDCRipple(el);
@@ -122,7 +131,7 @@ $(document).ready(function () {
                     // console.log('val ' + $("#search").val().trim() + ', res not empty')
                     html = ''
                     for (let x = 0; x < res.length; x++) {
-                        html += "<div class='grid-item' id='" + res[x]['prodID'] + "'>"
+                        html += "<div class='grid-item mdc-elevation--z2' id='" + res[x]['prodID'] + "'>"
                         html += '<img src="' + res[x]['img'] + '" alt="">'
                         html += "<div>" + res[x]['prodName'] + "</div>"
                         html += `<div class='priceTag'>&#x20B9; ` + res[x]['minPrice'] + `.00</div>
@@ -157,19 +166,19 @@ $(document).ready(function () {
     })
 
 
-    $('#menu').click(function () {
-        if ($('.category-filter').css('display') === 'none') {
-            $('.main').css('left', '15%')
-            $('.main').css('width', '83%')
-        }
-        else {
-            $('.main').css('left', '2%')
-            $('.main').css('width', '95%')
-        }
-        $('.category-filter').animate({
-            width: 'toggle'
-        })
+    // $('#menu').click(function () {
+    //     if ($('.category-filter').css('display') === 'none') {
+    //         $('.main').css('left', '15%')
+    //         $('.main').css('width', '83%')
+    //     }
+    //     else {
+    //         $('.main').css('left', '2%')
+    //         $('.main').css('width', '95%')
+    //     }
+    //     $('.category-filter').animate({
+    //         width: 'toggle'
+    //     })
 
-    })
+    // })
 
 })
