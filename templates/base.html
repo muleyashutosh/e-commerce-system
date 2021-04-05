@@ -68,30 +68,32 @@
                 search
             </button>
         </div>
-        <a id='cart' aria-describedby="cart-tooltip" href="{{ url_for('cart')}}">
-            <div class="mdc-icon-button navButton material-icons icon-button material-icons-round cart">
-                shopping_cart
-            </div>
-        </a>
-        <div class='dropDown'>
-            <a id='dropbtn' aria-describedby="profile-tooltip">
-                <div id='drop-btn' class="mdc-icon-button navButton material-icons material-icons-round profile">
-                    account_circle
+        <div class="navButtons">
+            <a id='cart' aria-describedby="cart-tooltip" href="{{ url_for('cart')}}">
+                <div class="mdc-icon-button navButton material-icons icon-button material-icons-round cart">
+                    shopping_cart
                 </div>
             </a>
-            <div class='dropdown-content' id='drop-content'>
-                <a href="{{ url_for('profile') if 'C' in session['userID'] else url_for('sellerProfile') }}">Hello, {{
-                    firstname }}
-                    <hr> <span>Edit Profile</span>
+            <div class='dropDown'>
+                <a id='dropbtn' aria-describedby="profile-tooltip">
+                    <div id='drop-btn' class="mdc-icon-button navButton material-icons material-icons-round profile">
+                        account_circle
+                    </div>
                 </a>
-                <a href="#">My Orders</a>
+                <div class='dropdown-content' id='drop-content'>
+                    <a href="{{ url_for('profile') if 'C' in session['userID'] else url_for('sellerProfile') }}">Hello, {{
+                        firstname }}
+                        <hr> <span>Edit Profile</span>
+                    </a>
+                    <a href="#">My Orders</a>
+                </div>
             </div>
+            <a aria-describedby="logout-tooltip" href="{{ url_for('logout')}}">
+                <div class="mdc-icon-button navButton material-icons material-icons-round logout">
+                    logout
+                </div>
+            </a>
         </div>
-        <a aria-describedby="logout-tooltip" href="{{ url_for('logout')}}">
-            <div class="mdc-icon-button navButton material-icons material-icons-round logout">
-                logout
-            </div>
-        </a>
     </div>
     {% block body %} {% endblock %}
     

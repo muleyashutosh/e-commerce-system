@@ -5,13 +5,15 @@ const tooltip = [].map.call(document.querySelectorAll('.mdc-tooltip'), el => {
     return new MDCTooltip(el);
 });
 
-const ripples = new MDCRipple(document.querySelector('.navButton'))
-ripples.unbounded = true;
 
-const ripple = new MDCRipple(document.querySelector('.mdc-icon-button'))
-ripple.unbounded = true;
+const iconRipples = [].map.call(document.querySelectorAll('.mdc-icon-button'), el => {
+    return new MDCRipple(el);
+})
 
-new MDCRipple(document.querySelector('#search-icon'))
+iconRipples.map(el => {
+    el.unbounded = true;
+})
+
 
 $(document).ready(() => {
     
