@@ -1,4 +1,10 @@
 const {MDCRipple} = mdc.ripple;
+const {MDCTooltip} = mdc.tooltip;
+
+const tooltip = [].map.call(document.querySelectorAll('.mdc-tooltip'), el => {
+    return new MDCTooltip(el);
+});
+
 const ripples = new MDCRipple(document.querySelector('.navButton'))
 ripples.unbounded = true;
 

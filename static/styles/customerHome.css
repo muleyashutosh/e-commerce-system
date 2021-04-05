@@ -29,7 +29,11 @@ body {
 }
 
 .mdc-form-field {
-    margin-left: 18px;
+    margin-left: 10px;
+}
+
+.mdc-list-group__subheader {
+    padding: 0 10px;
 }
 
 .category-filter {
@@ -51,17 +55,19 @@ body {
 
 .filter-button-container {
     display: flex;
-    justify-content: space-evenly;
+    justify-content: flex-end;
     align-items: center;
+    margin: 5px;
+}
+
+.filter-button {
+    margin: 5px;
 }
 
 input[type="checkbox"] {
     margin-left: 0;
 }
 
-.category-filter form button {
-    margin-top: 15px;
-}
 
 .category-filter form button:focus {
     outline: none;

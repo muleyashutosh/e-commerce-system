@@ -65,21 +65,21 @@ $(document).ready(function () {
     pages = $('.pageswitcher').children('a')
     dot_count = 0;
     for (x of pages) {
-        if (x.text == '.') {
+        if (x.text == '·') {
             dot_count++;
             x.style.display = 'none'
         }
     }
     dots = 0;
     for (x of pages) {
-        if (x.text == '.' && dots < 5) {
+        if (x.text == '·' && dots < 5) {
             x.style.display = ''
             dots++;
         }
     }
     dots = 0
     for (x of pages.get().reverse()) {
-        if (x.text == '.' && dots < 5) {
+        if (x.text == '·' && dots < 5) {
             x.style.display = ''
             dots++;
         }
@@ -104,8 +104,8 @@ $(document).ready(function () {
             if (allproducts.length == 0) {
                 // console.log('val empty, productslist empty')
                 var error = '<div class="noItemsFound"><h2>Oops, No Items matching your search were found!</h2><hr></div>'
-                $('.main').append(error);
                 $('.grid-container').empty()
+                $('.main-content').append(error);
             }
             else {
                 // console.log('val empty, productslist not empty')
@@ -123,8 +123,8 @@ $(document).ready(function () {
                 if (res.length == 0) {
                     // console.log('val ' + $("#search").val().trim() + ', res empty')
                     var error = '<div class="noItemsFound"><h2>Oops, No Items matching your search were found!</h2><hr></div>'
-                    if (!$('.main').has('.noItemsFound').length)
-                        $('.main').append(error)
+                    if (!$('.main-content').has('.noItemsFound').length)
+                        $('.main-content').append(error)
                     $(".grid-container").empty()
                 }
                 else {
@@ -165,20 +165,5 @@ $(document).ready(function () {
         }
     })
 
-
-    // $('#menu').click(function () {
-    //     if ($('.category-filter').css('display') === 'none') {
-    //         $('.main').css('left', '15%')
-    //         $('.main').css('width', '83%')
-    //     }
-    //     else {
-    //         $('.main').css('left', '2%')
-    //         $('.main').css('width', '95%')
-    //     }
-    //     $('.category-filter').animate({
-    //         width: 'toggle'
-    //     })
-
-    // })
 
 })

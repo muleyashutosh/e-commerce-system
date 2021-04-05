@@ -22,8 +22,28 @@
     {% block head %} {% endblock %}
 
 <body>
+    <div id="cart-tooltip" class="mdc-tooltip" role="tooltip" aria-hidden="true">
+        <div class="mdc-tooltip__surface">
+          Cart
+        </div>
+    </div>
+    <div id="profile-tooltip" class="mdc-tooltip" role="tooltip" aria-hidden="true">
+        <div class="mdc-tooltip__surface">
+          Profile
+        </div>
+    </div>
+    <div id="logout-tooltip" class="mdc-tooltip" role="tooltip" aria-hidden="true">
+        <div class="mdc-tooltip__surface">
+          Logout
+        </div>
+    </div>
+    <div id="drawer-tooltip" class="mdc-tooltip" role="tooltip" aria-hidden="true">
+        <div class="mdc-tooltip__surface">
+          Filter
+        </div>
+    </div>
     <div id='header' class='headerClass'>
-        <button id='menu' class="material-icons mdc-icon-button material-icons-round">
+        <button id='menu' aria-describedby='drawer-tooltip' class="material-icons mdc-icon-button material-icons-round">
             menu
         </button>
         <h2><a href="{{ url_for('home') if 'C' in session['userID'] else url_for('sellerHome') }}"></a>
@@ -48,13 +68,13 @@
                 search
             </button>
         </div>
-        <a id='cart' title='Cart' href="{{ url_for('cart')}}">
+        <a id='cart' aria-describedby="cart-tooltip" href="{{ url_for('cart')}}">
             <div class="mdc-icon-button navButton material-icons icon-button material-icons-round cart">
                 shopping_cart
             </div>
         </a>
         <div class='dropDown'>
-            <a id='dropbtn' title='Profile'>
+            <a id='dropbtn' aria-describedby="profile-tooltip">
                 <div id='drop-btn' class="mdc-icon-button navButton material-icons material-icons-round profile">
                     account_circle
                 </div>
@@ -67,7 +87,7 @@
                 <a href="#">My Orders</a>
             </div>
         </div>
-        <a title='Logout' href="{{ url_for('logout')}}">
+        <a aria-describedby="logout-tooltip" href="{{ url_for('logout')}}">
             <div class="mdc-icon-button navButton material-icons material-icons-round logout">
                 logout
             </div>
