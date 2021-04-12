@@ -2,6 +2,18 @@
   box-sizing: border-box;
 }
 
+:root {
+    --mdc-theme-primary: #2d2d2d;
+    --mdc-theme-secondary: #fdc100;
+    --dark-yellow: #ffa400;
+    --mdc-shape-small-component-radius: 4px;
+    --mdc-shape-medium-component-radius: 4px;
+    --mdc-shape-large-component-radius: 6px;
+    --mdc-typography-font-family: unquote("Roboto, sans-serif");
+    --mdc-theme-on-primary: #ffffff;
+    --mdc-theme-on-secondary: #000000;
+}
+
 .headerClass {
     /* background-color: #3c5c83; */
     background-color: #2d2d2d;
@@ -123,14 +135,13 @@ body {
 }
 
 .radioDiv {
-    width: 90%;
+    width: 100%;
     display: flex;
-    margin: 0px 10 0px 10%;
+    justify-content: space-evenly;
     font-size: 15px;
-    padding: 0px 10px;
 }
 
-.radioDiv label {
+/* .radioDiv label {
     width: 50%;
     display: flex;
     padding: 10px 0px;
@@ -141,7 +152,7 @@ body {
     width: auto;
     height: auto;
     /* margin: 5px; */
-}
+} */
 
 #orgName {
     display: none;
