@@ -89,6 +89,7 @@ $(document).ready(function () {
 
     function QuerySearch(query, category, callback) {
         $.ajax({
+            method: 'post',
             url: '/api/getproducts',
             data: {
                 search: query,

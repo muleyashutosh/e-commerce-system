@@ -98,7 +98,8 @@ def index():
 @myapp.route('/api/login', methods = ['POST'])
 def login():
     data = request.json;
-    email, password, user, login = data.values()
+    # print(request.body)
+    email, password, user = data.values()
     tableName = 'customers' if user == 'customer' else 'suppliers'
     idName = 'custID' if user == 'customer' else 'supplierID'
     try:
@@ -106,10 +107,10 @@ def login():
         # print(userID)
     except :
         print('error while trying to get userData')
-        return jsonify('Error trying to find the user data')
+        return jsonify({'status': 'Error trying to find the user data'})
 
     if not userData:
-        return jsonify('User Not Found')
+        return jsonify({'status':'User Not Found'})
     else:
         userID = userData[0][idName]
         try:
@@ -117,7 +118,7 @@ def login():
         except:
             # print(userID)
             print('error while trying to get the password hash')
-            return jsonify('Error trying to find the user data')
+            return jsonify({"status": 'Error trying to find the user data'})    
 
         hashedPassword = hashedPassword[0]['hash']
         if bcrypt.checkpw(password.encode(), hashedPassword.encode()):
@@ -125,9 +126,9 @@ def login():
                 session['email'] = email
                 session['firstname'] = userData[0]["firstname"]
                 session['userID'] = userID
-            return jsonify('verified')
+            return jsonify({"status": 'verified'})
         else:
-            return jsonify("Invalid Credentials")
+            return jsonify({'status': "Invalid Credentials"})
 
 
 # register route
@@ -512,11 +513,11 @@ def logout():
     session.clear()
     return redirect(url_for('index'))
 
-@myapp.route('/api/getproducts', methods = ['POST'])
+@myapp.route('/api/getproducts', methods = ['GET','POST'])
 def searchApi():
-    # print(request.json)
-    search = request.json['search']
-    cat = int(request.json['category'])
+    # print(request.form)
+    search = request.form['search']
+    cat = int(request.form['category'])
     print(search)
     # db = Workbench('minProj', password=mysql_pwd)
     if(cat != 0):
