@@ -10,6 +10,7 @@
     <link href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css" rel="stylesheet">
     <script src="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js"></script>
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="{{ url_for('static', filename='nprogress/nprogress.css') }}">
     <link rel="stylesheet" href="{{url_for('static', filename = 'styles/login.css')}}">
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link
@@ -36,8 +37,8 @@
                         <div class='radioDiv'>
                             <div class="mdc-form-field">
                                 <div class="mdc-radio">
-                                    <input class="mdc-radio__native-control userRadio" type="radio" id="custoption" name="user"
-                                        value='customer'>
+                                    <input class="mdc-radio__native-control userRadio" type="radio" id="custoption"
+                                        name="user" value='customer' checked>
                                     <div class="mdc-radio__background">
                                         <div class="mdc-radio__outer-circle"></div>
                                         <div class="mdc-radio__inner-circle"></div>
@@ -48,8 +49,8 @@
                             </div>
                             <div class="mdc-form-field">
                                 <div class="mdc-radio">
-                                    <input class="mdc-radio__native-control userRadio" type="radio" id='selloption' type='radio'
-                                        name='user' value='seller'>
+                                    <input class="mdc-radio__native-control userRadio" type="radio" id='selloption'
+                                        type='radio' name='user' value='seller'>
                                     <div class="mdc-radio__background">
                                         <div class="mdc-radio__outer-circle"></div>
                                         <div class="mdc-radio__inner-circle"></div>
@@ -102,7 +103,7 @@
 
                 <div id='login' class='loginClass'>
                     <br>
-                    <form name='loginform' action="/" id='loginform' method="POST">
+                    <form name='loginform' onsubmit="onSignIn(event)" id='loginform' method='POST'>
                         <div class='inputContain'>
                             <input id='emailLog' class='inputClass' onfocus="checker2(this); hide()"
                                 onfocusout='checker1(this)' type='email' name='email' value='' required>
@@ -119,7 +120,7 @@
                             <div class="mdc-form-field">
                                 <div class="mdc-radio">
                                     <input class="mdc-radio__native-control" id='custOptionLogin' type='radio'
-                                        name='user' value='customer'>
+                                        name='loginUser' value='customer' checked>
                                     <div class="mdc-radio__background">
                                         <div class="mdc-radio__outer-circle"></div>
                                         <div class="mdc-radio__inner-circle"></div>
@@ -131,7 +132,7 @@
                             <div class="mdc-form-field">
                                 <div class="mdc-radio">
                                     <input class="mdc-radio__native-control" id='sellerOptionLogin' type='radio'
-                                        name='user' value='seller'>
+                                        name='loginUser' value='seller'>
                                     <div class="mdc-radio__background">
                                         <div class="mdc-radio__outer-circle"></div>
                                         <div class="mdc-radio__inner-circle"></div>
@@ -143,8 +144,7 @@
 
                         </div>
 
-                        <div class='errMsg' id='error'>*Invalid email / password</div>
-                        <input type='hidden' name='login'><br>
+                        <div class='errMsg' id='error'>Email or Password combination is incorrect</div><br>
                         <input class='submit' type='submit' value='Login'><br>
                     </form>
 
@@ -155,26 +155,23 @@
         </div>
 
     </div>
-
+    <div class="mdc-snackbar">
+        <div class="mdc-snackbar__surface" role="status" aria-relevant="additions">
+          <div class="mdc-snackbar__label" aria-atomic="false">
+            Error occurred while accessing the database.
+          </div>
+          <div class="mdc-snackbar__actions" aria-atomic="true">
+            <button type="button" class="mdc-icon-button mdc-snackbar__action material-icons">
+                close
+            </button>
+          </div>
+        </div>
+      </div>
 </body>
 
 
+<script src="{{ url_for('static', filename='nprogress/nprogress.js') }}"></script>
 <script src="{{ url_for('static', filename='scripts/login.js') }}"></script>
 
-
-{% if login_status == 'Already Exists' %}
-<script>
-    showForm('signup')
-    // document.getElementById('signup').style.display = 'none'
-    document.getElementById('error1').style.display = 'block'
-</script>
-
-{% elif login_status == False %}
-<script>
-    window.onload = 'showForm("login")'
-    document.getElementById('error').style.display = 'block';
-</script>
-
-{% endif %}
 
 </html>
