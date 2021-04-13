@@ -15,7 +15,7 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
         rel="stylesheet">
-    
+
 </head>
 
 <body>
@@ -34,13 +34,10 @@
                     <br>
                     <form name='signupform' action="/" id='signupform' method='POST'>
                         <div class='radioDiv'>
-                            <!-- <label>
-                                <input id='custoption' type='radio' name='user' value='customer' checked>Customer
-                            </label> -->
                             <div class="mdc-form-field">
                                 <div class="mdc-radio">
-                                    <input class="mdc-radio__native-control" type="radio" id="custoption" name="user"
-                                        value='customer' checked>
+                                    <input class="mdc-radio__native-control userRadio" type="radio" id="custoption" name="user"
+                                        value='customer'>
                                     <div class="mdc-radio__background">
                                         <div class="mdc-radio__outer-circle"></div>
                                         <div class="mdc-radio__inner-circle"></div>
@@ -51,8 +48,8 @@
                             </div>
                             <div class="mdc-form-field">
                                 <div class="mdc-radio">
-                                    <input class="mdc-radio__native-control" type="radio" id='selloption' type='radio'
-                                        name='user' value='seller' checked>
+                                    <input class="mdc-radio__native-control userRadio" type="radio" id='selloption' type='radio'
+                                        name='user' value='seller'>
                                     <div class="mdc-radio__background">
                                         <div class="mdc-radio__outer-circle"></div>
                                         <div class="mdc-radio__inner-circle"></div>
@@ -61,9 +58,6 @@
                                 </div>
                                 <label for="selloption">Seller</label>
                             </div>
-                            <!-- <label>
-                                <input id='selloption' type='radio' name='user' value='seller'>Seller
-                            </label> -->
                         </div>
 
                         <div class='inputContain'>
@@ -124,7 +118,8 @@
                         <div class='radioDiv'>
                             <div class="mdc-form-field">
                                 <div class="mdc-radio">
-                                    <input class="mdc-radio__native-control" id='custOptionLogin'type='radio' name='user' value='customer' checked>
+                                    <input class="mdc-radio__native-control" id='custOptionLogin' type='radio'
+                                        name='user' value='customer'>
                                     <div class="mdc-radio__background">
                                         <div class="mdc-radio__outer-circle"></div>
                                         <div class="mdc-radio__inner-circle"></div>
@@ -135,7 +130,8 @@
                             </div>
                             <div class="mdc-form-field">
                                 <div class="mdc-radio">
-                                    <input class="mdc-radio__native-control" id='sellerOptionLogin'type='radio' name='user' value='seller' checked>
+                                    <input class="mdc-radio__native-control" id='sellerOptionLogin' type='radio'
+                                        name='user' value='seller'>
                                     <div class="mdc-radio__background">
                                         <div class="mdc-radio__outer-circle"></div>
                                         <div class="mdc-radio__inner-circle"></div>

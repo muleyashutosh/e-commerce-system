@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, session, url_for, jsonify
+from flask import Flask, json, render_template, request, session, url_for, jsonify
 # from livereload import Server
 from mysql.connector import Error
 from werkzeug.utils import redirect
@@ -8,6 +8,9 @@ from datetime import date
 import re
 from re import I
 import webbrowser
+from flask_cors import CORS
+import bcrypt
+
 # from webui import WebUI
 
 
@@ -15,6 +18,14 @@ import webbrowser
 mysql_pwd = "Ashu@12345"
 
 myapp = Flask(__name__)
+
+CORS(myapp)
+
+
+db = Workbench(database = 'minProj', password = mysql_pwd)
+
+    
+
 # ui = WebUI(myapp, debug= True)
 myapp.secret_key = 'ABCDEF'
 
@@ -25,7 +36,7 @@ def index():
     login_status=None
     if request.method == 'POST':
         payload = request.form
-        print(payload)
+        # print(payload)
         payload = payload.copy()
         if payload['user'] == 'customer':
                 tableName = "customers"
@@ -38,12 +49,10 @@ def index():
             idName = 'supplierID'
             idPrefix = 'S-'
         payload.pop('user')
-        dB = Workbench(database = 'minProj', password = mysql_pwd)
         if 'login' in payload :
             whereClause = dict([x for x in payload.items() if 'login' not in x])
-            # print(userDat)
-            userData = dB.select_from(tableName, where_clause = whereClause)
-            # print(userData)
+            userData = db.select_from(tableName, where_clause = whereClause)
+            print(userData)
             if userData :
                 login_status = True 
                 if payload['email'] not in session:
@@ -59,30 +68,110 @@ def index():
                 return render_template("index.html", login_status = login_status)
         else:
             print(payload)
-            values = dict([x for x in payload.items() if 'signup' not in x])
-            # print(values)
-            values[idName] = idPrefix + str(randint(1,9999999) + randint(1,999999))
-            values['joinDate'] = str(date.today())
-            try:
-                dB.insert_into(tableName, values)  
-                if payload['email'] not in session:
-                    session['email'] = payload['email']
-                    session['firstname'] = payload['firstName']
-                    session['userID'] = payload[idName]
-                    if idPrefix == 'C-':
-                        return redirect(url_for('home'))
-                    else:
-                        return redirect(url_for('sellerHome'))
-                else:
-                    return redirect(url_for('home'))
-            except Error as e:
-                if 'Duplicate entry' in str(e):
-                    print(e)
-                    login_status = 'Already Exists'
-                    return render_template('index.html', login_status= login_status)
+            # values = dict([x for x in payload.items() if 'signup' not in x])
+            # # print(values)
+            # values[idName] = idPrefix + str(randint(1,9999999) + randint(1,999999))
+            # values['joinDate'] = str(date.today())
+            # try:
+            #     db.insert_into(tableName, values)  
+            #     if payload['email'] not in session:
+            #         session['email'] = payload['email']
+            #         session['firstname'] = payload['firstName']
+            #         session['userID'] = payload[idName]
+            #         if idPrefix == 'C-':
+            #             return redirect(url_for('home'))
+            #         else:
+            #             return redirect(url_for('sellerHome'))
+            #     else:
+            #         return redirect(url_for('home'))
+            # except Error as e:
+            #     if 'Duplicate entry' in str(e):
+            #         print(e)
+            #         login_status = 'Already Exists'
+            #         return render_template('index.html', login_status= login_status)
     
     else:    
         return render_template("index.html")
+
+
+# login route
+@myapp.route('/api/login', methods = ['POST'])
+def login():
+    data = request.json;
+    email, password, user, login = data.values()
+    tableName = 'customers' if user == 'customer' else 'suppliers'
+    idName = 'custID' if user == 'customer' else 'supplierID'
+    try:
+        userData = db.select_from(tableName, [idName, 'firstname'], {'email': email})
+        # print(userID)
+    except :
+        print('error while trying to get userData')
+        return jsonify('Error trying to find the user data')
+
+    if not userData:
+        return jsonify('User Not Found')
+    else:
+        userID = userData[0][idName]
+        try:
+            hashedPassword = db.select_from('passwords', ['hash'], {'userID': userID})
+        except:
+            # print(userID)
+            print('error while trying to get the password hash')
+            return jsonify('Error trying to find the user data')
+
+        hashedPassword = hashedPassword[0]['hash']
+        if bcrypt.checkpw(password.encode(), hashedPassword.encode()):
+            if email not in session:
+                session['email'] = email
+                session['firstname'] = userData[0]["firstname"]
+                session['userID'] = userID
+            return jsonify('verified')
+        else:
+            return jsonify("Invalid Credentials")
+
+
+# register route
+@myapp.route('/api/register', methods = ['POST'])
+def register():
+    data = request.json
+    # print(data)
+    password = data['pwd']
+    user = data['user']
+    tableName, idName, idPrefix, redirectFunc = ('customers', 'custID', 'C-', 'home') if user == 'customer' else ('suppliers', 'supplierID', 'S-', 'sellerHome')
+    data.pop('signup')
+    data.pop('user')
+    data.pop('pwd')
+    data[idName] = idPrefix + str(randint(1,9999999) + randint(1,999999))
+    data['joinDate'] = str(date.today())
+    # print(data)
+    userID = data[idName]
+    try:
+        db.insert_into(tableName, data)
+        if data['email'] not in session:
+            session['email'] = data['email']
+            session['firstname'] = data['firstname']
+            session['userID'] = data[idName]
+    except Error as e:
+        print(e)
+        if 'Duplicate entry' in str(e):
+            return jsonify("User already exists")
+        else:
+            return jsonify('Error inserting data into database')
+
+    hashedPassword = bcrypt.hashpw(password.encode(), bcrypt.gensalt())
+    try:
+        db.insert_into('passwords', {
+            'hash': hashedPassword.decode(),
+            'userID': userID
+        })
+    except Error as e:
+        print(e)
+        return jsonify('Error hashing password to db')
+        
+    return jsonify('User registered successfully')
+
+
+
 
 @myapp.route('/Customerhome/', methods = ['GET', 'POST'])
 @myapp.route('/Customerhome/<int:page>', methods = ['GET', 'POST'])
@@ -92,7 +181,6 @@ def home(page = 1):
         startAt = perPage * page - perPage
         user = session['email']
         firstname = session['firstname']
-        db = Workbench('minProj', password=mysql_pwd)
         if request.method == 'POST' and request.form:
             payload = request.form
             # print(payload)
@@ -148,7 +236,6 @@ def sellerHome():
     if 'email' in session:
         user = session['email']
         firstname = session['firstname']
-        db = Workbench('minProj',password=mysql_pwd)
         uid = session['userID']
         productdetails = db.select_from('supplierdet',where_clause={'supplierID':uid})
         productlist = [db.select_from('products',where_clause={'prodID':x['prodID']})[0] for x in productdetails]
@@ -163,7 +250,6 @@ def sellerHome():
 def profile():
     if 'email' in session:
         login_status=True
-        db = Workbench(database = 'minProj', password = mysql_pwd)
         session['paymentdetailID']=db.select_from("customers",attributes=['paymentID'] ,where_clause = {'custID':session['userID']})[0]['paymentID']
         if request.method == 'POST':
             payload = request.form
@@ -293,7 +379,6 @@ def cart():
 def sellerProfile():
     if 'email' in session:
         login_status=True
-        db = Workbench(database = 'minProj', password = mysql_pwd)
         print(session)
         session['paymentdetailID']=db.select_from("suppliers",attributes=['paymentID'] ,where_clause = {'supplierID':session['userID']})[0]['paymentID']
         if request.method == 'POST':
@@ -427,10 +512,11 @@ def logout():
     session.clear()
     return redirect(url_for('index'))
 
-@myapp.route('/getproducts')
+@myapp.route('/api/getproducts', methods = ['POST'])
 def searchApi():
-    search = request.args['search']
-    cat = int(request.args['category'])
+    # print(request.json)
+    search = request.json['search']
+    cat = int(request.json['category'])
     print(search)
     # db = Workbench('minProj', password=mysql_pwd)
     if(cat != 0):
@@ -440,7 +526,7 @@ def searchApi():
         products = [ x for x in allproducts if re.search(search, x['prodName'], I) ]
         # products = db.select_from_custom(f"SELECT * FROM products WHERE (REGEXP_LIKE(prodName,'{search}') OR REGEXP_LIKE(prodDesc,'{search}'))")
 
-    print(len(products))
+    # print(len(products))
     return (jsonify(products))
     
 

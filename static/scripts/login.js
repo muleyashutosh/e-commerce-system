@@ -97,26 +97,23 @@ function checker1(x) {
     }
 }
 
-document.getElementById('selloption').addEventListener('change', function () {
-    var x = document.getElementById('orgName')
-    if (document.getElementById('selloption').checked) {
-        x.style.display = 'block'
-        document.getElementById('orgInput').required = true;
 
-    }
-    else {
-        x.style.display = 'none';
-        document.getElementById('orgInput').required = false;
-    }
+const userRadioInputs = document.querySelectorAll('.userRadio')
+const orgName = document.getElementById('orgName')
+const orgInput = document.getElementById('orgInput')
+
+userRadioInputs.forEach(el => {
+    el.addEventListener('change', (event) => {
+        const target = event.target;
+        if (target.id === 'custoption') {
+            orgName.style.display = 'none';
+            orgInput.required = false;
+            // orgInput.disabled = true;
+        } else {
+            orgName.style.display = 'block';
+            orgInput.required = true;
+            // orgInput.disabled = false;
+        }
+    })
 })
-document.getElementById('custoption').addEventListener('change', function () {
-    var x = document.getElementById('orgName')
-    if (document.getElementById('custoption').checked) {
-        x.style.display = 'none';
-        document.getElementById('orgInput').required = false;
-    }
-    else {
-        x.style.display = 'block';
-        document.getElementById('orgInput').required = true;
-    }
-})
+
