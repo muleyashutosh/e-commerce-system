@@ -159,9 +159,12 @@ class Workbench(Column):
             where_clause = [k + ' = "' + v + '"' for k, v in where_clause.items()]
             where = " WHERE " + key.join(where_clause) + ';'
         search = 'SELECT ' + attr + ' FROM ' + tablename + where
-        # print(search)
+        print(search)
         curr = self.conn.cursor(dictionary=True)
-        curr.execute(search)
+        try:
+            curr.execute(search)
+        except Error:
+            return Error
         return curr.fetchall()
 
 

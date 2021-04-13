@@ -141,18 +141,6 @@ body {
     font-size: 15px;
 }
 
-/* .radioDiv label {
-    width: 50%;
-    display: flex;
-    padding: 10px 0px;
-}
-
-.radioDiv label input {
-    outline: none;
-    width: auto;
-    height: auto;
-    /* margin: 5px; */
-} */
 
 #orgName {
     display: none;
@@ -271,45 +259,24 @@ body {
         height: 100vh;
     }
     .content {
-        width: 30%;
-    }
-    .radioDiv {
-        margin: 0px 10 0px 30px;
-    }
-    .radioDiv label {
-        margin: 0;
-        padding: 0;
+        width: 35%;
     }
 
 }
 @media screen and (max-width: 800px) {
-    .radioDiv {
-        margin: 0px 0px 10px 0px ;
-        display: block;
-    }
-    .radioDiv label {
-        margin: 0px 0px 0px 30px;
-        padding: 0;
-        width: 100%;
+    .content {
+        width: 45%;
     }
 
 }
 
-  
+
 @media screen and (max-width: 600px) {
     .mainClass{
         height: 100vh;
     }
     .content {
         width: auto;
-    }
-    .radioDiv {
-        display: flex;
-        margin: 0px 10 0px 5%;
-    }
-    .radioDiv label {
-        padding: 10px 0px;
-        width: 50%;
     }
     
 }
