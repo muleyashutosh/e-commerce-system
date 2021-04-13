@@ -277,6 +277,8 @@ body {
     }
     .content {
         width: auto;
+        margin: auto;
+        float: none;
     }
     
 }
