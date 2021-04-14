@@ -1,172 +1,167 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Welcome</title>
-    <link rel="icon" href="https://ik.imagekit.io/milyzn5unt/e-commerce-system/cart-2-512_iEf65WcBxP.png"
-        type="image/x-icon">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
-    <link href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css" rel="stylesheet">
-    <script src="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js"></script>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <link rel="stylesheet" href="{{ url_for('static', filename='nprogress/nprogress.css') }}">
-    <link rel="stylesheet" href="{{url_for('static', filename = 'styles/login.css')}}">
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link
-        href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
-        rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Welcome</title>
+  <link rel="icon" href="https://ik.imagekit.io/milyzn5unt/e-commerce-system/cart-2-512_iEf65WcBxP.png"
+    type="image/x-icon">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+  <link href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css" rel="stylesheet">
+  <script src="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js"></script>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" href="{{ url_for('static', filename='nprogress/nprogress.css') }}">
+  <link rel="stylesheet" href="{{url_for('static', filename = 'styles/login.css')}}">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+    rel="stylesheet">
 
 </head>
 
 <body>
-    <div class="content">
-        <div class='headerClass col-12'>
-            <div align='center'></div>
-        </div>
-        <div class='mainClass' id='main' align='center'>
-            <div align='center' class='switchHead'>
-                <div class='col-6' id='login-btn' onclick="showForm('login')">Login</div>
-                <div class='col-6' id='signup-btn' onclick="showForm('signup')">Signup</div>
+  <div class="content">
+    <div class='headerClass col-12'>
+      <div align='center'></div>
+    </div>
+    <div class='mainClass' id='main' align='center'>
+      <div align='center' class='switchHead'>
+        <div class='col-6' id='login-btn' onclick="showForm('login')">Login</div>
+        <div class='col-6' id='signup-btn' onclick="showForm('signup')">Signup</div>
+      </div>
+      <div class='formsClass' id='forms'>
+
+        <div id='signup' class='signupClass'>
+          <br>
+          <form name='signupform' id='signupform' onsubmit="OnRegister(event)" method='POST'>
+            <div class='radioDiv'>
+              <div class="mdc-form-field">
+                <div class="mdc-radio">
+                  <input class="mdc-radio__native-control userRadio" type="radio" id="custoption" name="user"
+                    value='customer' checked>
+                  <div class="mdc-radio__background">
+                    <div class="mdc-radio__outer-circle"></div>
+                    <div class="mdc-radio__inner-circle"></div>
+                  </div>
+                  <div class="mdc-radio__ripple"></div>
+                </div>
+                <label for="custoption">Customer</label>
+              </div>
+              <div class="mdc-form-field">
+                <div class="mdc-radio">
+                  <input class="mdc-radio__native-control userRadio" type="radio" id='selloption' type='radio'
+                    name='user' value='seller'>
+                  <div class="mdc-radio__background">
+                    <div class="mdc-radio__outer-circle"></div>
+                    <div class="mdc-radio__inner-circle"></div>
+                  </div>
+                  <div class="mdc-radio__ripple"></div>
+                </div>
+                <label for="selloption">Seller</label>
+              </div>
             </div>
-            <div class='formsClass' id='forms'>
 
-                <div id='signup' class='signupClass'>
-                    <br>
-                    <form name='signupform' action="/" id='signupform' method='POST'>
-                        <div class='radioDiv'>
-                            <div class="mdc-form-field">
-                                <div class="mdc-radio">
-                                    <input class="mdc-radio__native-control userRadio" type="radio" id="custoption"
-                                        name="user" value='customer' checked>
-                                    <div class="mdc-radio__background">
-                                        <div class="mdc-radio__outer-circle"></div>
-                                        <div class="mdc-radio__inner-circle"></div>
-                                    </div>
-                                    <div class="mdc-radio__ripple"></div>
-                                </div>
-                                <label for="custoption">Customer</label>
-                            </div>
-                            <div class="mdc-form-field">
-                                <div class="mdc-radio">
-                                    <input class="mdc-radio__native-control userRadio" type="radio" id='selloption'
-                                        type='radio' name='user' value='seller'>
-                                    <div class="mdc-radio__background">
-                                        <div class="mdc-radio__outer-circle"></div>
-                                        <div class="mdc-radio__inner-circle"></div>
-                                    </div>
-                                    <div class="mdc-radio__ripple"></div>
-                                </div>
-                                <label for="selloption">Seller</label>
-                            </div>
-                        </div>
+            <div class='inputContain'>
+              <input class='inputClass' name='firstname' onfocus='hide()' value="" type='text' required>
+              <label class='moveLabel' for='firstname'>First Name</label>
+            </div>
+            <div class='inputContain'>
+              <input class='inputClass' name='lastname' onfocus='hide()' value="" type='text' required>
+              <label class='moveLabel' for='lastname'>Last Name</label>
+            </div>
+            <div id='orgName' class='inputContain'>
+              <input id='orgInput' class='inputClass' name='orgname' onfocus='hide()' value="" type='text' disabled>
+              <label class='moveLabel' for='orgname'>Organisation</label>
+            </div>
+            <div class='inputContain'>
+              <input class='inputClass' id='emailSign' name='email' onfocusout='checker1(this)'
+                onfocus="checker2(this);hide()" value="" type='email' required>
+              <label class='moveLabel' for='email' id='emailSignLab'>Email</label>
+            </div>
+            <div class='inputContain'>
+              <input class='inputClass' type='password' onfocus='hide()' value="" name='pwd' required>
+              <label class='moveLabel'>Password</label>
+            </div>
+            <div class='inputContain'>
+              <input class='inputClass' id='mob' type='tel' onfocusout='checker1(this)' onfocus="checker2(this); hide()"
+                pattern='[1-9][0-9]{9}' title='Mobile no must contain 10 digits' value="" name='pno' required>
+              <label class='moveLabel' for='mob_no' id='mobLab'>Mobile No.</label>
+            </div>
+            <div id='error1' class='errMsg'>
+              Email id/ Mobile number already registered.<br>Please <a onclick='showForm("login")'>Login</a> to
+              continue.
+            </div>
+            <input class='submit' type='submit' value='Create an Account'><br>
 
-                        <div class='inputContain'>
-                            <input class='inputClass' name='firstName' onfocus='hide()' value="" type='text' required>
-                            <label class='moveLabel' for='firstName'>First Name</label>
-                        </div>
-                        <div class='inputContain'>
-                            <input class='inputClass' name='lastName' onfocus='hide()' value="" type='text' required>
-                            <label class='moveLabel' for='lastName'>Last Name</label>
-                        </div>
-                        <div id='orgName' class='inputContain'>
-                            <input id='orgInput' class='inputClass' name='orgname' onfocus='hide()' value=""
-                                type='text'>
-                            <label class='moveLabel' for='orgname'>Organisation</label>
-                        </div>
+          </form>
 
-                        <div class='inputContain'>
-                            <input class='inputClass' id='emailSign' name='email' onfocusout='checker1(this)'
-                                onfocus="checker2(this);hide()" value="" type='email' required>
-                            <label class='moveLabel' for='email' id='emailSignLab'>Email</label>
-                        </div>
-                        <div class='inputContain'>
-                            <input class='inputClass' type='password' onfocus='hide()' value="" name='pwd' required>
-                            <label class='moveLabel'>Password</label>
-                        </div>
-                        <div class='inputContain'>
-                            <input class='inputClass' id='mob' type='tel' onfocusout='checker1(this)'
-                                onfocus="checker2(this); hide()" pattern='[1-9][0-9]{9}'
-                                title='Mobile no must contain 10 digits' value="" name='pno' required>
-                            <label class='moveLabel' for='mob_no' id='mobLab'>Mobile No.</label>
-                        </div>
-                        <input type='hidden' name='signup'>
-                        <div id='error1' class='errMsg'>
-                            Email id/ Mobile number already registered.<br>Please <a href=''
-                                onclick='showForm("login")'>Login</a> to continue.
-                        </div>
-                        <input class='submit' type='submit' value='Create an Account'><br>
+        </div>
 
-                    </form>
-
+        <div id='login' class='loginClass'>
+          <br>
+          <form name='loginform' onsubmit="onSignIn(event)" id='loginform' method='POST'>
+            <div class='inputContain'>
+              <input id='emailLog' class='inputClass' onfocus="checker2(this); hide()" onfocusout='checker1(this)'
+                type='email' name='email' value='' required>
+              <label class='moveLabel' for='email' id='emailLogLab'>Email</label>
+            </div>
+            <div class='inputContain'>
+              <input class='inputClass' id='passIn' onfocus='hide()' type='password' value="" name='pwd' required>
+              <label class='moveLabel'>Password</label>
+              <img id='eye' onclick="showPass()"
+                src='https://ik.imagekit.io/milyzn5unt/e-commerce-system/showPassNormal_hI4WkY3i2z.svg'>
+            </div>
+            <div class='radioDiv'>
+              <div class="mdc-form-field">
+                <div class="mdc-radio">
+                  <input class="mdc-radio__native-control" id='custOptionLogin' type='radio' name='loginUser'
+                    value='customer' checked>
+                  <div class="mdc-radio__background">
+                    <div class="mdc-radio__outer-circle"></div>
+                    <div class="mdc-radio__inner-circle"></div>
+                  </div>
+                  <div class="mdc-radio__ripple"></div>
                 </div>
-
-                <div id='login' class='loginClass'>
-                    <br>
-                    <form name='loginform' onsubmit="onSignIn(event)" id='loginform' method='POST'>
-                        <div class='inputContain'>
-                            <input id='emailLog' class='inputClass' onfocus="checker2(this); hide()"
-                                onfocusout='checker1(this)' type='email' name='email' value='' required>
-                            <label class='moveLabel' for='email' id='emailLogLab'>Email</label>
-                        </div>
-                        <div class='inputContain'>
-                            <input class='inputClass' id='passIn' onfocus='hide()' type='password' value="" name='pwd'
-                                required>
-                            <label class='moveLabel'>Password</label>
-                            <img id='eye' onclick="showPass()"
-                                src='https://ik.imagekit.io/milyzn5unt/e-commerce-system/showPassNormal_hI4WkY3i2z.svg'>
-                        </div>
-                        <div class='radioDiv'>
-                            <div class="mdc-form-field">
-                                <div class="mdc-radio">
-                                    <input class="mdc-radio__native-control" id='custOptionLogin' type='radio'
-                                        name='loginUser' value='customer' checked>
-                                    <div class="mdc-radio__background">
-                                        <div class="mdc-radio__outer-circle"></div>
-                                        <div class="mdc-radio__inner-circle"></div>
-                                    </div>
-                                    <div class="mdc-radio__ripple"></div>
-                                </div>
-                                <label for="custOptionLogin">Customer</label>
-                            </div>
-                            <div class="mdc-form-field">
-                                <div class="mdc-radio">
-                                    <input class="mdc-radio__native-control" id='sellerOptionLogin' type='radio'
-                                        name='loginUser' value='seller'>
-                                    <div class="mdc-radio__background">
-                                        <div class="mdc-radio__outer-circle"></div>
-                                        <div class="mdc-radio__inner-circle"></div>
-                                    </div>
-                                    <div class="mdc-radio__ripple"></div>
-                                </div>
-                                <label for="sellerOptionLogin">Seller</label>
-                            </div>
-
-                        </div>
-
-                        <div class='errMsg' id='error'>Email or Password combination is incorrect</div><br>
-                        <input class='submit' type='submit' value='Login'><br>
-                    </form>
-
+                <label for="custOptionLogin">Customer</label>
+              </div>
+              <div class="mdc-form-field">
+                <div class="mdc-radio">
+                  <input class="mdc-radio__native-control" id='sellerOptionLogin' type='radio' name='loginUser'
+                    value='seller'>
+                  <div class="mdc-radio__background">
+                    <div class="mdc-radio__outer-circle"></div>
+                    <div class="mdc-radio__inner-circle"></div>
+                  </div>
+                  <div class="mdc-radio__ripple"></div>
                 </div>
+                <label for="sellerOptionLogin">Seller</label>
+              </div>
 
             </div>
 
+            <div class='errMsg' id='error'>Email or Password combination is incorrect</div><br>
+            <input class='submit' type='submit' value='Login'><br>
+          </form>
+
         </div>
+
+      </div>
 
     </div>
-    <div class="mdc-snackbar">
-        <div class="mdc-snackbar__surface" role="status" aria-relevant="additions">
-          <div class="mdc-snackbar__label" aria-atomic="false">
-            Error occurred while accessing the database.
-          </div>
-          <div class="mdc-snackbar__actions" aria-atomic="true">
-            <button type="button" class="mdc-icon-button mdc-snackbar__action material-icons">
-                close
-            </button>
-          </div>
-        </div>
+
+  </div>
+  <div class="mdc-snackbar">
+    <div class="mdc-snackbar__surface" role="status" aria-relevant="additions">
+      <div class="mdc-snackbar__label" aria-atomic="false">
+        Error occurred while accessing the database.
       </div>
+      <div class="mdc-snackbar__actions" aria-atomic="true">
+        <button type="button" class="mdc-icon-button mdc-snackbar__action material-icons">
+          close
+        </button>
+      </div>
+    </div>
+  </div>
 </body>
 
 

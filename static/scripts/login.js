@@ -1,4 +1,4 @@
-NProgress.configure({showSpinner: false})
+NProgress.configure({ showSpinner: false })
 const { MDCFormField } = mdc.formField;
 const { MDCRadio } = mdc.radio;
 const { MDCSnackbar } = mdc.snackbar
@@ -43,7 +43,7 @@ const showForm = (id) => {
 
 }
 
-const showPass = () =>  {
+const showPass = () => {
     var x = document.getElementById('passIn')
     var eye = document.getElementById('eye')
     if (x.type === 'password') {
@@ -112,33 +112,43 @@ userRadioInputs.forEach(el => {
         if (target.id === 'custoption') {
             orgName.style.display = 'none';
             orgInput.required = false;
-            // orgInput.disabled = true;
+            orgInput.disabled = true;
         } else {
             orgName.style.display = 'block';
             orgInput.required = true;
-            // orgInput.disabled = false;
+            orgInput.disabled = false;
         }
     })
 })
 
-const fetchLoginRoute = async (loginEmail, loginPass, loginUser) => {
-    
+const fetchLoginRoute = async (body) => {
+
     const data = await fetch(
         '/api/login', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Accept': '*'
-            },
-            body: JSON.stringify({
-                email: loginEmail,
-                pwd: loginPass,
-                user: loginUser
-            })
-        }
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': '*'
+        },
+        body: body
+    }
     )
     const resp = await data.json()
     return await resp
+}
+
+const fetchRegisterRoute = async (body) => {
+    const data = await fetch(
+        '/api/register', {
+        method: "POST",
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: body
+    }
+    )
+    const resp = await data.json();
+    return resp;
 }
 
 
@@ -146,26 +156,70 @@ const onSignIn = (event) => {
     NProgress.start()
     event.preventDefault();
 
-    const loginEmail = document.querySelector('#emailLog').value
-    const loginPass = document.querySelector('#passIn').value
-    const loginUser = document.querySelector('input[name="loginUser"]:checked').value
+    const loginForm = document.querySelector('#loginform')
+    const data = new FormData(loginForm)
+    const body = JSON.stringify(Object.fromEntries(data))
+    const loginUser = data.get('loginUser')
 
-    fetchLoginRoute(loginEmail, loginPass, loginUser).then(
+    fetchLoginRoute(body).then(
         (data) => {
-            const {status} = data;
-            console.log(data);
+            const { status } = data;
             NProgress.done();
-            if(status === 'verified') {
-                if(loginUser === 'customer') {
-                    window.location.replace('/Customerhome')
-                } else {
-                    window.location.replace('/sellerHome')
+            switch (status) {
+                case 'verified': {
+                    if (loginUser === 'customer') {
+                        window.location.replace('/Customerhome')
+                    } else {
+                        window.location.replace('/sellerHome')
+                    }
+                    break;
                 }
-            } else if(status === 'User Not Found' || status === 'Invalid Credentials') {
-                const invalidUserNameMsg = document.querySelector('#error');
-                invalidUserNameMsg.style.display = 'block';
-            } else {
-                snackbar.open()
+
+                case 'User Not Found' || 'Invalid Credentials': {
+                    const invalidUserNameMsg = document.querySelector('#error');
+                    invalidUserNameMsg.style.display = 'block';
+                    break;
+                }
+
+                default: {
+                    snackbar.open()
+                }
+            }
+        }
+    )
+}
+
+const OnRegister = (event) => {
+    NProgress.start();
+    event.preventDefault()
+
+    const signupForm = document.querySelector('#signupform')
+    const data = new FormData(signupForm);
+    const body = JSON.stringify(Object.fromEntries(data))
+    const user = data.get('user')
+    const error1 = document.querySelector('#error1')
+    fetchRegisterRoute(body).then(
+        (data) => {
+            const { status } = data;
+            NProgress.done();
+            switch (status) {
+                case "User already exists": {
+                    error1.style.display = 'block';
+                    break;
+                }
+
+                case 'User registered successfully': {
+                    if (user === 'customer') {
+                        window.location.replace('/Customerhome')
+                    } else {
+                        window.location.replace('/sellerHome')
+                    }
+                    break;
+                }
+
+                default: {
+                    snackbar.open()
+                }
             }
         }
     )

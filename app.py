@@ -33,65 +33,7 @@ allproducts = []
 
 @myapp.route('/', methods = ['GET', 'POST'])
 def index():
-    login_status=None
-    if request.method == 'POST':
-        payload = request.form
-        # print(payload)
-        payload = payload.copy()
-        if payload['user'] == 'customer':
-                tableName = "customers"
-                idName = 'custID'
-                idPrefix = 'C-'
-                if 'orgname' in payload: 
-                    payload.pop('orgname')
-        else:
-            tableName = 'suppliers'
-            idName = 'supplierID'
-            idPrefix = 'S-'
-        payload.pop('user')
-        if 'login' in payload :
-            whereClause = dict([x for x in payload.items() if 'login' not in x])
-            userData = db.select_from(tableName, where_clause = whereClause)
-            print(userData)
-            if userData :
-                login_status = True 
-                if payload['email'] not in session:
-                    session['email'] = payload['email']
-                    session['firstname'] = userData[0]['firstname']
-                    session['userID'] = userData[0][idName]
-                if idPrefix == 'C-':
-                    return redirect(url_for('home'))
-                else:
-                    return redirect(url_for('sellerHome'))
-            else:
-                login_status = False
-                return render_template("index.html", login_status = login_status)
-        else:
-            print(payload)
-            # values = dict([x for x in payload.items() if 'signup' not in x])
-            # # print(values)
-            # values[idName] = idPrefix + str(randint(1,9999999) + randint(1,999999))
-            # values['joinDate'] = str(date.today())
-            # try:
-            #     db.insert_into(tableName, values)  
-            #     if payload['email'] not in session:
-            #         session['email'] = payload['email']
-            #         session['firstname'] = payload['firstName']
-            #         session['userID'] = payload[idName]
-            #         if idPrefix == 'C-':
-            #             return redirect(url_for('home'))
-            #         else:
-            #             return redirect(url_for('sellerHome'))
-            #     else:
-            #         return redirect(url_for('home'))
-            # except Error as e:
-            #     if 'Duplicate entry' in str(e):
-            #         print(e)
-            #         login_status = 'Already Exists'
-            #         return render_template('index.html', login_status= login_status)
-    
-    else:    
-        return render_template("index.html")
+    return render_template("index.html")
 
 
 # login route
@@ -138,8 +80,8 @@ def register():
     # print(data)
     password = data['pwd']
     user = data['user']
-    tableName, idName, idPrefix, redirectFunc = ('customers', 'custID', 'C-', 'home') if user == 'customer' else ('suppliers', 'supplierID', 'S-', 'sellerHome')
-    data.pop('signup')
+    tableName, idName, idPrefix = ('customers', 'custID', 'C-') if user == 'customer' else ('suppliers', 'supplierID', 'S-')
+    # data.pop('signup')
     data.pop('user')
     data.pop('pwd')
     data[idName] = idPrefix + str(randint(1,9999999) + randint(1,999999))
@@ -148,16 +90,12 @@ def register():
     userID = data[idName]
     try:
         db.insert_into(tableName, data)
-        if data['email'] not in session:
-            session['email'] = data['email']
-            session['firstname'] = data['firstname']
-            session['userID'] = data[idName]
     except Error as e:
         print(e)
         if 'Duplicate entry' in str(e):
-            return jsonify("User already exists")
+            return jsonify({"status": "User already exists"})
         else:
-            return jsonify('Error inserting data into database')
+            return jsonify({"status": 'Error inserting data into database'})
 
     hashedPassword = bcrypt.hashpw(password.encode(), bcrypt.gensalt())
     try:
@@ -167,9 +105,13 @@ def register():
         })
     except Error as e:
         print(e)
-        return jsonify('Error hashing password to db')
-        
-    return jsonify('User registered successfully')
+        return jsonify({"status": 'Error hashing password to db'})
+
+    if data['email'] not in session:
+        session['email'] = data['email']
+        session['firstname'] = data['firstname']
+        session['userID'] = data[idName]
+    return jsonify({"status": 'User registered successfully'})
 
 
 
