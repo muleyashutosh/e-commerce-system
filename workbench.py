@@ -7,6 +7,7 @@ from os import error
 import mysql.connector
 from mysql.connector import Error
 
+
 class Column:
     def __init__(self, name, datatype=None, constraints=[False, False, False], length=None):
         self.name = name
@@ -24,7 +25,8 @@ class Column:
         if self.length is None:
             self.rstring = self.name + ' ' + self.datatype
         else:
-            self.rstring = self.name + ' ' + self.datatype + '(' + str(self.length) + ')'
+            self.rstring = self.name + ' ' + \
+                self.datatype + '(' + str(self.length) + ')'
         if self.pkey:
             self.rstring += ' PRIMARY KEY'
         if self.notnull:
@@ -33,11 +35,13 @@ class Column:
             self.rstring += ' AUTO_INCREMENT'
         return self.rstring
 
+
 class Workbench(Column):
     """
     MySQL Workbench Class
     """
-    def __init__(self, database='Sample', host='localhost', user='muleyashutosh', password=''):
+
+    def __init__(self, database='Sample', host='localhost', user='muleyashutosh', password='', port=''):
         """
         INPUT: database name, hostname(default = localhost),
                     username(default = 'root'), password
@@ -49,8 +53,8 @@ class Workbench(Column):
         self.host = host
         self.database = database
         self.password = password
+        self.port = port
         self.connect_db()
-
 
     def connect_db(self):
         """
@@ -60,8 +64,9 @@ class Workbench(Column):
         """
         self.conn = mysql.connector.connect(host=self.host,
                                             user=self.user,
-                                             password=self.password,
-                                            database=self.database)
+                                            password=self.password,
+                                            database=self.database,
+                                            port=self.port)
 
     def create_table(self, tablename):
         """
@@ -73,7 +78,8 @@ class Workbench(Column):
         prim_set = False
         count = 1
         for _ in range(numattr):
-            name = input('Enter the name of column {}:-> '.format(count)).replace(' ', '_')
+            name = input(
+                'Enter the name of column {}:-> '.format(count)).replace(' ', '_')
             datatype = input('Enter the datatype of column:-> ')
             if not prim_set:
                 prim = input('Set Primary Key ? ( Y / N ):-> ')
@@ -82,7 +88,8 @@ class Workbench(Column):
                 auto_inc = input('Set Auto_Increment? ( Y / N ):-> ')
             else:
                 auto_inc = 'n'
-            constr = [prim.lower() == 'y', notnull.lower() == 'y', auto_inc == 'y']
+            constr = [prim.lower() == 'y', notnull.lower()
+                      == 'y', auto_inc == 'y']
             if prim.lower() == 'y':
                 prim_set = True
                 prim = 'n'
@@ -102,10 +109,12 @@ class Workbench(Column):
             curr = self.conn.cursor()
         curr.execute(query)
 
-    def insert_into(self, tablename,values=None):
+    def insert_into(self, tablename, values=None):
         columns = ', '.join([k for k in values.keys()])
-        vals = ', '.join([str(v) if type(v) != type('str') else '"' + v + '"' for v in values.values()])
-        query = 'INSERT INTO ' + tablename + '(' + columns + ') VALUES (' + vals + ')'
+        vals = ', '.join([str(v) if type(v) != type(
+            'str') else '"' + v + '"' for v in values.values()])
+        query = 'INSERT INTO ' + tablename + \
+            '(' + columns + ') VALUES (' + vals + ')'
         print(query)
         if self.conn:
             curr = self.conn.cursor()
@@ -113,7 +122,6 @@ class Workbench(Column):
             curr = self.conn.cursor()
         curr.execute(query)
         self.conn.commit()
-
 
     def show_tables(self):
         """
@@ -126,7 +134,6 @@ class Workbench(Column):
         curr.execute(query)
         return curr.fetchall()
 
-
     def drop_table(self, tablename):
         """
         Function to delete tables from our selected database
@@ -136,7 +143,6 @@ class Workbench(Column):
         query = 'DROP TABLE ' + tablename
         curr = self.conn.cursor()
         curr.execute(query)
-
 
     def select_from(self, tablename, attributes=None, where_clause=None, key='AND'):
         """
@@ -156,7 +162,8 @@ class Workbench(Column):
         if where_clause is None:
             where = ";"
         else:
-            where_clause = [k + ' = "' + v + '"' for k, v in where_clause.items()]
+            where_clause = [k + ' = "' + v +
+                            '"' for k, v in where_clause.items()]
             where = " WHERE " + key.join(where_clause) + ';'
         search = 'SELECT ' + attr + ' FROM ' + tablename + where
         print(search)
@@ -166,7 +173,6 @@ class Workbench(Column):
         except Error:
             return Error
         return curr.fetchall()
-
 
     def delete_from(self, tablename, where_clause=None, key='AND'):
         """
@@ -185,7 +191,7 @@ class Workbench(Column):
             query = 'DELETE FROM ' + tablename + ' WHERE ' + where
         else:
             query = 'DELETE FROM ' + tablename
-        #print(query)
+        # print(query)
         curr = self.conn.cursor()
         curr.execute(query)
         self.conn.commit()
@@ -201,7 +207,8 @@ class Workbench(Column):
         RETURNS: None
         """
         key = ' ' + key + ' '
-        updates = [k + ' = "' + v + '"' if v != None else k + '=NULL' for k, v in updates.items()]
+        updates = [k + ' = "' + v + '"' if v !=
+                   None else k + '=NULL' for k, v in updates.items()]
         updates = ', '.join(updates)
         if where_clause is not None:
             where = [k + ' = "' + v + '"' for k, v in where_clause.items()]
@@ -212,7 +219,7 @@ class Workbench(Column):
         curr = self.conn.cursor()
         curr.execute(query)
         self.conn.commit()
-    
+
     def custom_query(self, query):
         curr = self.conn.cursor(dictionary=True)
         try:
@@ -229,5 +236,3 @@ class Workbench(Column):
             return curr.fetchall()
         except Error as e:
             return e
-
-

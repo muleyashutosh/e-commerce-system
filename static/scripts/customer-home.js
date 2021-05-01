@@ -33,17 +33,17 @@ $(document).ready(function () {
         el.input = checkboxes[index];
     })
 
-    // const radios = [].map.call(document.querySelectorAll('.mdc-radio'), (el) => {
-    //     return new MDCRadio(el);
-    // })
+    const radios = [].map.call(document.querySelectorAll('.mdc-radio'), (el) => {
+        return new MDCRadio(el);
+    })
 
-    // const formFieldsRadios = [].map.call(document.querySelectorAll('.mdc-form-field-radios'), (el) => {
-    //     return new MDCFormField(el);
-    // })
+    const formFieldsRadios = [].map.call(document.querySelectorAll('.mdc-form-field-radios'), (el) => {
+        return new MDCFormField(el);
+    })
 
-    // formFieldsRadios.map((el, index) => {
-    //     el.input = radios[index];
-    // })
+    formFieldsRadios.map((el, index) => {
+        el.input = radios[index];
+    })
 
     document.getElementById('reset').addEventListener('click', function (event) {
         document.getElementById('filter').reset();
@@ -118,9 +118,10 @@ $(document).ready(function () {
 
         }
         else {
-
+            NProgress.start()
             QuerySearch($('#search').val().trim(), $('#category').val(), function (res) {
                 // console.log(res)
+                NProgress.done();
                 if (res.length == 0) {
                     // console.log('val ' + $("#search").val().trim() + ', res empty')
                     var error = '<div class="noItemsFound"><h2>Oops, No Items matching your search were found!</h2><hr></div>'
