@@ -1,3 +1,5 @@
+NProgress.configure({ showSpinner: false })
+
 const {MDCRipple} = mdc.ripple;
 const {MDCTooltip} = mdc.tooltip;
 
