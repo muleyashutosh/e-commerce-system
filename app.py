@@ -16,9 +16,9 @@ import bcrypt
 
 mysql_pwd = "tSBhhYOwA7okjWar6P54"
 
-myapp = Flask(__name__)
+app = Flask(__name__)
 
-CORS(myapp)
+CORS(app)
 
 
 db = Workbench(host='boshpwqslechchug6yfq-mysql.services.clever-cloud.com',
@@ -28,19 +28,19 @@ db = Workbench(host='boshpwqslechchug6yfq-mysql.services.clever-cloud.com',
                port='3306')
 
 
-# ui = WebUI(myapp, debug= True)
-myapp.secret_key = 'ABCDEF'
+# ui = WebUI(app, debug= True)
+app.secret_key = 'ABCDEF'
 
 allproducts = []
 
 
-@myapp.route('/', methods=['GET', 'POST'])
+@app.route('/', methods=['GET', 'POST'])
 def index():
     return render_template("index.html")
 
 
 # login route
-@myapp.route('/api/login', methods=['POST'])
+@app.route('/api/login', methods=['POST'])
 def login():
     data = request.json
     # print(request.body)
@@ -79,7 +79,7 @@ def login():
 
 
 # register route
-@myapp.route('/api/register', methods=['POST'])
+@app.route('/api/register', methods=['POST'])
 def register():
     data = request.json
     # print(data)
@@ -120,8 +120,8 @@ def register():
     return jsonify({"status": 'User registered successfully'})
 
 
-@myapp.route('/Customerhome/', methods=['GET', 'POST'])
-@myapp.route('/Customerhome/<int:page>', methods=['GET', 'POST'])
+@app.route('/Customerhome/', methods=['GET', 'POST'])
+@app.route('/Customerhome/<int:page>', methods=['GET', 'POST'])
 def home(page=1):
     if 'email' in session:
         perPage = 20
@@ -177,7 +177,7 @@ def home(page=1):
         return redirect(url_for('index'))
 
 
-@myapp.route('/sellerHome')
+@app.route('/sellerHome')
 def sellerHome():
     if 'email' in session:
         user = session['email']
@@ -195,7 +195,7 @@ def sellerHome():
     return render_template('sellerHome.html', user=user, firstname=firstname, productdetails=productdetails, productlist=productlist, login_status=True)
 
 
-@myapp.route('/Profile', methods=['GET', 'POST'])
+@app.route('/Profile', methods=['GET', 'POST'])
 def profile():
     if 'email' in session:
         login_status = True
@@ -336,7 +336,7 @@ def profile():
     return render_template('profile.html', user=userinfo, firstname=userinfo[0]['firstname'], payinfo=result, login_status=login_status)
 
 
-@myapp.route('/cart')
+@app.route('/cart')
 def cart():
     if 'email' in session:
         user = session['email']
@@ -346,7 +346,7 @@ def cart():
     return render_template('cart.html', user=user, firstname=firstname, login_status=True)
 
 
-@myapp.route('/sellerProfile', methods=['GET', 'POST'])
+@app.route('/sellerProfile', methods=['GET', 'POST'])
 def sellerProfile():
     if 'email' in session:
         login_status = True
@@ -488,28 +488,28 @@ def sellerProfile():
     return render_template('sellerprofile.html', user=userinfo, firstname=userinfo[0]['firstname'], payinfo=result, login_status=login_status)
 
 
-@myapp.route('/myOrders')
+@app.route('/myOrders')
 def myOrders():
     pass
 
 
-@myapp.route('/productPage')
+@app.route('/productPage')
 def productPage():
     pass
 
 
-@myapp.route('/payment')
+@app.route('/payment')
 def payment():
     pass
 
 
-@myapp.route('/logout')
+@app.route('/logout')
 def logout():
     session.clear()
     return redirect(url_for('index'))
 
 
-@myapp.route('/api/getproducts', methods=['GET', 'POST'])
+@app.route('/api/getproducts', methods=['GET', 'POST'])
 def searchApi():
     # print(request.form)
     search = request.form['search']
@@ -530,4 +530,4 @@ def searchApi():
 
 
 if __name__ == "__main__":
-    myapp.run(debug=True)
+    app.run(debug=True)
