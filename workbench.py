@@ -2,7 +2,6 @@
 MySQL Workbench Module
 """
 
-from configparser import Error
 from os import error
 import mysql.connector
 from mysql.connector import Error
@@ -170,8 +169,8 @@ class Workbench(Column):
         curr = self.conn.cursor(dictionary=True)
         try:
             curr.execute(search)
-        except Error:
-            return Error
+        except Error as e:
+            raise e
         return curr.fetchall()
 
     def delete_from(self, tablename, where_clause=None, key='AND'):

@@ -11,6 +11,9 @@ import webbrowser
 from flask_cors import CORS
 import bcrypt
 import os
+from dotenv import load_dotenv
+
+load_dotenv()
 
 # from webui import WebUI
 
@@ -47,16 +50,17 @@ def index():
 @app.route('/api/login', methods=['POST'])
 def login():
     data = request.json
-    # print(request.body)
+    # print(data)
     email, password, user = data.values()
     tableName = 'customers' if user == 'customer' else 'suppliers'
     idName = 'custID' if user == 'customer' else 'supplierID'
     try:
         userData = db.select_from(
             tableName, [idName, 'firstname'], {'email': email})
-        # print(userID)
-    except:
+        # print(userData)
+    except Error as e:
         print('error while trying to get userData')
+        print(e)
         return jsonify({'status': 'Error trying to find the user data'})
 
     if not userData:
