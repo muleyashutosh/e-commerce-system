@@ -165,7 +165,8 @@ class Workbench(Column):
                             '"' for k, v in where_clause.items()]
             where = " WHERE " + key.join(where_clause) + ';'
         search = 'SELECT ' + attr + ' FROM ' + tablename + where
-        print(search)
+        # print(search)
+        self.connect_db()
         curr = self.conn.cursor(dictionary=True)
         try:
             curr.execute(search)
@@ -191,6 +192,7 @@ class Workbench(Column):
         else:
             query = 'DELETE FROM ' + tablename
         # print(query)
+        self.connect_db()
         curr = self.conn.cursor()
         curr.execute(query)
         self.conn.commit()
@@ -215,11 +217,13 @@ class Workbench(Column):
             query = 'UPDATE ' + tablename + ' SET ' + updates + ' WHERE ' + where
         else:
             query = 'UPDATE ' + tablename + ' SET ' + updates
+        self.connect_db()
         curr = self.conn.cursor()
         curr.execute(query)
         self.conn.commit()
 
     def custom_query(self, query):
+        self.connect_db()
         curr = self.conn.cursor(dictionary=True)
         try:
             curr.execute(query)
@@ -229,6 +233,7 @@ class Workbench(Column):
             return e
 
     def select_from_custom(self, query):
+        self.connect_db()
         curr = self.conn.cursor(dictionary=True)
         try:
             curr.execute(query)
