@@ -10,29 +10,15 @@ from re import I
 import webbrowser
 from flask_cors import CORS
 import bcrypt
-import os
-from dotenv import load_dotenv
+from db_config import CONFIG
 
-load_dotenv()
-
-# from webui import WebUI
-
-mysql_host = os.getenv('mysql-host')
-mysql_username = os.getenv('mysql-user')
-mysql_pwd = os.getenv('mysql-password')
-mysql_database = os.getenv('mysql-database')
-mysql_port = os.getenv('mysql-port')
 
 app = Flask(__name__)
 
 CORS(app)
 
 
-db = Workbench(host=mysql_host,
-               database=mysql_database,
-               user=mysql_username,
-               password=mysql_pwd,
-               port=mysql_port)
+db = Workbench(**CONFIG)
 
 
 # ui = WebUI(app, debug= True)
