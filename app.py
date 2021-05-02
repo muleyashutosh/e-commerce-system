@@ -22,12 +22,6 @@ mysql_username = os.getenv('mysql-user')
 mysql_pwd = os.getenv('mysql-password')
 mysql_database = os.getenv('mysql-database')
 mysql_port = os.getenv('mysql-port')
-print(mysql_host)
-print(mysql_database)
-print(mysql_port)
-print(mysql_pwd)
-print(mysql_username)
-
 
 app = Flask(__name__)
 
