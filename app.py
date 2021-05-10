@@ -198,8 +198,7 @@ def sellerHome():
         print(user, firstname, uid)
         productdetails = db.select_from(
             'supplierdet', where_clause={'supplierID': uid})
-        productlist = [db.select_from('products', where_clause={'prodID': x['prodID']})[
-            0] for x in productdetails]
+        productlist = [db.select_from('products', where_clause={'prodID': x['prodID']})[0] for x in productdetails]
         # print(productlist[0])
 
     else:
@@ -508,7 +507,7 @@ def myOrders():
 
 @app.route('/productPage')
 def productPage():
-    pass
+    return render_template('prodDetail.html')
 
 
 @app.route('/payment')
@@ -545,3 +544,13 @@ def searchApi():
             "data": products
         })
     )
+@app.route('/productDetail/<string:id>', methods=['GET'])
+def productDetail(id):
+    for x in allproducts:
+        if x['prodID']==id:
+            print(id);
+            return (jsonify(x))
+    return jsonify({"status": "not found"})
+
+    
+    
