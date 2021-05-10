@@ -14,7 +14,9 @@ CREATE TABLE customers (
     pwd VARCHAR(14) NOT NULL,
     joinDate date NOT NULL,
     paymentID INT,
+    cartID VARCHAR(20) NOT NULL;
     FOREIGN KEY (paymentdetailID) REFERENCES paymentdet(paymentdetailID),
+    FOREIGN KEY (cartID) REFERENCES cartDetails(cartID)
 );
 
 CREATE TABLE category (
