@@ -178,14 +178,6 @@ input[type="search"]:focus::-webkit-search-cancel-button {
     margin: 2px 5px 2px 0px;
 }
 
-.More{
-    background-color: #e1e6e2;
-    display: inline-block;
-    margin: 2px;
-    -ms-transform: translate(-0%, -50%);
-    transform: translate(-0%, -50%);
-  }
-}
 
 .noItemsFound {
     padding: 20px 20px 5px 20px;

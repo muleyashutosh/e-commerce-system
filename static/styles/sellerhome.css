@@ -9,7 +9,7 @@
 }
 
  .RightContainer{
-     width: 80%;
+     width: 98.5%;
  }
  .Statistics{
           border: 2px solid #fdc100;
@@ -24,13 +24,14 @@
          
 }  
 .StockDetails{
+    overflow-y :hidden;
     border: 2px solid #e1e6e2;
     background-color: #fdc100;
-    display: grid;
-    grid-template-columns: auto auto auto auto auto ;
-    float: left;
+    display: block;
+    
+    /* float: left; */
     width: 98.5%;
-    height: 44.5%;
+    height: 40%;
     align-items: center;
     text-align: center;
     margin:10px;
@@ -38,11 +39,19 @@
     
 }  
 
+#Holder{
+    width: max-content;
+    height: 100%;
 
+
+}
 
 .grid-item {
-    border: 2px solid #fdc100;
+    background-color:white;
+    border: 2px solid hsl(46, 100%, 50%);
     height: fit-content;
+    width:200px;
+    float:left;
     align-items: center;
     text-align: center;
     margin:10px;
@@ -68,7 +77,7 @@
     background-color: #fdc100;
     float: left;
     width: 98.5%;
-    height: 44.5%;
+    height: 50%;
     align-items: center;
     text-align: center;
     margin:10px;
