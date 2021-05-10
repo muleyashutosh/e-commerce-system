@@ -4,11 +4,9 @@ from werkzeug.utils import redirect
 from workbench import Workbench
 from random import randint
 from datetime import date
-import re
-from re import I
-import webbrowser
+from re import I, search
 from flask_cors import CORS
-import bcrypt
+from bcrypt import checkpw, hashpw, gensalt
 from db_config import CONFIG
 
 
@@ -59,7 +57,7 @@ def login():
             return jsonify({"status": 'Error trying to find the user data'})
 
         hashedPassword = hashedPassword[0]['hash']
-        if bcrypt.checkpw(password.encode(), hashedPassword.encode()):
+        if checkpw(password.encode(), hashedPassword.encode()):
             if email not in session:
                 session['email'] = email
                 session['firstname'] = userData[0]["firstname"]
@@ -94,7 +92,7 @@ def register():
         else:
             return jsonify({"status": 'Error inserting data into database'})
 
-    hashedPassword = bcrypt.hashpw(password.encode(), bcrypt.gensalt())
+    hashedPassword = hashpw(password.encode(), gensalt())
     try:
         db.insert_into('passwords', {
             'hash': hashedPassword.decode(),
@@ -532,11 +530,11 @@ def searchApi():
     print(search)
     # db = Workbench('minProj', password=mysql_pwd)
     if(cat != 0):
-        products = [x for x in allproducts if (re.search(search, x['prodName'], I) or re.search(
+        products = [x for x in allproducts if (search(search, x['prodName'], I) or search(
             search, x['prodDesc'], I)) and x['categoryID'] == cat]
         # products = db.select_from_custom(f"SELECT * FROM products WHERE (REGEXP_LIKE(prodName,'{search}') OR REGEXP_LIKE(prodDesc,'{search}')) AND categoryID= {cat}")
     else:
-        products = [x for x in allproducts if re.search(
+        products = [x for x in allproducts if search(
             search, x['prodName'], I)]
         # products = db.select_from_custom(f"SELECT * FROM products WHERE (REGEXP_LIKE(prodName,'{search}') OR REGEXP_LIKE(prodDesc,'{search}'))")
 
