@@ -193,10 +193,10 @@ def home(page=1):
 @app.route('/sellerHome')
 def sellerHome():
     if 'email' in session:
-        user, firstname, uid = session.values()
-        # user = session['email']
-        # firstname = session['firstname']
-        # uid = session['userID']'
+        # user, firstname, uid = session.values()
+        user = session['email']
+        firstname = session['firstname']
+        uid = session['userID']
         print(user, firstname, uid)
         productdetails = db.select_from(
             'supplierdet', where_clause={'supplierID': uid})
