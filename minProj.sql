@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 8.0.22, for Linux (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.23, for Linux (x86_64)
 --
 -- Host: localhost    Database: minProj
 -- ------------------------------------------------------
--- Server version	8.0.22
+-- Server version	8.0.23
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -84,9 +84,8 @@ CREATE TABLE `customers` (
   `pinCode` varchar(6) DEFAULT NULL,
   `pno` varchar(10) NOT NULL,
   `email` varchar(40) NOT NULL,
-  `pwd` varchar(14) NOT NULL,
   `joinDate` date NOT NULL,
-  `paymentID` int DEFAULT NULL,
+  `paymentID` varchar(20) DEFAULT NULL,
   PRIMARY KEY (`custID`),
   UNIQUE KEY `pno_UNIQUE` (`pno`),
   UNIQUE KEY `email_UNIQUE` (`email`)
@@ -99,8 +98,35 @@ CREATE TABLE `customers` (
 
 LOCK TABLES `customers` WRITE;
 /*!40000 ALTER TABLE `customers` DISABLE KEYS */;
-INSERT INTO `customers` VALUES ('C-7731996','Monica','Paliwal',NULL,NULL,NULL,NULL,'8145612354','monicapaliwal17@gmail.com','Monica@123','2020-11-15',NULL),('C-8283317','Saksham','Yadav',NULL,NULL,NULL,NULL,'9145774142','sakshamyadavpune@gmail.com','Saksham@123','2020-11-15',NULL),('C-9723854','Ashutosh','Muley',NULL,NULL,NULL,NULL,'9096080085','muleyashutosh@gmail.com','Ashu@12345','2020-11-15',NULL);
+INSERT INTO `customers` VALUES ('C-5236706','Nikhil','Gaikwad',NULL,NULL,NULL,NULL,'7020244686','nikhil@gmail.com','2021-04-13',NULL),('C-7731996','Monica','Paliwal',NULL,NULL,NULL,NULL,'8145612354','monicapaliwal17@gmail.com','2020-11-15',NULL),('C-8283317','Saksham','Yadav',NULL,NULL,NULL,NULL,'9145774142','sakshamyadavpune@gmail.com','2020-11-15',NULL),('C-9723854','Ashutosh','Muley',NULL,NULL,NULL,NULL,'9096080085','muleyashutosh@gmail.com','2020-11-15',NULL);
 /*!40000 ALTER TABLE `customers` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `passwords`
+--
+
+DROP TABLE IF EXISTS `passwords`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `passwords` (
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `hash` varchar(100) NOT NULL,
+  `userID` varchar(20) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id` (`id`),
+  UNIQUE KEY `userID` (`userID`)
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `passwords`
+--
+
+LOCK TABLES `passwords` WRITE;
+/*!40000 ALTER TABLE `passwords` DISABLE KEYS */;
+INSERT INTO `passwords` VALUES (1,'$2b$12$sjXncOaLoWYmbE/b7aTBp.ECh.AA6wvciHgiZ70VygxH703Fa00UK','C-7731996'),(2,'$2b$12$WZhdnj5lcjAy8vSN4L0QZuMUiRrrt9Z3nFsmEaPPW90OclUYqMUsy','C-8283317'),(3,'$2b$12$aaseAA9cbCBcleQqTi6XAe4w2VyvD4L3UR0/qX6NygpLogzKxx4UG','C-9723854'),(4,'$2b$12$U.cMzFtmX/TdSu2YakoSA.16aghLTWlHf/uIRGfS/MCv.xx0Vb4eq','S-1766765'),(5,'$2b$12$AzfWTU/hlrKNgzMTgGd4LOMWAOb/Otp5Zu6x0yGqf3YqdQ26xuGp6','S-2750505'),(6,'$2b$12$1Qexxq/MYrtj3rE/ini4/OlMVsE9HDD3uFIZkmQn1m8SX74ThQpfu','S-4754649'),(7,'$2b$12$31Okd1y3v8cV4kLUGQMm6OIdZzczvQl2caW3WJoX3JvZUlNeIugqm','S-4963842'),(8,'$2b$12$rqZG6HSafEsucLk1vhSeN.todCw6B/LVDNKUxYgIG7hwa04YTJURm','S-5607342'),(9,'$2b$12$.us05xNcLMy1DM1IJI806.d9YpN/8AAqIbAakQ2oCon26.HVJg2dy','S-5709556'),(10,'$2b$12$duhS6WbwxgvElCq901lvO.OQZKK0jFbSBH/fSpHjdXF866s/BKNOC','S-5887616'),(11,'$2b$12$tU.Fds/.5HEL7YIMQwmePOWjalvBhR1rq/jX8LajFSiYqobh/adye','S-6910637'),(12,'$2b$12$A4cnvMfNZIB0wNJ1k3Eb6.8T1d0a0zyeaffsXtnuufsdacA3D4Fze','S-8599811'),(13,'$2b$12$8HxaqR95nPePr5VWCYOKGe60PJrELlNkpvC27csQbWKSz1uWn9JFa','S-8703969'),(15,'$2b$12$3r.NMCjRAUf9EoUg5nvxguh1kDlB6xVr73XoNmUqcm8qT6ecUKjgS','C-5236706'),(16,'$2b$12$AJTxpz0QvoLOhu9IZu2cp.tSdjBH3boItwhx3vdEesVqiVMCR08zK','S-5109465');
+/*!40000 ALTER TABLE `passwords` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -212,10 +238,11 @@ CREATE TABLE `suppliers` (
   `pinCode` varchar(6) DEFAULT NULL,
   `pno` varchar(10) NOT NULL,
   `email` varchar(40) NOT NULL,
-  `pwd` varchar(14) NOT NULL,
   `joinDate` date NOT NULL,
-  `paymentID` int DEFAULT NULL,
-  PRIMARY KEY (`supplierID`)
+  `paymentID` varchar(20) DEFAULT NULL,
+  PRIMARY KEY (`supplierID`),
+  UNIQUE KEY `email_UNIQUE` (`email`),
+  UNIQUE KEY `pno_UNIQUE` (`pno`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -225,7 +252,7 @@ CREATE TABLE `suppliers` (
 
 LOCK TABLES `suppliers` WRITE;
 /*!40000 ALTER TABLE `suppliers` DISABLE KEYS */;
-INSERT INTO `suppliers` VALUES ('S-1766765','Cidindustries','Abhijeet','Patil',NULL,NULL,NULL,NULL,'8546231791','cidindustries@gmial.com','Cid@123','2020-11-19',NULL),('S-2750505','Megha Industries','Megha','Pandhey',NULL,NULL,NULL,NULL,'7589641362','meghaindustries@gmail.com','Megha@123','2020-11-19',NULL),('S-4754649','Gaikwad Suplliers','Nikhil','Gaikwad',NULL,NULL,NULL,NULL,'9632587415','gnikhil@gmail.com','Nikhil@123','2020-11-19',NULL),('S-4963842','Manik supply services','Manish','Sisodiya',NULL,NULL,NULL,NULL,'9563214785','manik@gmail.com','manik@123','2020-11-19',NULL),('S-5607342','Kuber traiding','Dayanand','Parekh',NULL,NULL,NULL,NULL,'7412369851','kubertraiding@gmail.com','Kuber@123','2020-11-19',NULL),('S-5709556','Yadav Enterprises','Saksham','Yadav',NULL,NULL,NULL,NULL,'9145774142','sakshamyadavpune@gmail.com','Saksham@123','2020-11-15',NULL),('S-5887616','Jai mata di suppliers','Pankaj','Purohit',NULL,NULL,NULL,NULL,'4455887799','jaimatadi@gmail.com','Jaimatadi','2020-11-19',NULL),('S-6910637','Muley trading company','Ashutosh','Muley',NULL,NULL,NULL,NULL,'9096080085','muleyashutosh@gmail.com','Ashu@123','2020-11-19',NULL),('S-8599811','Kundra industries','Raj','Kundra',NULL,NULL,NULL,NULL,'9512346873','shilpashetty@gmail.com','Shilpa@123','2020-11-19',NULL),('S-8703969','Paliwal Enterprises','Monica','Paliwal',NULL,NULL,NULL,NULL,'8456123456','monicapaliwal17@gmail.com','Monica@123','2020-11-17',NULL);
+INSERT INTO `suppliers` VALUES ('S-1766765','Cidindustries','Abhijeet','Patil',NULL,NULL,NULL,NULL,'8546231791','cidindustries@gmial.com','2020-11-19',NULL),('S-2750505','Megha Industries','Megha','Pandhey',NULL,NULL,NULL,NULL,'7589641362','meghaindustries@gmail.com','2020-11-19',NULL),('S-4754649','Gaikwad Suplliers','Nikhil','Gaikwad',NULL,NULL,NULL,NULL,'9632587415','gnikhil@gmail.com','2020-11-19',NULL),('S-4963842','Manik supply services','Manish','Sisodiya',NULL,NULL,NULL,NULL,'9563214785','manik@gmail.com','2020-11-19',NULL),('S-5109465','Holland Electronics','Sam','Holland',NULL,NULL,NULL,NULL,'9874563125','sam@gmail.com','2021-04-13',NULL),('S-5607342','Kuber traiding','Dayanand','Parekh',NULL,NULL,NULL,NULL,'7412369851','kubertraiding@gmail.com','2020-11-19',NULL),('S-5709556','Yadav Enterprises','Saksham','Yadav',NULL,NULL,NULL,NULL,'9145774142','sakshamyadavpune@gmail.com','2020-11-15',NULL),('S-5887616','Jai mata di suppliers','Pankaj','Purohit',NULL,NULL,NULL,NULL,'4455887799','jaimatadi@gmail.com','2020-11-19',NULL),('S-6910637','Muley trading company','Ashutosh','Muley',NULL,NULL,NULL,NULL,'9096080085','muleyashutosh@gmail.com','2020-11-19',NULL),('S-8599811','Kundra industries','Raj','Kundra',NULL,NULL,NULL,NULL,'9512346873','shilpashetty@gmail.com','2020-11-19',NULL),('S-8703969','Paliwal Enterprises','Monica','Paliwal',NULL,NULL,NULL,NULL,'8456123456','monicapaliwal17@gmail.com','2020-11-17',NULL);
 /*!40000 ALTER TABLE `suppliers` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -252,6 +279,14 @@ LOCK TABLES `upidet` WRITE;
 /*!40000 ALTER TABLE `upidet` DISABLE KEYS */;
 /*!40000 ALTER TABLE `upidet` ENABLE KEYS */;
 UNLOCK TABLES;
+
+--
+-- Dumping events for database 'minProj'
+--
+
+--
+-- Dumping routines for database 'minProj'
+--
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -262,4 +297,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-11-27 21:48:43
+-- Dump completed on 2021-04-14  0:35:16
