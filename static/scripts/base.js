@@ -3,7 +3,7 @@ NProgress.configure({ showSpinner: false })
 const {MDCRipple} = mdc.ripple;
 const {MDCTooltip} = mdc.tooltip;
 
-const tooltip = [].map.call(document.querySelectorAll('.mdc-tooltip'), el => {
+const tooltips = [].map.call(document.querySelectorAll('.mdc-tooltip'), el => {
     return new MDCTooltip(el);
 });
 
@@ -44,8 +44,6 @@ $(document).ready(() => {
     window.onclick = function(e) {
         if (!e.target.matches('#dropbtn') && !e.target.matches('#drop-btn')) {
             $('#drop-content').slideUp();
-            if($('#drop-content').css('display') == 'block')
-                switchClass();
         }
         
     }

@@ -1,4 +1,3 @@
-// const {MDCRipple} = mdc.ripple;
 const { MDCCheckbox } = mdc.checkbox;
 const { MDCFormField } = mdc.formField;
 const { MDCRadio } = mdc.radio;
@@ -87,7 +86,7 @@ $(document).ready(function () {
     // console.log(pages.get().reverse())
 
 
-    function QuerySearch(query, category, callback) {
+    const QuerySearch = (query, category, callback) => {
         $.ajax({
             method: 'post',
             url: '/api/getproducts',
@@ -98,73 +97,108 @@ $(document).ready(function () {
             success: callback
         })
     }
-    var allproducts = $('.grid-container').contents();
+    const gridContainer = $('.grid-container')
+    var allproducts = gridContainer.contents();
+    const searchInput = $('#search')
+    const searchButton = $('#search-icon')
     // console.log(allproducts)
-    $('#search-icon').click(function () {
-        if ($('#search').val().trim() == '') {
+
+
+    const renderProducts = ({ status, data }) => {
+        // console.log(re111s)
+        if (status !== 'OK')
+            return;
+        NProgress.done();
+        if (data.length == 0) {
+            // console.log('val ' + $("#search").val().trim() + ', data empty')
+            var error = '<div class="noItemsFound"><h2>Oops, No Items matching your search were found!</h2><hr></div>'
+            if (!$('.main-content').has('.noItemsFound').length)
+                $('.main-content').append(error)
+            $(".grid-container").empty()
+        }
+        else {
+            // console.log('val ' + $("#search").val().trim() + ', res not empty')
+            const html = data.reduce((prev, item) => {
+                return `${prev}<div class='grid-item mdc-elevation--z2' id='${item['prodID']}'>
+                            <img src="${item['img']}" alt="">
+                            <div>${item['prodName']}</div>
+                            <div class='priceTag'>&#x20B9; ${item['minPrice']}.00</div>
+                            <span class="addCartButtonContainer">
+                                <button class="addToCart mdc-button mdc-button--raised">
+                                    <span class="mdc-button__ripple"></span>
+                                    <i class="material-icons mdc-button__icon" aria-hidden="true">
+                                        add_shopping_cart
+                                    </i>
+                                    <span class="mdc-button__label">Add to Cart</span>
+                                </button>
+                            </span>
+                        </div>`
+            }, "")
+            $('.noItemsFound').remove()
+            gridContainer.empty();
+            gridContainer.append(html);
+            $('.pageswitcher').hide();
+
+            initialize_button_Ripples();
+        }
+
+    }
+
+
+
+
+    searchButton.click(function () {
+        if (searchInput.val().trim() == '') {
             if (allproducts.length == 0) {
                 // console.log('val empty, productslist empty')
                 var error = '<div class="noItemsFound"><h2>Oops, No Items matching your search were found!</h2><hr></div>'
-                $('.grid-container').empty()
+                gridContainer.empty()
                 $('.main-content').append(error);
             }
             else {
                 // console.log('val empty, productslist not empty')
                 $('.noItemsFound').remove();
-                if (!$('.grid-container').contents().length)
-                    $('.grid-container').append(allproducts);
+                if (!gridContainer.contents().length)
+                    gridContainer.append(allproducts);
                 $('.pageswitcher').slideDown();
             }
 
         }
         else {
             NProgress.start()
-            QuerySearch($('#search').val().trim(), $('#category').val(), function (res) {
-                // console.log(res)
-                NProgress.done();
-                if (res.length == 0) {
-                    // console.log('val ' + $("#search").val().trim() + ', res empty')
-                    var error = '<div class="noItemsFound"><h2>Oops, No Items matching your search were found!</h2><hr></div>'
-                    if (!$('.main-content').has('.noItemsFound').length)
-                        $('.main-content').append(error)
-                    $(".grid-container").empty()
-                }
-                else {
-                    // console.log('val ' + $("#search").val().trim() + ', res not empty')
-                    html = ''
-                    for (let x = 0; x < res.length; x++) {
-                        html += "<div class='grid-item mdc-elevation--z2' id='" + res[x]['prodID'] + "'>"
-                        html += '<img src="' + res[x]['img'] + '" alt="">'
-                        html += "<div>" + res[x]['prodName'] + "</div>"
-                        html += `<div class='priceTag'>&#x20B9; ` + res[x]['minPrice'] + `.00</div>
-                                    <span class="addCartButtonContainer">
-                                        <button class="addToCart mdc-button mdc-button--raised">
-                                            <span class="mdc-button__ripple"></span>
-                                            <i class="material-icons mdc-button__icon" aria-hidden="true">
-                                                add_shopping_cart
-                                            </i>
-                                            <span class="mdc-button__label">Add to Cart</span>
-                                        </button>
-                                    </span>
-                                </div>`
-                    }
-                    $('.noItemsFound').remove()
-                    $('.grid-container').empty();
-                    $('.grid-container').append(html);
-                    $('.pageswitcher').hide();
-
-                    initialize_button_Ripples();
-
-                }
-            })
+            QuerySearch(searchInput.val().trim(), $('#category').val(), renderProducts)
         }
     })
 
 
-    $('#search').keypress(function (e) {
+    searchInput.keypress(function (e) {
         if (e.keyCode == 13) {
             $('#search-icon').click()
         }
+    })
+
+    const fetchFilteredProducts = async (body) => {
+        const resp = await fetch("/api/filter", {
+            headers: { 'Content-Type': "application/json" },
+            method: "post",
+            body: body
+        })
+        const data = resp.json();
+        return data;
+    }
+
+
+
+    const filterForm = document.querySelector('#filter')
+    filterForm.addEventListener('submit', (event) => {
+        event.preventDefault();
+        NProgress.start()
+        const formData = new FormData(filterForm)
+        const body = JSON.stringify(Object.fromEntries(formData))
+        fetchFilteredProducts(body).then((data) => {
+            renderProducts(data)
+        })
+
     })
 
 

@@ -14,7 +14,7 @@ CREATE TABLE customers (
     pwd VARCHAR(14) NOT NULL,
     joinDate date NOT NULL,
     paymentID INT,
-    -- FOREIGN KEY (paymentID) REFERENCES paymentdet(paymentdetailID),
+    FOREIGN KEY (paymentdetailID) REFERENCES paymentdet(paymentdetailID),
 );
 
 CREATE TABLE category (
@@ -50,7 +50,7 @@ CREATE TABLE suppliers (
     pwd VARCHAR(14) NOT NULL,
     joinDate date NOT NULL,
     paymentID INT,
-    -- FOREIGN KEY (paymentID) REFERENCES paymentdet(paymentdetailID),
+    FOREIGN KEY (paymentdetailID) REFERENCES paymentdet(paymentdetailID),
 );
 
 
@@ -97,7 +97,17 @@ end //
 delimiter ;
 
 
+CREATE TABLE cartDetails (
+    cartID VARCHAR(20) PRIMARY KEY NOT NULL,
+    subtotal INT default 0
+);
 
 
-
-
+CREATE TABLE cart(
+    cartID VARCHAR(20) NOT NULL ,
+    prodID VARCHAR(50) NOT NULL ,
+    PRIMARY KEY(cartID, prodID),
+    quantity INT default 1,
+    FOREIGN KEY (prodID) REFERENCES products(prodID),
+    FOREIGN KEY (cartID) REFERENCES cartDetails(cartID)
+);

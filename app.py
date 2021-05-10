@@ -1,5 +1,4 @@
 from flask import Flask, json, render_template, request, session, url_for, jsonify
-# from livereload import Server
 from mysql.connector import Error
 from werkzeug.utils import redirect
 from workbench import Workbench
@@ -20,8 +19,6 @@ CORS(app)
 
 db = Workbench(**CONFIG)
 
-
-# ui = WebUI(app, debug= True)
 app.secret_key = 'ABCDEF'
 
 allproducts = []
@@ -113,6 +110,55 @@ def register():
         session['userID'] = data[idName]
     return jsonify({"status": 'User registered successfully'})
 
+# filter products route
+
+
+@app.route('/api/filter', methods=['POST'])
+def filter():
+    data = request.json
+    # print(payload)
+    query = 'SELECT * FROM products'
+    filters = []
+    if (len(data) >= 1 and 'price' not in data) or len(data) > 1:
+        categoryIDs = []
+        for k, v in data.items():
+            if k != 'price':
+                categoryIDs.append(v)
+        print(categoryIDs)
+        cat = ['categoryID = ' + x for x in categoryIDs]
+        cat = '(' + ' OR '.join(cat) + ')'
+        filters.append(cat)
+
+    if('price' in data):
+        priceconstraint = '(minPrice'
+        if data['price'] == '1':
+            priceconstraint += '< 1000)'
+        elif data['price'] == '2':
+            priceconstraint += '>= 1000 AND minPrice<= 5000)'
+        elif data['price'] == '3':
+            priceconstraint += '>= 5000 AND minPrice<= 10000)'
+        elif data['price'] == '4':
+            priceconstraint += '>= 10000 AND minPrice<= 20000)'
+        else:
+            priceconstraint += '> 20000)'
+        filters.append(priceconstraint)
+
+    filters = ' AND '.join(filters)
+    filters += ';'
+    query = ' WHERE '.join([query, filters])
+    print(query)
+    try:
+        products = db.select_from_custom(query)
+    except Error as e:
+        print(e)
+        return jsonify({
+            status: "Error while accessing database"
+        })
+    return jsonify({
+        "status": "OK",
+        "data": products
+    })
+
 
 @app.route('/Customerhome/', methods=['GET', 'POST'])
 @app.route('/Customerhome/<int:page>', methods=['GET', 'POST'])
@@ -122,51 +168,24 @@ def home(page=1):
         startAt = perPage * page - perPage
         user = session['email']
         firstname = session['firstname']
-        if request.method == 'POST' and request.form:
-            payload = request.form
-            # print(payload)
-            query = 'SELECT * FROM products'
-            filters = []
-            if (len(payload) >= 1 and 'price' not in payload) or len(payload) > 1:
-                categoryIDs = []
-                for k, v in payload.items():
-                    if k != 'price':
-                        categoryIDs.append(v)
-                print(categoryIDs)
-                cat = ['categoryID = ' + x for x in categoryIDs]
-                cat = '(' + ' OR '.join(cat) + ')'
-                filters.append(cat)
-
-            if('price' in payload):
-                priceconstraint = '(minPrice'
-                if payload['price'] == '1':
-                    priceconstraint += '< 1000)'
-                elif payload['price'] == '2':
-                    priceconstraint += '>= 1000 AND minPrice<= 5000)'
-                elif payload['price'] == '3':
-                    priceconstraint += '>= 5000 AND minPrice<= 10000)'
-                elif payload['price'] == '4':
-                    priceconstraint += '>= 10000 AND minPrice<= 20000)'
-                else:
-                    priceconstraint += '> 20000)'
-                filters.append(priceconstraint)
-
-            filters = ' AND '.join(filters)
-            filters += ';'
-            query = ' WHERE '.join([query, filters])
-            print(query)
-            products = db.select_from_custom(query)
-            filter = True
-            return render_template('home.html', user=user, firstname=firstname, products=products, page=page, filter=filter, login_status=True)
-        else:
-            products = db.select_from('products')
-            global allproducts
-            allproducts = products
-            totalPages = len(products) // 20 + 1
-            # print(totalPages)
-            products = products[startAt:startAt + perPage]
-            filter = False
-            return render_template('home.html', user=user, firstname=firstname, products=products, page=page, totalPages=totalPages, filter=filter, login_status=True)
+        global allproducts
+        if not len(allproducts):
+            allproducts = db.select_from('products')
+        products = allproducts
+        totalPages = len(products) // 20 + 1
+        # print(totalPages)
+        products = products[startAt:startAt + perPage]
+        filter = False
+        payload = {
+            "user" : user,
+            "firstname" : firstname,
+            "products" : products,
+            "page" : page,
+            "totalPages": totalPages,
+            "filter" : filter,
+            "login_status": True
+        }
+        return render_template('home.html', **payload)
     else:
         return redirect(url_for('index'))
 
@@ -174,9 +193,11 @@ def home(page=1):
 @app.route('/sellerHome')
 def sellerHome():
     if 'email' in session:
-        user = session['email']
-        firstname = session['firstname']
-        uid = session['userID']
+        user, firstname, uid = session.values()
+        # user = session['email']
+        # firstname = session['firstname']
+        # uid = session['userID']'
+        print(user, firstname, uid)
         productdetails = db.select_from(
             'supplierdet', where_clause={'supplierID': uid})
         productlist = [db.select_from('products', where_clause={'prodID': x['prodID']})[
@@ -194,7 +215,7 @@ def profile():
     if 'email' in session:
         login_status = True
         session['paymentdetailID'] = db.select_from("customers", attributes=[
-                                                    'paymentID'], where_clause={'custID': session['userID']})[0]['paymentID']
+                                                    'paymentdetailID'], where_clause={'custID': session['userID']})[0]['paymentdetailID']
         if request.method == 'POST':
             payload = request.form
             card = ['cardName', 'bankName', 'cardNum', 'cvv', 'expDate']
@@ -230,7 +251,7 @@ def profile():
                             return 'upidet.upiID'
                     if 'upidetailID' in payinfo or 'carddetailID' in payinfo:
                         session['paymentdetailID'] = payinfo['paymentdetailID']
-                        payloads['paymentID'] = payinfo['paymentdetailID']
+                        payloads['paymentdetailID'] = payinfo['paymentdetailID']
                         db.insert_into("paymentdet", values=payinfo)
                 else:
                     print(session)
@@ -346,7 +367,7 @@ def sellerProfile():
         login_status = True
         print(session)
         session['paymentdetailID'] = db.select_from("suppliers", attributes=[
-                                                    'paymentID'], where_clause={'supplierID': session['userID']})[0]['paymentID']
+                                                    'paymentdetailID'], where_clause={'supplierID': session['userID']})[0]['paymentdetailID']
         if request.method == 'POST':
             payload = request.form
             card = ['cardName', 'bankName', 'cardNum', 'cvv', 'expDate']
@@ -382,7 +403,7 @@ def sellerProfile():
                             return 'upidet.upiID'
                     if 'upidetailID' in payinfo or 'carddetailID' in payinfo:
                         session['paymentdetailID'] = payinfo['paymentdetailID']
-                        payloads['paymentID'] = payinfo['paymentdetailID']
+                        payloads['paymentdetailID'] = payinfo['paymentdetailID']
                         db.insert_into("paymentdet", values=payinfo)
                 else:
                     print(session)
@@ -520,4 +541,9 @@ def searchApi():
         # products = db.select_from_custom(f"SELECT * FROM products WHERE (REGEXP_LIKE(prodName,'{search}') OR REGEXP_LIKE(prodDesc,'{search}'))")
 
     # print(len(products))
-    return (jsonify(products))
+    return (
+        jsonify({
+            "status": "OK",
+            "data": products
+        })
+    )
