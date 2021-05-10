@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block title %}
+ProductDetail
+{% endblock %}
+{% block head %}
+<link rel="stylesheet" href="{{url_for('static', filename = 'styles/profile.css')}}">
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+{% endblock %}
+{% block body %}
+<div class='grid-container'>
+    
+</div>
+{% endblock %}
+{% block scripts %}
+<script src="{{ url_for('static', filename='scripts/prodfetch.js') }}"></script>
+{% endblock %}

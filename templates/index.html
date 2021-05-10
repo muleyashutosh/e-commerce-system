@@ -1,227 +1,172 @@
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Welcome</title>
-    <link rel="icon" href="https://ik.imagekit.io/milyzn5unt/e-commerce-system/cart-2-512_iEf65WcBxP.png" type="image/x-icon">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="{{url_for('static', filename = 'styles/login.css')}}">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Welcome</title>
+  <link rel="icon" href="https://ik.imagekit.io/milyzn5unt/e-commerce-system/cart-2-512_iEf65WcBxP.png"
+    type="image/x-icon">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+  <link href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css" rel="stylesheet">
+  <script src="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js"></script>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" href="{{ url_for('static', filename='nprogress/nprogress.css') }}">
+  <link rel="stylesheet" href="{{url_for('static', filename = 'styles/login.css')}}">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+    rel="stylesheet">
+
 </head>
+
 <body>
-    <div class = 'headerClass col-12'>   
-        <div align = 'center'></div>
+  <div class="content">
+    <div class='headerClass col-12'>
+      <div align='center'></div>
     </div>
-    <div class = 'mainClass' id = 'main' align = 'center'>
-        <div align = 'center' class = 'switchHead'>
-            <div class = 'col-6' id = 'login-btn' onclick="showForm('login')">Login</div>
-            <div class = 'col-6' id = 'signup-btn' onclick="showForm('signup')">Signup</div>
-        </div>
-        <div class = 'formsClass' id= 'forms'>
+    <div class='mainClass' id='main' align='center'>
+      <div align='center' class='switchHead'>
+        <div class='col-6' id='login-btn' onclick="showForm('login')">Login</div>
+        <div class='col-6' id='signup-btn' onclick="showForm('signup')">Signup</div>
+      </div>
+      <div class='formsClass' id='forms'>
 
-            <div id ='signup' class = 'signupClass'>
-                <br>
-                <form name = 'signupform' action="/" id = 'signupform' method = 'POST'> 
-                    <div class = 'radioDiv'>
-                        <label>
-                            <input id = 'custoption' type='radio' name = 'user' value = 'customer' checked>Customer
-                        </label>
-                        <label>
-                            <input id = 'selloption' type='radio' name = 'user' value = 'seller' >Seller
-                        </label>
-                    </div>
-                    
-                    <div class = 'inputContain'>
-                       <input class = 'inputClass' name = 'firstName' onfocus='hide()' value="" type = 'text' required>
-                       <label class = 'moveLabel' for = 'firstName'>First Name</label>
-                    </div>
-                    <div class = 'inputContain'>
-                        <input class = 'inputClass' name = 'lastName' onfocus='hide()' value="" type = 'text' required>
-                        <label class = 'moveLabel' for = 'lastName'>Last Name</label>
-                    </div>
-                    <div id = 'orgName' class = 'inputContain'>
-                        <input id ='orgInput'class = 'inputClass' name = 'orgname' onfocus='hide()' value="" type = 'text'>
-                        <label class = 'moveLabel' for = 'orgname'>Organisation</label>
-                    </div>
-
-                    <div class = 'inputContain'>   
-                        <input class = 'inputClass' id= 'emailSign' name = 'email' onfocusout='checker1(this)' onfocus="checker2(this);hide()" value="" type = 'email' required>
-                        <label class = 'moveLabel' for = 'email' id = 'emailSignLab'>Email</label>
-                    </div>
-                    <div class = 'inputContain'>   
-                        <input class = 'inputClass' type='password' onfocus='hide()' value="" name = 'pwd' required>
-                        <label class = 'moveLabel'>Password</label>
-                    </div>
-                    <div class = 'inputContain'>
-                        <input class = 'inputClass' id = 'mob' type = 'tel' onfocusout='checker1(this)' onfocus="checker2(this); hide()" pattern = '[1-9][0-9]{9}' title= 'Mobile no must contain 10 digits' value="" name = 'pno' required>
-                        <label class = 'moveLabel' for = 'mob_no' id = 'mobLab'>Mobile No.</label>
-                    </div>
-                    <input type = 'hidden' name = 'signup'>
-                    <div id = 'error1' class = 'errMsg'>
-                        Email id/ Mobile number already registered.<br>Please <a href=''onclick='showForm("login")'>Login</a> to continue.
-                    </div>
-                    <input class = 'submit' type = 'submit' value= 'Create an Account'><br>
-        
-                </form>
-                
+        <div id='signup' class='signupClass'>
+          <br>
+          <form name='signupform' id='signupform' onsubmit="OnRegister(event)" method='POST'>
+            <div class='radioDiv'>
+              <div class="mdc-form-field">
+                <div class="mdc-radio">
+                  <input class="mdc-radio__native-control userRadio" type="radio" id="custoption" name="user"
+                    value='customer' checked>
+                  <div class="mdc-radio__background">
+                    <div class="mdc-radio__outer-circle"></div>
+                    <div class="mdc-radio__inner-circle"></div>
+                  </div>
+                  <div class="mdc-radio__ripple"></div>
+                </div>
+                <label for="custoption">Customer</label>
+              </div>
+              <div class="mdc-form-field">
+                <div class="mdc-radio">
+                  <input class="mdc-radio__native-control userRadio" type="radio" id='selloption' type='radio'
+                    name='user' value='seller'>
+                  <div class="mdc-radio__background">
+                    <div class="mdc-radio__outer-circle"></div>
+                    <div class="mdc-radio__inner-circle"></div>
+                  </div>
+                  <div class="mdc-radio__ripple"></div>
+                </div>
+                <label for="selloption">Seller</label>
+              </div>
             </div>
 
-            <div id = 'login' class = 'loginClass'>
-                <br>
-                <form name = 'loginform' action = "/" id = 'loginform' method="POST"> 
-                    <div class = 'inputContain'>
-                        <input id = 'emailLog' class = 'inputClass' onfocus="checker2(this); hide()" onfocusout='checker1(this)' type = 'email' name = 'email' value='' required>
-                        <label class = 'moveLabel' for = 'email' id = 'emailLogLab'>Email</label>
-                    </div>
-                    <div class = 'inputContain'>
-                        <input class = 'inputClass' id = 'passIn' onfocus='hide()' type='password' value="" name = 'pwd' required>
-                        <label class = 'moveLabel'>Password</label>
-                        <img id = 'eye' onclick="showPass()" src = 'https://ik.imagekit.io/milyzn5unt/e-commerce-system/showPassNormal_hI4WkY3i2z.svg'>
-                    </div> 
-                    <div class = 'radioDiv'>
-                        <label>
-                            <input type='radio' name = 'user' value = 'customer' checked>Customer
-                        </label>
-                        <label>
-                            <input type='radio' name = 'user' value = 'seller' >Seller
-                        </label>
-                    </div>
-                    
-                    <div class = 'errMsg' id = 'error'>*Invalid email / password</div>
-                    <input type = 'hidden' name = 'login'><br>
-                    <input class = 'submit' type = 'submit' value = 'Login'><br>
-                </form>
-        
+            <div class='inputContain'>
+              <input class='inputClass' name='firstname' onfocus='hide()' value="" type='text' required>
+              <label class='moveLabel' for='firstname'>First Name</label>
             </div>
-            
+            <div class='inputContain'>
+              <input class='inputClass' name='lastname' onfocus='hide()' value="" type='text' required>
+              <label class='moveLabel' for='lastname'>Last Name</label>
+            </div>
+            <div id='orgName' class='inputContain'>
+              <input id='orgInput' class='inputClass' name='orgname' onfocus='hide()' value="" type='text' disabled>
+              <label class='moveLabel' for='orgname'>Organisation</label>
+            </div>
+            <div class='inputContain'>
+              <input class='inputClass' id='emailSign' name='email' onfocusout='checker1(this)'
+                onfocus="checker2(this);hide()" value="" type='email' required>
+              <label class='moveLabel' for='email' id='emailSignLab'>Email</label>
+            </div>
+            <div class='inputContain'>
+              <input class='inputClass' type='password' onfocus='hide()' value="" name='pwd' required>
+              <label class='moveLabel'>Password</label>
+            </div>
+            <div class='inputContain'>
+              <input class='inputClass' id='mob' type='tel' onfocusout='checker1(this)' onfocus="checker2(this); hide()"
+                pattern='[1-9][0-9]{9}' title='Mobile no must contain 10 digits' value="" name='pno' required>
+              <label class='moveLabel' for='mob_no' id='mobLab'>Mobile No.</label>
+            </div>
+            <div id='error1' class='errMsg'>
+              Email id/ Mobile number already registered.<br>Please <a onclick='showForm("login")'>Login</a> to
+              continue.
+            </div>
+            <input class='submit' type='submit' value='Create an Account'><br>
+
+          </form>
+
         </div>
-        
+
+        <div id='login' class='loginClass'>
+          <br>
+          <form name='loginform' onsubmit="onSignIn(event)" id='loginform' method='POST'>
+            <div class='inputContain'>
+              <input id='emailLog' class='inputClass' onfocus="checker2(this); hide()" onfocusout='checker1(this)'
+                type='email' name='email' value='' required>
+              <label class='moveLabel' for='email' id='emailLogLab'>Email</label>
+            </div>
+            <div class='inputContain'>
+              <input class='inputClass' id='passIn' onfocus='hide()' type='password' value="" name='pwd' required>
+              <label class='moveLabel'>Password</label>
+              <img id='eye' onclick="showPass()"
+                src='https://ik.imagekit.io/milyzn5unt/e-commerce-system/showPassNormal_hI4WkY3i2z.svg'>
+            </div>
+            <div class='radioDiv'>
+              <div class="mdc-form-field">
+                <div class="mdc-radio">
+                  <input class="mdc-radio__native-control" id='custOptionLogin' type='radio' name='loginUser'
+                    value='customer' checked>
+                  <div class="mdc-radio__background">
+                    <div class="mdc-radio__outer-circle"></div>
+                    <div class="mdc-radio__inner-circle"></div>
+                  </div>
+                  <div class="mdc-radio__ripple"></div>
+                </div>
+                <label for="custOptionLogin">Customer</label>
+              </div>
+              <div class="mdc-form-field">
+                <div class="mdc-radio">
+                  <input class="mdc-radio__native-control" id='sellerOptionLogin' type='radio' name='loginUser'
+                    value='seller'>
+                  <div class="mdc-radio__background">
+                    <div class="mdc-radio__outer-circle"></div>
+                    <div class="mdc-radio__inner-circle"></div>
+                  </div>
+                  <div class="mdc-radio__ripple"></div>
+                </div>
+                <label for="sellerOptionLogin">Seller</label>
+              </div>
+
+            </div>
+
+            <div class='errMsg' id='error'>Email or Password combination is incorrect</div><br>
+            <input class='submit' type='submit' value='Login'><br>
+          </form>
+
+        </div>
+
+      </div>
+
     </div>
+
+  </div>
+  <div class="mdc-snackbar">
+    <div class="mdc-snackbar__surface" role="status" aria-relevant="additions">
+      <div class="mdc-snackbar__label" aria-atomic="false">
+        Error occurred while accessing the database.
+      </div>
+      <div class="mdc-snackbar__actions" aria-atomic="true">
+        <button type="button" class="mdc-icon-button mdc-snackbar__action material-icons">
+          close
+        </button>
+      </div>
+    </div>
+  </div>
 </body>
 
 
+<script src="{{ url_for('static', filename='nprogress/nprogress.js') }}"></script>
+<script src="{{ url_for('static', filename='scripts/login.js') }}"></script>
 
-<script> 
-    function showForm(id) {
-        if(id === 'login') {
-            var curr = 'login';
-            var other = 'signup';
-            document.getElementById(other + '-btn').style.boxShadow = 'inset 10px -10px 5px 0px #888888';
-            document.getElementById(curr + '-btn').style.boxShadow = 'none';
-            document.getElementById('forms').style.transform = 'translateX(-50%)'
-        }
-        else {
-            var curr = 'signup'
-            var other = 'login'
-            document.getElementById(other + '-btn').style.boxShadow = 'inset -10px -10px 5px 0px #888888'
-            document.getElementById(curr + '-btn').style.boxShadow = 'none';
-            document.getElementById('forms').style.transform = 'translateX(0%)'
-        }
-        // document.getElementById(curr).style.display = 'block';
-        document.getElementById(curr + '-btn').style.backgroundColor = '#e1e6e2';
-        document.getElementById(curr + '-btn').style.fontWeight = 'bold';
-        document.getElementById(other + '-btn').style.backgroundColor = '#a4a6a6';
-        // document.getElementById(other).style.display = 'none';
-        document.getElementById(other + '-btn').style.fontWeight = 'normal';
-        document.getElementById('error1').style.display = 'none';
-
-    }
-
-    function showPass() {
-        var x = document.getElementById('passIn')
-        var eye = document.getElementById('eye')
-        if(x.type === 'password') {
-            x.type = 'text';
-            eye.src = "https://ik.imagekit.io/milyzn5unt/e-commerce-system/showPassSelected_Z472MnFZm.svg"
-        }
-        else {
-            x.type = 'password';
-            eye.src = "https://ik.imagekit.io/milyzn5unt/e-commerce-system/showPassNormal_hI4WkY3i2z.svg"
-        }
-    }
-    
-    function hide() {
-        document.getElementById('error').style.display = 'none';
-        document.getElementById('error1').style.display = 'none';
-    }
-
-    function checker2(x) {
-        x.style.border = '2px solid #f2a305'
-        x.style.transform = 'scale(1.05,1.05)'
-        var label = document.getElementById(x.id +'Lab')
-        // console.log(x.style.transform)
-        label.style.zIndex = 1;
-        label.style.fontWeight = 'bold';
-        label.style.top = '-18px';
-        label.style.color = '#f2a305';
-    }
-
-    function checker1(x) {
-        if(x.value == '') {
-            x.style.border = '2px solid #3f3f3f';
-            x.style.transform = 'scale(1,1)'
-            var label = document.getElementById(x.id +'Lab')
-            label.zIndex = '-1'
-            label.style.color = '#999999';
-            label.style.fontWeight = 'normal';
-            label.style.top = '5px';
-       }
-       else if(!x.checkValidity()) {
-            x.style.transform = 'scale(1.05,1.05)'
-            x.style.border = '2px solid #d32710';
-            var label = document.getElementById(x.id +'Lab')
-            label.style.zIndex = 1;
-            label.style.color = '#d32710';
-            label.style.fontWeight = 'bold';
-            label.style.top = '-18px';
-       }
-       else if(x.checkValidity()) {
-            x.style.border = '2px solid #3f3f3f';
-            var label = document.getElementById(x.id +'Lab')
-            label.style.color = '#3f3f3f';
-            label.style.transform = 'scale(1.05,1.05)'
-       }
-    }
-
-    document.getElementById('selloption').addEventListener('change', function() {
-        var x = document.getElementById('orgName')
-        if(document.getElementById('selloption').checked) {
-            x.style.display = 'block'
-            document.getElementById('orgInput').required = true;
-            
-        }
-        else {
-            x.style.display = 'none';
-            document.getElementById('orgInput').required = false;
-        }
-    })
-    document.getElementById('custoption').addEventListener('change', function() {
-        var x = document.getElementById('orgName')
-        if(document.getElementById('custoption').checked) {
-            x.style.display = 'none';
-            document.getElementById('orgInput').required = false;
-        }
-        else {
-            x.style.display = 'block';
-            document.getElementById('orgInput').required = true;
-        }
-    })
-    
-</script>
-
-
-{% if login_status == 'Already Exists' %}
-    <script>
-        showForm('signup')
-        // document.getElementById('signup').style.display = 'none'
-        document.getElementById('error1').style.display = 'block'
-    </script>
-
-{% elif login_status == False %}
-    <script>
-        window.onload = 'showForm("login")'
-        document.getElementById('error').style.display = 'block';
-    </script>
-
-{% endif %}
 
 </html>

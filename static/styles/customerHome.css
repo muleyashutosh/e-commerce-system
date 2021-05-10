@@ -1,85 +1,99 @@
-#searchfield {
-    display:inline-block;
+@import url("https://fonts.googleapis.com/css?family=Roboto:300,400,500");
+
+:root {
+    --mdc-theme-primary: #2d2d2d;
+    --mdc-theme-secondary: #fdc100;
+    --dark-yellow: #ffa400;
+    --mdc-shape-small-component-radius: 4px;
+    --mdc-shape-medium-component-radius: 4px;
+    --mdc-shape-large-component-radius: 6px;
+    --mdc-typography-font-family: unquote("Roboto, sans-serif");
+    --mdc-theme-on-primary: #ffffff;
+    --mdc-theme-on-secondary: #000000;
 }
+
+#searchfield {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
 body {
-    background-color: #edf2f4;
+    background-color: #e1e1e1;
+    margin: 0;
+}
+
+.mdc-drawer-app-content {
+    flex: auto;
+    position: relative;
+}
+
+.mdc-form-field {
+    margin-left: 10px;
+}
+
+.mdc-list-group__subheader {
+    padding: 0 10px;
 }
 
 .category-filter {
     position: fixed;
-    top:67px;
-    width: 15%;
-    height: 100%;
-    background-color:  #e1e6e2;
-    padding: 10px;
-    margin-right: 10px;
+    background-color: #e1e6e2;
+    padding: 0px 0px 75px 0px;
 }
 
-.category-filter div {
-    font-family: 'Poppins', 'sans-serif';
-    font-size: 20px;
+.category-filter .subHead {
+    font-family: var(--mdc-typography-font-family);
+    font-size: 17px;
     color: #3f3f3f;
-    text-decoration: underline;
+    font-weight: bold;
 }
 
 .category-filter form {
     color: #2d2d2d;
 }
 
-.category-filter label {
-    margin: 10px;
-    font-size: 15px;
+.filter-button-container {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin: 5px;
 }
 
-input[type='checkbox'] {
+.filter-button {
+    margin: 5px;
+}
+
+input[type="checkbox"] {
     margin-left: 0;
 }
 
-input[type='submit'] {
-    background-color: #fdc100;
-    
-}
 
-.category-filter form button, input[type='submit'] {
-    border: transparent;
-    padding: 10px;
-    border-radius: 5px;
-    margin: 10px 5px;
-    cursor: pointer;
-    color: #3f3f3f;
-    font-weight: bold;
-    transition: all 0.3s ease;
-}
-
-.category-filter form button:hover, input[type='submit']:hover {
-    transform: scale(1.1,1.1);
-    box-shadow: 0px 0px 3px 1px rgba(133,116,133,1);
-} 
-
-
-.main {
-    position: relative;
-    left:15%;
-    width: 83%;
+.category-filter form button:focus {
+    outline: none;
 }
 
 .grid-container {
     display: grid;
     position: relative;
-    grid-template-columns: 25% 25% 25% 25%;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 15px;
+    margin: 8px;
 }
 
 .grid-item {
-    /* border: 10px solid #efefef; */
     background-color: white;
-    /* box-shadow: 0px 0px 7px 1px white; */
     height: auto;
+    display: flex;
     align-items: center;
+    justify-content: center;
+    flex-direction: column;
     text-align: center;
-    margin:10px;
     height: fit-content;
-    /* border-radius: 5px; */
+    position: relative;
     transition: all 0.2s;
+    border-radius: var(--mdc-shape-medium-component-radius);
+    /* box-shadow: 1px 1px 4px -1px rgba(153,153,153,1); */
 }
 
 .grid-item img {
@@ -87,25 +101,50 @@ input[type='submit'] {
     display: block;
     height: 150px;
     margin: 10px auto 10px auto;
+    user-select: none;
+    -webkit-user-drag: none;
+    /* z-index: 0; */
+    padding: 10px 0;
 }
 .grid-item div {
     overflow: hidden;
-    height: 45px;
+    height: 44px;
     font-size: 15px;
     margin: 2px;
     padding: 5px;
+    /* z-index: 0; */
 }
 .priceTag {
-    color:#B12704!important;
+    color: #b12704 !important;
     font-size: 17px !important;
     font-weight: bold;
     height: 28px !important;
+    margin: 0px 10px 10px !important;
+    /* z-index: 0; */
+}
+
+.grid-item:hover .addToCart {
+    display: block;
+}
+.grid-item:hover .addCartButtonContainer {
+    /* z-index: 0; */
+    background: rgba(255, 255, 255, 0.45);
+}
+
+.addCartButtonContainer {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* z-index: -1; */
 }
 
 .grid-item:hover {
-    transform: scale(1.01);
     cursor: pointer;
-    box-shadow: 0px 0px 7px 1px rgba(133,116,133,1);
 }
 
 input[type="search"]::-webkit-search-cancel-button {
@@ -118,7 +157,7 @@ input[type="search"]::-webkit-search-cancel-button {
     opacity: 0;
     pointer-events: none;
 }
-  
+
 input[type="search"]:focus::-webkit-search-cancel-button {
     opacity: 0.5;
     pointer-events: all;
@@ -127,7 +166,6 @@ input[type="search"]:focus::-webkit-search-cancel-button {
 #category {
     display: inline-block;
 }
-
 
 .pageswitcher {
     width: fit-content;
@@ -144,12 +182,13 @@ input[type="search"]:focus::-webkit-search-cancel-button {
     padding: 10px;
     font-size: 15px;
     color: #2d2d2d;
-    border:none;
+    border: none;
     background-color: #c4c7c5;
     transition: all 0.3s;
 }
-#prevPage, #nextPage {
-    background-color: #007E7B;
+#prevPage,
+#nextPage {
+    background-color: #007e7b;
     color: #e1e6e2;
 }
 
@@ -159,34 +198,34 @@ input[type="search"]:focus::-webkit-search-cancel-button {
 }
 
 .pageNo:hover {
-    transform: scale(1.1,1.1);
+    transform: scale(1.1, 1.1);
 }
 
+.mdc-button--raised:not(:disabled) {
+    background-color: var(--dark-yellow);
+    color: var(--mdc-theme-on-secondary);
+}
 
 .addToCart {
-    border: transparent;
-    margin: 10px auto;
-    padding: 10px;
-    background-color: #FFA400;
-    border-radius: 3px;
+    background-color: #ffa400;
     color: #2d2d2d;
+    opacity: 1 !important;
     display: none;
+    /* transition: all 0.05s ease; */
 }
 
-.addToCart i {
-    font-size: 18px;
-    margin: 2px 5px 2px 0px;
+.addToCart:focus {
+    outline: none;
 }
-
 
 .noItemsFound {
     padding: 20px 20px 5px 20px;
 }
 
-.noItemsFound h2{
+.noItemsFound h2 {
     margin: 5px;
     font-weight: 300;
-    font-family: 'Open Sans', 'sans-serif';
+    font-family: "Open Sans", "sans-serif";
     text-decoration: #999999;
 }
 
@@ -196,6 +235,4 @@ input[type="search"]:focus::-webkit-search-cancel-button {
 
 .pageDot {
     font-size: small;
-    
 }
-
