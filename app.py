@@ -177,12 +177,12 @@ def home(page=1):
         products = products[startAt:startAt + perPage]
         filter = False
         payload = {
-            "user" : user,
-            "firstname" : firstname,
-            "products" : products,
-            "page" : page,
+            "user": user,
+            "firstname": firstname,
+            "products": products,
+            "page": page,
             "totalPages": totalPages,
-            "filter" : filter,
+            "filter": filter,
             "login_status": True
         }
         return render_template('home.html', **payload)
