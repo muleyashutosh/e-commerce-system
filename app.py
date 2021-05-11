@@ -150,7 +150,7 @@ def filter():
     except Error as e:
         print(e)
         return jsonify({
-            status: "Error while accessing database"
+            "status": "Error while accessing database"
         })
     return jsonify({
         "status": "OK",
@@ -536,8 +536,6 @@ def searchApi():
         products = [x for x in allproducts if search(
             search, x['prodName'], I)]
         # products = db.select_from_custom(f"SELECT * FROM products WHERE (REGEXP_LIKE(prodName,'{search}') OR REGEXP_LIKE(prodDesc,'{search}'))")
-
-    # print(len(products))
     return (
         jsonify({
             "status": "OK",
