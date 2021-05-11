@@ -31,7 +31,7 @@ const tooltipsCleanup = () => {
     })
 }
 
-setInterval(tooltipsCleanup, 1000)
+setInterval(tooltipsCleanup, 25)
 
 
 $(document).ready(() => {
