@@ -17,6 +17,18 @@ iconRipples.map(el => {
 })
 
 
+const tooltipsCleanup = () => {
+    tooltips.map(({ root }) => {
+        if (root.classList.contains('mdc-tooltip--showing') || root.classList.contains('mdc-tooltip--hide')) {
+            root.classList.remove('mdc-tooltip--showing')
+            root.classList.remove('mdc-tooltip--hide')
+        }
+    })
+}
+
+setInterval(tooltipsCleanup, 1000)
+
+
 $(document).ready(() => {
     
     $('#dropbtn').click(function() {

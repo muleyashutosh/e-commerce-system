@@ -81,9 +81,13 @@ def register():
     data.pop('pwd')
     data[idName] = idPrefix + str(randint(1, 9999999) + randint(1, 999999))
     data['joinDate'] = str(date.today())
-    # print(data)
+    if tableName == 'customers':
+        data['cartID'] = 'CART-' + \
+            str(randint(1, 9999999) + randint(1, 999999))
     userID = data[idName]
     try:
+        if tableName == 'customers':
+            db.insert_into('cartDetails', {'cartID': data['cartID']})
         db.insert_into(tableName, data)
     except Error as e:
         print(e)
