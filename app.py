@@ -544,6 +544,8 @@ def searchApi():
             "data": products
         })
     )
+
+
 @app.route('/productDetail/<string:id>', methods=['GET'])
 def productDetail(id):
     for x in allproducts:
