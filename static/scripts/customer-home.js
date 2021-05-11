@@ -119,11 +119,12 @@ $(document).ready(function () {
         else {
             // console.log('val ' + $("#search").val().trim() + ', res not empty')
             const html = data.reduce((prev, item) => {
-                return `${prev}<a href="{{ url_for('productPage', id=${item['prodID']}) }}" style="text-decoration: none;color: inherit">
-                    <div class='grid-item mdc-elevation--z2' id='${item['prodID']}'>
-                            <img src="${item['img']}" alt="">
-                            <div>${item['prodName']}</div>
-                            <div class='priceTag'>&#x20B9; ${item['minPrice']}.00</div>
+                const { prodID, prodName, minPrice, img } = item;
+                return `${prev}<a href="/productPage/${prodID}" style="text-decoration: none;color: inherit">
+                    <div class='grid-item mdc-elevation--z2' id='${prodID}'>
+                            <img src="${img}" alt="">
+                            <div>${prodName}</div>
+                            <div class='priceTag'>&#x20B9; ${minPrice}.00</div>
                             <span class="addCartButtonContainer">
                                 <button class="addToCart mdc-button mdc-button--raised">
                                     <span class="mdc-button__ripple"></span>
