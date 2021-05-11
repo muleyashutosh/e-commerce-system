@@ -1,14 +1,13 @@
-
 const onload = async (body) => {
-    const data = await fetch("/productDetail/P-100106331");
+    const data = await fetch(`/productDetail/${id}`);
     const resp = await data.json();
 return resp;
   };
   let product=[];
   const gridContainer = $('.grid-container')
   onload().then( (resp) => {
-      product = resp;
-      console.log(resp);
+      product = resp.data[0];
+      console.log(product);
       let desc=product['prodDesc'].split('. ').reduce((prev,item)=>{
         return `${prev}<li>${item}</li>`
       },'')

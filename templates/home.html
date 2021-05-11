@@ -213,7 +213,7 @@ Home
         {% else: %}
             <div class='grid-container'>
                 {% for x in products: %}
-                <a href="{{ url_for('productPage')}}" style="text-decoration: none;color: inherit">
+                <a href="{{ url_for('productPage', id=x['prodID']) }}" style="text-decoration: none;color: inherit">
                     <div class='grid-item mdc-elevation--z2' id="{{ x['prodID'] }}"">
                         <img src=" {{ x['img'] }}" alt="">
                         <div>{{ x['prodName'] }}</div>

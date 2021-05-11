@@ -505,9 +505,9 @@ def myOrders():
     pass
 
 
-@app.route('/productPage')
-def productPage():
-    return render_template('prodDetail.html')
+@app.route('/productPage/<string:id>')
+def productPage(id):
+    return render_template('prodDetail.html',id=id)
 
 
 @app.route('/payment')
@@ -544,13 +544,15 @@ def searchApi():
             "data": products
         })
     )
-@app.route('/productDetail/<string:id>', methods=['GET'])
+@app.route('/productDetail/<id>', methods=['GET'])
 def productDetail(id):
-    for x in allproducts:
-        if x['prodID']==id:
-            print(id);
-            return (jsonify(x))
-    return jsonify({"status": "not found"})
+    try:
+        print(type(id))
+        product=db.select_from_custom(f"SELECT * FROM products WHERE prodID='{id}'")
+        print(product);
+        return jsonify({"status": "OK","data":product})
+    except:
+        return jsonify({"status": "not found"})
 
     
     

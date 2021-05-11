@@ -11,5 +11,6 @@ ProductDetail
 </div>
 {% endblock %}
 {% block scripts %}
+<script>const id='{{ id }}'</script>
 <script src="{{ url_for('static', filename='scripts/prodfetch.js') }}"></script>
 {% endblock %}
