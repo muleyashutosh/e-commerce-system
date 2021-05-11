@@ -1,7 +1,12 @@
 NProgress.configure({ showSpinner: false })
 
-const {MDCRipple} = mdc.ripple;
-const {MDCTooltip} = mdc.tooltip;
+const { MDCRipple } = mdc.ripple;
+const { MDCTooltip } = mdc.tooltip;
+
+const { MDCDialog } = mdc.dialog;
+
+const dialogEl = document.querySelector('.mdc-dialog')
+const dialog = new MDCDialog(dialogEl);
 
 const tooltips = [].map.call(document.querySelectorAll('.mdc-tooltip'), el => {
     return new MDCTooltip(el);
@@ -15,6 +20,18 @@ const iconRipples = [].map.call(document.querySelectorAll('.mdc-icon-button'), e
 iconRipples.map(el => {
     el.unbounded = true;
 })
+
+
+const tooltipsCleanup = () => {
+    tooltips.map(({ root }) => {
+        if (root.classList.contains('mdc-tooltip--showing') || root.classList.contains('mdc-tooltip--hide')) {
+            root.classList.remove('mdc-tooltip--showing')
+            root.classList.remove('mdc-tooltip--hide')
+        }
+    })
+}
+
+setInterval(tooltipsCleanup, 1000)
 
 
 $(document).ready(() => {
@@ -53,6 +70,18 @@ $(document).ready(() => {
         $('#resizerOption').html($('#category option:selected').text())
         // console.log($('#resizerOption').width())
         $('#category').width($('#resizerSelect').width())
+    })
+
+    $('.logout').click(() => {
+        dialog.open()
+    })
+
+    $('.logout_button').click(() => {
+        const a = document.createElement('a');
+        a.href = '/logout';
+        a.style = "display: none"
+        document.body.appendChild(a)
+        a.click();
     })
 
 

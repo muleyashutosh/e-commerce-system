@@ -92,14 +92,37 @@
                     <a href="#">My Orders</a>
                 </div>
             </div>
-            <a aria-describedby="logout-tooltip" href="{{ url_for('logout')}}">
+            <a aria-describedby="logout-tooltip">
                 <div class="mdc-icon-button navButton material-icons material-icons-round logout">
                     logout
                 </div>
             </a>
-        </div>
-    </div>
-    {% block body %} {% endblock %}
+            </div>
+            </div>
+            <div class="mdc-dialog">
+                <div class="mdc-dialog__container">
+                    <div class="mdc-dialog__surface" role="alertdialog" aria-modal="true" aria-labelledby="my-dialog-title"
+                        aria-describedby="my-dialog-content">
+                        <div class="mdc-dialog__content" id="my-dialog-content">
+                            Are you sure you want to logout?
+                        </div>
+                        <div class="mdc-dialog__actions">
+                            <button type="button" class="mdc-button mdc-dialog__button" data-mdc-dialog-action="cancel">
+                                <div class="mdc-button__ripple"></div>
+                                <span class="mdc-button__label">Cancel</span>
+                            </button>
+                            <button type="button" class="mdc-button logout_button mdc-dialog__button"
+                                data-mdc-dialog-action="discard" data-mdc-dialog-button-default>
+                                <div class="mdc-button__ripple"></div>
+                                <span class="mdc-button__label">Logout</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="mdc-dialog__scrim"></div>
+            </div>
+            {% block body %}
+            {% endblock %}
     
 
 </body>
