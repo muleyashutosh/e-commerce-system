@@ -37,15 +37,19 @@
           Logout
         </div>
     </div>
-    <div id="drawer-tooltip" class="mdc-tooltip" role="tooltip" aria-hidden="true">
-        <div class="mdc-tooltip__surface">
-          Filter
+    {% if home %}
+        <div id="drawer-tooltip" class="mdc-tooltip" role="tooltip" aria-hidden="true">
+            <div class="mdc-tooltip__surface">
+                Filter
+            </div>
         </div>
-    </div>
+    {% endif %}
     <div id='header' class='headerClass'>
-        <button id='menu' aria-describedby='drawer-tooltip' class="material-icons mdc-icon-button material-icons-round">
-            menu
-        </button>
+        {% if home %}
+            <button id='menu' aria-describedby='drawer-tooltip' class="material-icons mdc-icon-button material-icons-round">
+                menu
+            </button>
+        {% endif %}
         <h2><a href="{{ url_for('home') if 'C' in session['userID'] else url_for('sellerHome') }}"></a>
         </h2>
         <div id='searchfield'>

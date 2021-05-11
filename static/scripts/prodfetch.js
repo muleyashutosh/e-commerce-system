@@ -11,7 +11,7 @@ return resp;
       let desc=product['prodDesc'].split('. ').reduce((prev,item)=>{
         return `${prev}<li>${item}</li>`
       },'')
-      const html = `<div class='grid-item mdc-elevation--z2' id='${product['prodID']}'>
+    const html = `<div class='grid-item' id='${product['prodID']}'>
                     <img src="${product['img']}" alt="">
                     <div class='details'>
                       <div class='title'>
@@ -27,12 +27,12 @@ return resp;
                       </ul>
                       </div>
                       <button class="mdc-button mdc-button--raised button">
-                                    <span class="mdc-button__ripple"></span>
-                                    <i class="material-icons mdc-button__icon" aria-hidden="true">
-                                        bolt
-                                    </i>
-                                    <span class="mdc-button__label">BUY NOW</span>
-                                </button>
+                        <span class="mdc-button__ripple"></span>
+                        <i class="material-icons mdc-button__icon" aria-hidden="true">
+                            bolt
+                        </i>
+                        <span class="mdc-button__label">BUY NOW</span>
+                      </button>
                     </div>                 
                 </div>`
                 

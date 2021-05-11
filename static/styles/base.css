@@ -35,14 +35,14 @@
 }
 
 .headerClass h2 {
-    width: 15%;
+    width: 25%;
     height: 67px;
     margin: 0;
     /* pointer-events: none; */
     user-select: none;
     float: left;
     background-image: url(logo.png);
-    background-size: cover;
+    background-size: contain;
     /* background-position: 25%; */
     background-repeat: no-repeat;
 }
@@ -206,4 +206,18 @@ body {
     font-family: "Roboto", sans-serif;
     overflow-x: hidden;
     margin: 0px;
+}
+
+
+@media screen and (max-width: 860px) {
+    .headerClass h2 {
+        width: 50%;
+    }
+}
+
+@media screen and (max-width: 430px) {
+    .headerClass h2 {
+        width: 60%;
+        background-position: 25%;
+    }
 }

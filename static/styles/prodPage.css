@@ -1,14 +1,12 @@
-body{
-    overflow: hidden;
-}
+
 .grid-container {
     display: grid;
     position: relative;
     grid-template-columns: 1fr;
     gap: 15px;
-    margin: 8px;
-    height: 0px;
+    margin: 8px 8px 35px;
 }
+
 .grid-item {
     background-color: white;
     display: grid;
@@ -19,14 +17,14 @@ body{
     align-items: center;
     border-radius: var(--mdc-shape-medium-component-radius);
     width: 100%;
+    padding: 0 0 20px;
 }
 .grid-item img {
-    width: 80%;
+    width: 50%;
     display: block;
     margin: 10px auto 10px auto;
     user-select: none;
     -webkit-user-drag: none;
-    /* z-index: 0; */
     padding: 10px 0;
 }
 
@@ -59,4 +57,21 @@ body{
 
 .button{
     margin:10px 20px 0px!important;
+}
+
+
+@media screen and (max-width: 800px) {
+    .grid-item img {
+        width: 75%;
+    }
+}
+
+
+@media screen and (max-width: 600px) {
+    .grid-item {
+        grid-template-columns: 1fr ;
+    }
+    .grid-item img {
+        width: 100%;
+    }
 }

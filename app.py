@@ -181,7 +181,8 @@ def home(page=1):
             "page": page,
             "totalPages": totalPages,
             "filter": filter,
-            "login_status": True
+            "login_status": True,
+            "home": True
         }
         return render_template('home.html', **payload)
     else:
@@ -543,9 +544,9 @@ def searchApi():
 @app.route('/productDetail/<id>', methods=['GET'])
 def productDetail(id):
     try:
-        print(type(id))
+        # print(type(id))
         product=db.select_from_custom(f"SELECT * FROM products WHERE prodID='{id}'")
-        print(product);
+        # print(product);
         return jsonify({"status": "OK","data":product})
     except:
         return jsonify({"status": "not found"})
