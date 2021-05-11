@@ -1,7 +1,12 @@
 NProgress.configure({ showSpinner: false })
 
-const {MDCRipple} = mdc.ripple;
-const {MDCTooltip} = mdc.tooltip;
+const { MDCRipple } = mdc.ripple;
+const { MDCTooltip } = mdc.tooltip;
+
+const { MDCDialog } = mdc.dialog;
+
+const dialogEl = document.querySelector('.mdc-dialog')
+const dialog = new MDCDialog(dialogEl);
 
 const tooltips = [].map.call(document.querySelectorAll('.mdc-tooltip'), el => {
     return new MDCTooltip(el);
@@ -65,6 +70,18 @@ $(document).ready(() => {
         $('#resizerOption').html($('#category option:selected').text())
         // console.log($('#resizerOption').width())
         $('#category').width($('#resizerSelect').width())
+    })
+
+    $('.logout').click(() => {
+        dialog.open()
+    })
+
+    $('.logout_button').click(() => {
+        const a = document.createElement('a');
+        a.href = '/logout';
+        a.style = "display: none"
+        document.body.appendChild(a)
+        a.click();
     })
 
 
