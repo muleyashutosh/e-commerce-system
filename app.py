@@ -529,13 +529,11 @@ def searchApi():
     print(search)
     # db = Workbench('minProj', password=mysql_pwd)
     if(cat != 0):
-        products = [x for x in allproducts if (search(search, x['prodName'], I) or search(
-            search, x['prodDesc'], I)) and x['categoryID'] == cat]
-        # products = db.select_from_custom(f"SELECT * FROM products WHERE (REGEXP_LIKE(prodName,'{search}') OR REGEXP_LIKE(prodDesc,'{search}')) AND categoryID= {cat}")
+        products = db.select_from_custom(
+            f"SELECT * FROM products WHERE MATCH(prodName, prodDesc) AGAINST ('{search}' IN NATURAL LANGUAGE MODE) AND categoryID = {cat};")
     else:
-        products = [x for x in allproducts if search(
-            search, x['prodName'], I)]
-        # products = db.select_from_custom(f"SELECT * FROM products WHERE (REGEXP_LIKE(prodName,'{search}') OR REGEXP_LIKE(prodDesc,'{search}'))")
+        products = db.select_from_custom(
+            f"SELECT * FROM products WHERE MATCH(prodName, prodDesc) AGAINST ('{search}' IN NATURAL LANGUAGE MODE);")
     return (
         jsonify({
             "status": "OK",
