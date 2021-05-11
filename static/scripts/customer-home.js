@@ -119,7 +119,8 @@ $(document).ready(function () {
         else {
             // console.log('val ' + $("#search").val().trim() + ', res not empty')
             const html = data.reduce((prev, item) => {
-                return `${prev}<div class='grid-item mdc-elevation--z2' id='${item['prodID']}'>
+                return `${prev}<a href="{{ url_for('productPage', id=${item['prodID']}) }}" style="text-decoration: none;color: inherit">
+                    <div class='grid-item mdc-elevation--z2' id='${item['prodID']}'>
                             <img src="${item['img']}" alt="">
                             <div>${item['prodName']}</div>
                             <div class='priceTag'>&#x20B9; ${item['minPrice']}.00</div>
@@ -132,7 +133,8 @@ $(document).ready(function () {
                                     <span class="mdc-button__label">Add to Cart</span>
                                 </button>
                             </span>
-                        </div>`
+                        </div>
+                    </a>`
             }, "")
             $('.noItemsFound').remove()
             gridContainer.empty();
