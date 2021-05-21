@@ -201,15 +201,28 @@ def sellerHome():
         firstname = session['firstname']
         uid = session['userID']
         print(user, firstname, uid)
-        productdetails = db.select_from(
-            'supplierdet', where_clause={'supplierID': uid})
-        productlist = [db.select_from('products', where_clause={'prodID': x['prodID']})[0] for x in productdetails]
+        productlist = db.select_from_custom(f'''
+        SELECT 
+            prodID, prodName, prodDesc, minPrice, img, rating, unitStock, categoryID, prodAvail
+        FROM 
+            suppliers 
+        NATURAL JOIN 
+            supplierdet 
+        NATURAL JOIN 
+            products 
+        WHERE 
+            supplierID = '{uid}';''')
+        # print(productlist)
+        # productdetails = db.select_from(
+        #     'supplierdet', where_clause={'supplierID': uid})
+        # productlist = [db.select_from('products', where_clause={'prodID': x['prodID']})[
+        #     0] for x in productdetails]
         # print(productlist[0])
 
     else:
         return redirect(url_for('index'))
 
-    return render_template('sellerHome.html', user=user, firstname=firstname, productdetails=productdetails, productlist=productlist, login_status=True)
+    return render_template('sellerHome.html', user=user, firstname=firstname, productlist=productlist, login_status=True)
 
 
 @app.route('/Profile', methods=['GET', 'POST'])
@@ -512,7 +525,7 @@ def myOrders():
 
 @app.route('/productPage/<string:id>')
 def productPage(id):
-    return render_template('prodDetail.html',id=id)
+    return render_template('prodDetail.html', id=id)
 
 
 @app.route('/payment')
@@ -545,15 +558,15 @@ def searchApi():
             "data": products
         })
     )
+
+
 @app.route('/productDetail/<id>', methods=['GET'])
 def productDetail(id):
     try:
         # print(type(id))
-        product=db.select_from_custom(f"SELECT * FROM products WHERE prodID='{id}'")
+        product = db.select_from_custom(
+            f"SELECT * FROM products WHERE prodID='{id}'")
         # print(product);
-        return jsonify({"status": "OK","data":product})
+        return jsonify({"status": "OK", "data": product})
     except:
         return jsonify({"status": "not found"})
-
-    
-    
