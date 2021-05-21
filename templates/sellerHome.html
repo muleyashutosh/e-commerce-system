@@ -16,15 +16,15 @@ Suppliers Home
         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
     </div>-->
     <div class="RightContainer">
-        <div class="Stockdetails"> 
+        <div class="Stockdetails">
             <div id="Holder">
                 {% for x in range(productlist|length): %}
-            <div class='grid-item'>
-                <img src="{{ productlist[x]['img'] }}" alt="">
-                <div>{{ productlist[x]['prodName'] }}</div>
-                <div><strong>&#x20B9; {{ productdetails[x]['sellprice'] }}.00</strong></div>
-            </div>
-            {% endfor %}
+                <div class='grid-item'>
+                    <img src="{{ productlist[x]['img'] }}" alt="">
+                    <div>{{ productlist[x]['prodName'] }}</div>
+                    <div><strong>&#x20B9; {{ productlist[x]['minPrice'] }}.00</strong></div>
+                </div>
+                {% endfor %}
             </div>
         </div>
         <!-- <div class="AddProducts">
@@ -48,11 +48,11 @@ Suppliers Home
             hi
         </div>
     </div>
-    
+
 </div>
 
 {% endblock %}
 
-{% block scripts %} 
+{% block scripts %}
 
 {% endblock %}

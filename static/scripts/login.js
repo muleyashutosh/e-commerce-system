@@ -131,7 +131,7 @@ const fetchLoginRoute = async (body) => {
     body: body,
   });
   const resp = await data.json();
-  return await resp;
+  return resp;
 };
 
 const fetchRegisterRoute = async (body) => {
