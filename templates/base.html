@@ -23,35 +23,37 @@
 <body>
     <div id="cart-tooltip" class="mdc-tooltip" role="tooltip" aria-hidden="true">
         <div class="mdc-tooltip__surface">
-          Cart
+            Cart
         </div>
     </div>
     <div id="profile-tooltip" class="mdc-tooltip" role="tooltip" aria-hidden="true">
         <div class="mdc-tooltip__surface">
-          Profile
+            Profile
         </div>
     </div>
     <div id="logout-tooltip" class="mdc-tooltip" role="tooltip" aria-hidden="true">
         <div class="mdc-tooltip__surface">
-          Logout
+            Logout
         </div>
     </div>
     {% if home %}
-        <div id="drawer-tooltip" class="mdc-tooltip" role="tooltip" aria-hidden="true">
-            <div class="mdc-tooltip__surface">
-                Filter
-            </div>
+    <div id="drawer-tooltip" class="mdc-tooltip" role="tooltip" aria-hidden="true">
+        <div class="mdc-tooltip__surface">
+            Filter
         </div>
+    </div>
     {% endif %}
     <div id='header' class='headerClass'>
         {% if home %}
-            <button id='menu' aria-describedby='drawer-tooltip' class="material-icons mdc-icon-button material-icons-round">
-                menu
-            </button>
+        <button id='menu' aria-describedby='drawer-tooltip' class="material-icons mdc-icon-button material-icons-round">
+            sort
+        </button>
         {% endif %}
-        <h2><a href="{{ url_for('home') if 'C' in session['userID'] else url_for('sellerHome') }}"></a>
+        <h2><a href="{{ url_for('home') if 'C' in session['userID'] else url_for('sellerHome') }}">
+                <img src="{{ url_for('static', filename='styles/logo.png') }}" id='headerLogo' alt="">
+            </a>
         </h2>
-        <div id='searchfield'>
+        <div id='searchfield' >
             <select name="resizer" id="resizerSelect">
                 <option id='resizerOption' value="width"></option>
             </select>
@@ -72,6 +74,11 @@
             </button>
         </div>
         <div class="navButtons">
+      
+                <div class="search-icon-button mdc-icon-button navButton material-icons icon-button material-icons-round cart">
+                    search
+                </div>
+           
             <a id='cart' aria-describedby="cart-tooltip" href="{{ url_for('cart')}}">
                 <div class="mdc-icon-button navButton material-icons icon-button material-icons-round cart">
                     shopping_cart
@@ -84,7 +91,8 @@
                     </div>
                 </a>
                 <div class='dropdown-content' id='drop-content'>
-                    <a href="{{ url_for('profile') if 'C' in session['userID'] else url_for('sellerProfile') }}">Hello, {{
+                    <a href="{{ url_for('profile') if 'C' in session['userID'] else url_for('sellerProfile') }}">Hello,
+                        {{
                         firstname }}
                         <hr> <span>Edit Profile</span>
                     </a>
@@ -96,33 +104,33 @@
                     logout
                 </div>
             </a>
-            </div>
-            </div>
-            <div class="mdc-dialog">
-                <div class="mdc-dialog__container">
-                    <div class="mdc-dialog__surface" role="alertdialog" aria-modal="true" aria-labelledby="my-dialog-title"
-                        aria-describedby="my-dialog-content">
-                        <div class="mdc-dialog__content" id="my-dialog-content">
-                            Are you sure you want to logout?
-                        </div>
-                        <div class="mdc-dialog__actions">
-                            <button type="button" class="mdc-button mdc-dialog__button" data-mdc-dialog-action="cancel">
-                                <div class="mdc-button__ripple"></div>
-                                <span class="mdc-button__label">Cancel</span>
-                            </button>
-                            <button type="button" class="mdc-button logout_button mdc-dialog__button"
-                                data-mdc-dialog-action="discard" data-mdc-dialog-button-default>
-                                <div class="mdc-button__ripple"></div>
-                                <span class="mdc-button__label">Logout</span>
-                            </button>
-                        </div>
-                    </div>
+        </div>
+    </div>
+    <div class="mdc-dialog">
+        <div class="mdc-dialog__container">
+            <div class="mdc-dialog__surface" role="alertdialog" aria-modal="true" aria-labelledby="my-dialog-title"
+                aria-describedby="my-dialog-content">
+                <div class="mdc-dialog__content" id="my-dialog-content">
+                    Are you sure you want to logout?
                 </div>
-                <div class="mdc-dialog__scrim"></div>
+                <div class="mdc-dialog__actions">
+                    <button type="button" class="mdc-button mdc-dialog__button" data-mdc-dialog-action="cancel">
+                        <div class="mdc-button__ripple"></div>
+                        <span class="mdc-button__label">Cancel</span>
+                    </button>
+                    <button type="button" class="mdc-button logout_button mdc-dialog__button"
+                        data-mdc-dialog-action="discard" data-mdc-dialog-button-default>
+                        <div class="mdc-button__ripple"></div>
+                        <span class="mdc-button__label">Logout</span>
+                    </button>
+                </div>
             </div>
-            {% block body %}
-            {% endblock %}
-    
+        </div>
+        <div class="mdc-dialog__scrim"></div>
+    </div>
+    {% block body %}
+    {% endblock %}
+
 
 </body>
 
