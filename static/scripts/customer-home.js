@@ -135,20 +135,50 @@ $(document).ready(function () {
     } else {
       // console.log('val ' + $("#search").val().trim() + ', res not empty')
       const html = data.reduce((prev, item) => {
-        return `${prev}<div class='grid-item mdc-elevation--z2' id='${item["prodID"]}'>
-                            <img src="${item["img"]}" alt="">
-                            <div>${item["prodName"]}</div>
-                            <div class='priceTag'>&#x20B9; ${item["minPrice"]}.00</div>
-                            <span class="addCartButtonContainer">
-                                <button class="addToCart mdc-button mdc-button--raised">
-                                    <span class="mdc-button__ripple"></span>
-                                    <i class="material-icons mdc-button__icon" aria-hidden="true">
-                                        add_shopping_cart
-                                    </i>
-                                    <span class="mdc-button__label">Add to Cart</span>
-                                </button>
-                            </span>
-                        </div>`;
+        // return `${prev}<div class='grid-item mdc-elevation--z2' id='${item["prodID"]}'>
+        //                     <img src="${item["img"]}" alt="">
+        //                     <div>${item["prodName"]}</div>
+        //                     <div class='priceTag'>&#x20B9; ${item["minPrice"]}.00</div>
+        //                     <span class="addCartButtonContainer">
+        //                         <button class="addToCart mdc-button mdc-button--raised">
+        //                             <span class="mdc-button__ripple"></span>
+        //                             <i class="material-icons mdc-button__icon" aria-hidden="true">
+        //                                 add_shopping_cart
+        //                             </i>
+        //                             <span class="mdc-button__label">Add to Cart</span>
+        //                         </button>
+        //                     </span>
+        //                 </div>`;
+        return `${prev}<div class="mdc-card">
+        <div class="mdc-card__primary-action">
+          <div
+            class="mdc-card__media mdc-card__media--square"
+            style="
+              background-image: url(${item.img});
+            "
+            data-redirect="/productPage/${item.prodID}"
+          ></div>
+          <div class="mdc-card__ripple"></div>
+        </div>
+        <div class="mdc-card-wrapper__text-section">
+          <div class="card__title">${item.prodName.substring(0, 45)}...</div>
+        </div>
+        <div class="mdc-card__actions">
+          <div class="priceTag">&#x20B9;${item.minPrice}.00</div>
+          <div class="mdc-card__action-icons">
+            <button
+              class="
+                material-icons
+                mdc-icon-button
+                mdc-card__action mdc-card__action--icon
+              "
+              title="Share"
+            >
+              add_shopping_cart
+            </button>
+          </div>
+        </div>
+      </div>`;
       }, "");
       $(".noItemsFound").remove();
       gridContainer.empty();
@@ -212,6 +242,7 @@ $(document).ready(function () {
 
   const redirectToProductPage = (e) => {
     const url = e.target.getAttribute("data-redirect");
+    // console.log(url);
     window.location = url;
   };
 
