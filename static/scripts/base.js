@@ -34,7 +34,37 @@ const tooltipsCleanup = () => {
 setInterval(tooltipsCleanup, 25)
 
 
-$(document).ready(() => {
+$(() => {
+    const LOGO = `/static/styles/logo.png`
+    const SHORT_LOGO = `/static/styles/logo1.png`
+    const adjustLogo = () => {
+        const width = window.innerWidth;
+        const img = document.getElementById('headerLogo')
+        if(width < 467) {
+            img.src = SHORT_LOGO;
+        } else {
+            img.src = LOGO;
+        }
+    }
+
+    adjustLogo()
+
+    $(window).resize(adjustLogo)
+
+    const floatingSearchToggle = () => {
+        const searchfield = $('#searchfield')
+        // console.log(searchfield.hasClass('floating-search'))
+        if (searchfield.hasClass('floating-search')) {
+            searchfield.slideUp(100)
+            console.log(searchfield.attr('style'))
+        }
+        else {
+            searchfield.slideDown(50).css('display', 'flex')
+        }
+        searchfield.toggleClass('floating-search')
+    }
+
+    $('.search-icon-button').on('click', floatingSearchToggle)
     
     $('#dropbtn').click(function() {
         $('#drop-content').slideToggle(200);    

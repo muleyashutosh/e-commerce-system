@@ -1,218 +1,366 @@
-{% extends "base.html" %}
-{% block title %}
-Home
-{% endblock %}
-{% block head %}
-<link rel="stylesheet" href="{{ url_for('static', filename='styles/customerHome.css')}}">
-{% endblock %}
-{% block body %}
+{% extends "base.html" %} {% block title %} Home {% endblock %} {% block head %}
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='styles/customerHome.css')}}"
+/>
+{% endblock %} {% block body %}
 <aside class="category-filter mdc-drawer mdc-drawer--dismissible">
-    <div class="mdc-drawer__content">
-        <form id='filter' method="post">
-            <nav class="mdc-list">
-                <h6 class="mdc-list-group__subheader">Filter By Category:</h6>
-                <div class="mdc-form-field mdc-form-field-checkboxes">
-                    <div class="mdc-checkbox">
-                        <input type="checkbox" class="mdc-checkbox__native-control" name="mobiles" id="mobiles"
-                            value="1" />
-                        <div class="mdc-checkbox__background">
-                            <svg class="mdc-checkbox__checkmark" viewBox="0 0 24 24">
-                                <path class="mdc-checkbox__checkmark-path" fill="none"
-                                    d="M1.73,12.91 8.1,19.28 22.79,4.59" />
-                            </svg>
-                            <div class="mdc-checkbox__mixedmark"></div>
-                        </div>
-                        <div class="mdc-checkbox__ripple"></div>
-                    </div>
-                    <label for="mobiles">Mobiles</label>
-                </div><br>
-                <div class="mdc-form-field mdc-form-field-checkboxes">
-                    <div class="mdc-checkbox">
-                        <input type="checkbox" class="mdc-checkbox__native-control" name="televisions" id="televisions"
-                            value="2" />
-                        <div class="mdc-checkbox__background">
-                            <svg class="mdc-checkbox__checkmark" viewBox="0 0 24 24">
-                                <path class="mdc-checkbox__checkmark-path" fill="none"
-                                    d="M1.73,12.91 8.1,19.28 22.79,4.59" />
-                            </svg>
-                            <div class="mdc-checkbox__mixedmark"></div>
-                        </div>
-                        <div class="mdc-checkbox__ripple"></div>
-                    </div>
-                    <label for="televisions">Televisions</label>
-                </div><br>
-                <div class="mdc-form-field mdc-form-field-checkboxes">
-                    <div class="mdc-checkbox">
-                        <input type="checkbox" class="mdc-checkbox__native-control" name="laptops" id="laptops"
-                            value="3" />
-                        <div class="mdc-checkbox__background">
-                            <svg class="mdc-checkbox__checkmark" viewBox="0 0 24 24">
-                                <path class="mdc-checkbox__checkmark-path" fill="none"
-                                    d="M1.73,12.91 8.1,19.28 22.79,4.59" />
-                            </svg>
-                            <div class="mdc-checkbox__mixedmark"></div>
-                        </div>
-                        <div class="mdc-checkbox__ripple"></div>
-                    </div>
-                    <label for="laptops">Laptops</label>
-                </div><br>
-                <div class="mdc-form-field mdc-form-field-checkboxes">
-                    <div class="mdc-checkbox">
-                        <input type="checkbox" class="mdc-checkbox__native-control" name="earphones" id="earphones"
-                            value="4" />
-                        <div class="mdc-checkbox__background">
-                            <svg class="mdc-checkbox__checkmark" viewBox="0 0 24 24">
-                                <path class="mdc-checkbox__checkmark-path" fill="none"
-                                    d="M1.73,12.91 8.1,19.28 22.79,4.59" />
-                            </svg>
-                            <div class="mdc-checkbox__mixedmark"></div>
-                        </div>
-                        <div class="mdc-checkbox__ripple"></div>
-                    </div>
-                    <label for="earphones">Earphones</label>
-                </div><br>
-                <div class="mdc-form-field mdc-form-field-checkboxes">
-                    <div class="mdc-checkbox">
-                        <input type="checkbox" class="mdc-checkbox__native-control" name="cameras" id="cameras"
-                            value="5" />
-                        <div class="mdc-checkbox__background">
-                            <svg class="mdc-checkbox__checkmark" viewBox="0 0 24 24">
-                                <path class="mdc-checkbox__checkmark-path" fill="none"
-                                    d="M1.73,12.91 8.1,19.28 22.79,4.59" />
-                            </svg>
-                            <div class="mdc-checkbox__mixedmark"></div>
-                        </div>
-                        <div class="mdc-checkbox__ripple"></div>
-                    </div>
-                    <label for="cameras">Cameras</label>
-                </div><br>
-                <div class="mdc-form-field mdc-form-field-checkboxes">
-                    <div class="mdc-checkbox">
-                        <input type="checkbox" class="mdc-checkbox__native-control" name="fridges" id="fridges"
-                            value="6" />
-                        <div class="mdc-checkbox__background">
-                            <svg class="mdc-checkbox__checkmark" viewBox="0 0 24 24">
-                                <path class="mdc-checkbox__checkmark-path" fill="none"
-                                    d="M1.73,12.91 8.1,19.28 22.79,4.59" />
-                            </svg>
-                            <div class="mdc-checkbox__mixedmark"></div>
-                        </div>
-                        <div class="mdc-checkbox__ripple"></div>
-                    </div>
-                    <label for="fridges">Fridges</label>
-                </div><br>
-                <div class="mdc-form-field mdc-form-field-checkboxes">
-                    <div class="mdc-checkbox">
-                        <input type="checkbox" class="mdc-checkbox__native-control" name="washing-machines"
-                            id="washing-machines" value="7" />
-                        <div class="mdc-checkbox__background">
-                            <svg class="mdc-checkbox__checkmark" viewBox="0 0 24 24">
-                                <path class="mdc-checkbox__checkmark-path" fill="none"
-                                    d="M1.73,12.91 8.1,19.28 22.79,4.59" />
-                            </svg>
-                            <div class="mdc-checkbox__mixedmark"></div>
-                        </div>
-                        <div class="mdc-checkbox__ripple"></div>
-                    </div>
-                    <label for="washing-machines">Washing machines</label>
-                </div><br>
-                <div class="mdc-form-field mdc-form-field-checkboxes">
-                    <div class="mdc-checkbox">
-                        <input type="checkbox" class="mdc-checkbox__native-control" name="microwaves" id="microwaves"
-                            value="8" />
-                        <div class="mdc-checkbox__background">
-                            <svg class="mdc-checkbox__checkmark" viewBox="0 0 24 24">
-                                <path class="mdc-checkbox__checkmark-path" fill="none"
-                                    d="M1.73,12.91 8.1,19.28 22.79,4.59" />
-                            </svg>
-                            <div class="mdc-checkbox__mixedmark"></div>
-                        </div>
-                        <div class="mdc-checkbox__ripple"></div>
-                    </div>
-                    <label for="microwaves">Microwaves</label>
-                </div><br>
-                <hr class="mdc-list-divider">
-                <h6 class="mdc-list-group__subheader">Filter By Price:</h6>
-                <div class="mdc-form-field mdc-form-field-radios">
-                    <div class="mdc-radio">
-                        <input class="mdc-radio__native-control" type='radio' id='value1' name="price" value="1" />
-                        <div class="mdc-radio__background">
-                            <div class="mdc-radio__outer-circle"></div>
-                            <div class="mdc-radio__inner-circle"></div>
-                        </div>
-                        <div class="mdc-radio__ripple"></div>
-                    </div>
-                    <label for="value1">Under &#x20B9;1000</label>
-                </div><br>
-                <div class="mdc-form-field mdc-form-field-radios">
-                    <div class="mdc-radio">
-                        <input class="mdc-radio__native-control" type='radio' id='value2' name="price" value="2" />
-                        <div class="mdc-radio__background">
-                            <div class="mdc-radio__outer-circle"></div>
-                            <div class="mdc-radio__inner-circle"></div>
-                        </div>
-                        <div class="mdc-radio__ripple"></div>
-                    </div>
-                    <label for="value2">&#x20B9;1000 - &#x20B9;5000</label>
-                </div><br>
-                <div class="mdc-form-field mdc-form-field-radios">
-                    <div class="mdc-radio">
-                        <input class="mdc-radio__native-control" type='radio' id='value3' name="price" value="3" />
-                        <div class="mdc-radio__background">
-                            <div class="mdc-radio__outer-circle"></div>
-                            <div class="mdc-radio__inner-circle"></div>
-                        </div>
-                        <div class="mdc-radio__ripple"></div>
-                    </div>
-                    <label for="value3">&#x20B9;5000 - &#x20B9;10000</label>
-                </div><br>
-                <div class="mdc-form-field mdc-form-field-radios">
-                    <div class="mdc-radio">
-                        <input class="mdc-radio__native-control" type='radio' id='value4' name="price" value="4" />
-                        <div class="mdc-radio__background">
-                            <div class="mdc-radio__outer-circle"></div>
-                            <div class="mdc-radio__inner-circle"></div>
-                        </div>
-                        <div class="mdc-radio__ripple"></div>
-                    </div>
-                    <label for="value4">&#x20B9;10000 - &#x20B9;20000</label>
-                </div><br>
-                <div class="mdc-form-field mdc-form-field-radios">
-                    <div class="mdc-radio">
-                        <input class="mdc-radio__native-control" type='radio' id='value5' name="price" value="5" />
-                        <div class="mdc-radio__background">
-                            <div class="mdc-radio__outer-circle"></div>
-                            <div class="mdc-radio__inner-circle"></div>
-                        </div>
-                        <div class="mdc-radio__ripple"></div>
-                    </div>
-                    <label for="value5">Over &#x20B9;20000</label>
-                </div><br>
-                <div class="filter-button-container">
-                    <button id='apply' class="filter-button mdc-button apply-button mdc-button--raised">
-                        <span class="mdc-button__ripple"></span>
-                        <span class="mdc-button__label">Apply</span>
-                    </button>
-                    <button id='reset' class="filter-button mdc-button">
-                        <span class="mdc-button__ripple"></span>
-                        <span class="mdc-button__label">reset</span>
-                    </button>
-                </div>
-            </nav>
-        </form>
-    </div>
+  <div class="mdc-drawer__content">
+    <form id="filter" method="post">
+      <nav class="mdc-list">
+        <h6 class="mdc-list-group__subheader">Filter By Category:</h6>
+        <div class="mdc-form-field mdc-form-field-checkboxes">
+          <div class="mdc-checkbox">
+            <input
+              type="checkbox"
+              class="mdc-checkbox__native-control"
+              name="mobiles"
+              id="mobiles"
+              value="1"
+            />
+            <div class="mdc-checkbox__background">
+              <svg class="mdc-checkbox__checkmark" viewBox="0 0 24 24">
+                <path
+                  class="mdc-checkbox__checkmark-path"
+                  fill="none"
+                  d="M1.73,12.91 8.1,19.28 22.79,4.59"
+                />
+              </svg>
+              <div class="mdc-checkbox__mixedmark"></div>
+            </div>
+            <div class="mdc-checkbox__ripple"></div>
+          </div>
+          <label for="mobiles">Mobiles</label>
+        </div>
+        <br />
+        <div class="mdc-form-field mdc-form-field-checkboxes">
+          <div class="mdc-checkbox">
+            <input
+              type="checkbox"
+              class="mdc-checkbox__native-control"
+              name="televisions"
+              id="televisions"
+              value="2"
+            />
+            <div class="mdc-checkbox__background">
+              <svg class="mdc-checkbox__checkmark" viewBox="0 0 24 24">
+                <path
+                  class="mdc-checkbox__checkmark-path"
+                  fill="none"
+                  d="M1.73,12.91 8.1,19.28 22.79,4.59"
+                />
+              </svg>
+              <div class="mdc-checkbox__mixedmark"></div>
+            </div>
+            <div class="mdc-checkbox__ripple"></div>
+          </div>
+          <label for="televisions">Televisions</label>
+        </div>
+        <br />
+        <div class="mdc-form-field mdc-form-field-checkboxes">
+          <div class="mdc-checkbox">
+            <input
+              type="checkbox"
+              class="mdc-checkbox__native-control"
+              name="laptops"
+              id="laptops"
+              value="3"
+            />
+            <div class="mdc-checkbox__background">
+              <svg class="mdc-checkbox__checkmark" viewBox="0 0 24 24">
+                <path
+                  class="mdc-checkbox__checkmark-path"
+                  fill="none"
+                  d="M1.73,12.91 8.1,19.28 22.79,4.59"
+                />
+              </svg>
+              <div class="mdc-checkbox__mixedmark"></div>
+            </div>
+            <div class="mdc-checkbox__ripple"></div>
+          </div>
+          <label for="laptops">Laptops</label>
+        </div>
+        <br />
+        <div class="mdc-form-field mdc-form-field-checkboxes">
+          <div class="mdc-checkbox">
+            <input
+              type="checkbox"
+              class="mdc-checkbox__native-control"
+              name="earphones"
+              id="earphones"
+              value="4"
+            />
+            <div class="mdc-checkbox__background">
+              <svg class="mdc-checkbox__checkmark" viewBox="0 0 24 24">
+                <path
+                  class="mdc-checkbox__checkmark-path"
+                  fill="none"
+                  d="M1.73,12.91 8.1,19.28 22.79,4.59"
+                />
+              </svg>
+              <div class="mdc-checkbox__mixedmark"></div>
+            </div>
+            <div class="mdc-checkbox__ripple"></div>
+          </div>
+          <label for="earphones">Earphones</label>
+        </div>
+        <br />
+        <div class="mdc-form-field mdc-form-field-checkboxes">
+          <div class="mdc-checkbox">
+            <input
+              type="checkbox"
+              class="mdc-checkbox__native-control"
+              name="cameras"
+              id="cameras"
+              value="5"
+            />
+            <div class="mdc-checkbox__background">
+              <svg class="mdc-checkbox__checkmark" viewBox="0 0 24 24">
+                <path
+                  class="mdc-checkbox__checkmark-path"
+                  fill="none"
+                  d="M1.73,12.91 8.1,19.28 22.79,4.59"
+                />
+              </svg>
+              <div class="mdc-checkbox__mixedmark"></div>
+            </div>
+            <div class="mdc-checkbox__ripple"></div>
+          </div>
+          <label for="cameras">Cameras</label>
+        </div>
+        <br />
+        <div class="mdc-form-field mdc-form-field-checkboxes">
+          <div class="mdc-checkbox">
+            <input
+              type="checkbox"
+              class="mdc-checkbox__native-control"
+              name="fridges"
+              id="fridges"
+              value="6"
+            />
+            <div class="mdc-checkbox__background">
+              <svg class="mdc-checkbox__checkmark" viewBox="0 0 24 24">
+                <path
+                  class="mdc-checkbox__checkmark-path"
+                  fill="none"
+                  d="M1.73,12.91 8.1,19.28 22.79,4.59"
+                />
+              </svg>
+              <div class="mdc-checkbox__mixedmark"></div>
+            </div>
+            <div class="mdc-checkbox__ripple"></div>
+          </div>
+          <label for="fridges">Fridges</label>
+        </div>
+        <br />
+        <div class="mdc-form-field mdc-form-field-checkboxes">
+          <div class="mdc-checkbox">
+            <input
+              type="checkbox"
+              class="mdc-checkbox__native-control"
+              name="washing-machines"
+              id="washing-machines"
+              value="7"
+            />
+            <div class="mdc-checkbox__background">
+              <svg class="mdc-checkbox__checkmark" viewBox="0 0 24 24">
+                <path
+                  class="mdc-checkbox__checkmark-path"
+                  fill="none"
+                  d="M1.73,12.91 8.1,19.28 22.79,4.59"
+                />
+              </svg>
+              <div class="mdc-checkbox__mixedmark"></div>
+            </div>
+            <div class="mdc-checkbox__ripple"></div>
+          </div>
+          <label for="washing-machines">Washing machines</label>
+        </div>
+        <br />
+        <div class="mdc-form-field mdc-form-field-checkboxes">
+          <div class="mdc-checkbox">
+            <input
+              type="checkbox"
+              class="mdc-checkbox__native-control"
+              name="microwaves"
+              id="microwaves"
+              value="8"
+            />
+            <div class="mdc-checkbox__background">
+              <svg class="mdc-checkbox__checkmark" viewBox="0 0 24 24">
+                <path
+                  class="mdc-checkbox__checkmark-path"
+                  fill="none"
+                  d="M1.73,12.91 8.1,19.28 22.79,4.59"
+                />
+              </svg>
+              <div class="mdc-checkbox__mixedmark"></div>
+            </div>
+            <div class="mdc-checkbox__ripple"></div>
+          </div>
+          <label for="microwaves">Microwaves</label>
+        </div>
+        <br />
+        <hr class="mdc-list-divider" />
+        <h6 class="mdc-list-group__subheader">Filter By Price:</h6>
+        <div class="mdc-form-field mdc-form-field-radios">
+          <div class="mdc-radio">
+            <input
+              class="mdc-radio__native-control"
+              type="radio"
+              id="value1"
+              name="price"
+              value="1"
+            />
+            <div class="mdc-radio__background">
+              <div class="mdc-radio__outer-circle"></div>
+              <div class="mdc-radio__inner-circle"></div>
+            </div>
+            <div class="mdc-radio__ripple"></div>
+          </div>
+          <label for="value1">Under &#x20B9;1000</label>
+        </div>
+        <br />
+        <div class="mdc-form-field mdc-form-field-radios">
+          <div class="mdc-radio">
+            <input
+              class="mdc-radio__native-control"
+              type="radio"
+              id="value2"
+              name="price"
+              value="2"
+            />
+            <div class="mdc-radio__background">
+              <div class="mdc-radio__outer-circle"></div>
+              <div class="mdc-radio__inner-circle"></div>
+            </div>
+            <div class="mdc-radio__ripple"></div>
+          </div>
+          <label for="value2">&#x20B9;1000 - &#x20B9;5000</label>
+        </div>
+        <br />
+        <div class="mdc-form-field mdc-form-field-radios">
+          <div class="mdc-radio">
+            <input
+              class="mdc-radio__native-control"
+              type="radio"
+              id="value3"
+              name="price"
+              value="3"
+            />
+            <div class="mdc-radio__background">
+              <div class="mdc-radio__outer-circle"></div>
+              <div class="mdc-radio__inner-circle"></div>
+            </div>
+            <div class="mdc-radio__ripple"></div>
+          </div>
+          <label for="value3">&#x20B9;5000 - &#x20B9;10000</label>
+        </div>
+        <br />
+        <div class="mdc-form-field mdc-form-field-radios">
+          <div class="mdc-radio">
+            <input
+              class="mdc-radio__native-control"
+              type="radio"
+              id="value4"
+              name="price"
+              value="4"
+            />
+            <div class="mdc-radio__background">
+              <div class="mdc-radio__outer-circle"></div>
+              <div class="mdc-radio__inner-circle"></div>
+            </div>
+            <div class="mdc-radio__ripple"></div>
+          </div>
+          <label for="value4">&#x20B9;10000 - &#x20B9;20000</label>
+        </div>
+        <br />
+        <div class="mdc-form-field mdc-form-field-radios">
+          <div class="mdc-radio">
+            <input
+              class="mdc-radio__native-control"
+              type="radio"
+              id="value5"
+              name="price"
+              value="5"
+            />
+            <div class="mdc-radio__background">
+              <div class="mdc-radio__outer-circle"></div>
+              <div class="mdc-radio__inner-circle"></div>
+            </div>
+            <div class="mdc-radio__ripple"></div>
+          </div>
+          <label for="value5">Over &#x20B9;20000</label>
+        </div>
+        <br />
+        <div class="filter-button-container">
+          <button
+            id="apply"
+            class="filter-button mdc-button apply-button mdc-button--raised"
+          >
+            <span class="mdc-button__ripple"></span>
+            <span class="mdc-button__label">Apply</span>
+          </button>
+          <button id="reset" class="filter-button mdc-button">
+            <span class="mdc-button__ripple"></span>
+            <span class="mdc-button__label">reset</span>
+          </button>
+        </div>
+      </nav>
+    </form>
+  </div>
 </aside>
 <div class="mdc-drawer-app-content">
-    <main class="main-content" id="main-content">
-        {% if products|length == 0: %}
-            <div class="noItemsFound">
-                <h2>Oops, No Items matching your search were found!</h2>
-                <hr>
-            </div>
-        {% else: %}
-            <div class='grid-container'>
-                {% for x in products: %}
-                <a href="{{ url_for('productPage', id=x['prodID']) }}" style="text-decoration: none;color: inherit">
+  <main class="main-content" id="main-content">
+    {% if products|length == 0: %}
+    <div class="noItemsFound">
+      <h2>Oops, No Items matching your search were found!</h2>
+      <hr />
+    </div>
+    {% else: %}
+    <div class="grid-container">
+      {% for x in products: %}
+      <div class="mdc-card">
+        <div class="mdc-card__primary-action">
+          <div
+            class="mdc-card__media mdc-card__media--square"
+            style="
+              background-image: url({{ x['img'] }});
+            "
+            data-redirect="{{ url_for('productPage', id=x['prodID']) }}"
+          ></div>
+          <div class="mdc-card__ripple"></div>
+        </div>
+        <div class="mdc-card-wrapper__text-section">
+          <div class="card__title">{{ x['prodName']|truncate(45) }}</div>
+        </div>
+        <div class="mdc-card__actions">
+          <div class="priceTag">&#x20B9;{{ x['minPrice'] }}.00</div>
+          <div class="mdc-card__action-icons">
+            <button
+              class="
+                material-icons
+                mdc-icon-button
+                mdc-card__action mdc-card__action--icon
+              "
+              title="Share"
+            >
+              add_shopping_cart
+            </button>
+            <!-- <button
+              class="
+                material-icons
+                mdc-icon-button
+                mdc-card__action mdc-card__action--icon
+              "
+              title="Wishlist"
+            >
+              favorite_border
+            </button> -->
+          </div>
+        </div>
+      </div>
+      <!-- <a href="{{ url_for('productPage', id=x['prodID']) }}" style="text-decoration: none;color: inherit">
                     <div class='grid-item mdc-elevation--z2' id="{{ x['prodID'] }}"">
                         <img src=" {{ x['img'] }}" alt="">
                         <div>{{ x['prodName'] }}</div>
@@ -227,82 +375,90 @@ Home
                             </button>
                         </span>
                     </div>
-                </a>
-                {% endfor %}
-            </div>
+                </a> -->
+      {% endfor %}
+    </div>
 
-            {% if filter == False or totalPages: %}
-                <div class="pageswitcher">
-                    {% if page != 1 %}
-                    <a href="{{url_for('home', page=page-1)}}">
-                        <button class='pageNo' id='prevPage'>
-                            <i class="fas fa-arrow-left"></i>
-                        </button>
-                    </a>
-                    {% endif %}
-
-                    {% for x in range(1, totalPages + 1) %}
-                        {% if x == 1 or x == totalPages %}
-                            {% if x == page %}
-                                <a href="{{url_for('home', page=x)}}"><button class='pageNo selectedPage'>{{ x }}</button></a>
-                            {% else %}
-                                <a href="{{url_for('home', page=x)}}"><button class='pageNo'>{{ x }}</button></a>
-                            {% endif %}
-                        {% elif page == 1 %}
-                            {% if x == page %}
-                                <a href="{{url_for('home', page=x)}}"><button class='pageNo selectedPage'>{{ x }}</button></a>
-                            {% elif (page+2) <= totalPages and x <=page+2 %} 
-                                <a href="{{url_for('home', page=x)}}"><button class='pageNo'>{{ x }}</button></a>
-                            {% else %}
-                                <a href="{{url_for('home', page=x)}}" class='pageDot'>&#183;</a>
-                            {% endif %}
-                        {% elif page == 2 %}
-                            {% if x == page %}
-                                <a href="{{url_for('home', page=x)}}"><button class='pageNo selectedPage'>{{ x }}</button></a>
-                            {% elif (page-1)>= 1 and (page+2) <= totalPages and x <=page+2 %} 
-                                <a href="{{url_for('home', page=x)}}"><button class='pageNo'>{{ x }}</button></a>
-                            {% else %}
-                                <a href="{{url_for('home', page=x)}}" class='pageDot'>&#183;</a>
-                            {% endif %}
-                            {% elif (page >= 3 and page <= (totalPages-2)) and (page-2)>= 1 and (page+2)<=totalPages and x>=(page-2) and x <= (page+2): %} 
-                                {% if x==page %} 
-                                    <a href="{{url_for('home', page=x)}}"><button class='pageNo selectedPage'>{{ x }}</button></a>
-                                {% else %}
-                                    <a href="{{url_for('home', page=x)}}"><button class='pageNo'>{{ x }}</button></a>
-                                {% endif %}
-                            {% elif page == (totalPages-1) %}
-                                {% if x == page %}
-                                    <a href="{{url_for('home', page=x)}}"><button class='pageNo selectedPage'>{{ x }}</button></a>
-                                {% elif (page-2) >= 1 and x >= (page-2) and x <= (page+1) %} 
-                                    <a href="{{url_for('home', page=x)}}"><button class='pageNo'>{{ x }}</button></a>
-                                {% else %}
-                                    <a href="{{url_for('home', page=x)}}" class='pageDot'>&#183;</a>
-                                {% endif %}
-                            {% elif page == totalPages %}
-                                {% if x == page %}
-                                    <a href="{{url_for('home', page=x)}}"><button class='pageNo selectedPage'>{{ x }}</button></a>
-                                {% elif (page-2) >= 1 and x >= (page-2) %}
-                                    <a href="{{url_for('home', page=x)}}"><button class='pageNo'>{{ x }}</button></a>
-                                {% else %}
-                                    <a href="{{url_for('home', page=x)}}" class='pageDot'>&#183;</a>
-                                {% endif %}
-                            {% else %}
-                                <a href="{{url_for('home', page=x)}}" class='pageDot'>&#183;</a>
-                        {% endif %}
-                    {% endfor %}
-                    {% if page != totalPages %}
-                        <a href="{{url_for('home', page=page+1)}}"><button class='pageNo' id='nextPage'><i class="fas fa-arrow-right"></i></button></a>
-                    {% endif %}
-                </div>
-            {% endif %}
-
-        {% endif %}
-
-    </main>
+    {% if filter == False or totalPages: %}
+    <div class="pageswitcher">
+      {% if page != 1 %}
+      <a href="{{url_for('home', page=page-1)}}">
+        <button class="pageNo" id="prevPage">
+          <i class="fas fa-arrow-left"></i>
+        </button>
+      </a>
+      {% endif %} {% for x in range(1, totalPages + 1) %} {% if x == 1 or x ==
+      totalPages %} {% if x == page %}
+      <a href="{{url_for('home', page=x)}}"
+        ><button class="pageNo selectedPage">{{ x }}</button></a
+      >
+      {% else %}
+      <a href="{{url_for('home', page=x)}}"
+        ><button class="pageNo">{{ x }}</button></a
+      >
+      {% endif %} {% elif page == 1 %} {% if x == page %}
+      <a href="{{url_for('home', page=x)}}"
+        ><button class="pageNo selectedPage">{{ x }}</button></a
+      >
+      {% elif (page+2) <= totalPages and x <=page+2 %}
+      <a href="{{url_for('home', page=x)}}"
+        ><button class="pageNo">{{ x }}</button></a
+      >
+      {% else %}
+      <a href="{{url_for('home', page=x)}}" class="pageDot">&#183;</a>
+      {% endif %} {% elif page == 2 %} {% if x == page %}
+      <a href="{{url_for('home', page=x)}}"
+        ><button class="pageNo selectedPage">{{ x }}</button></a
+      >
+      {% elif (page-1)>= 1 and (page+2) <= totalPages and x <=page+2 %}
+      <a href="{{url_for('home', page=x)}}"
+        ><button class="pageNo">{{ x }}</button></a
+      >
+      {% else %}
+      <a href="{{url_for('home', page=x)}}" class="pageDot">&#183;</a>
+      {% endif %} {% elif (page >= 3 and page <= (totalPages-2)) and (page-2)>=
+      1 and (page+2)<=totalPages and x>=(page-2) and x <= (page+2): %} {% if
+      x==page %}
+      <a href="{{url_for('home', page=x)}}"
+        ><button class="pageNo selectedPage">{{ x }}</button></a
+      >
+      {% else %}
+      <a href="{{url_for('home', page=x)}}"
+        ><button class="pageNo">{{ x }}</button></a
+      >
+      {% endif %} {% elif page == (totalPages-1) %} {% if x == page %}
+      <a href="{{url_for('home', page=x)}}"
+        ><button class="pageNo selectedPage">{{ x }}</button></a
+      >
+      {% elif (page-2) >= 1 and x >= (page-2) and x <= (page+1) %}
+      <a href="{{url_for('home', page=x)}}"
+        ><button class="pageNo">{{ x }}</button></a
+      >
+      {% else %}
+      <a href="{{url_for('home', page=x)}}" class="pageDot">&#183;</a>
+      {% endif %} {% elif page == totalPages %} {% if x == page %}
+      <a href="{{url_for('home', page=x)}}"
+        ><button class="pageNo selectedPage">{{ x }}</button></a
+      >
+      {% elif (page-2) >= 1 and x >= (page-2) %}
+      <a href="{{url_for('home', page=x)}}"
+        ><button class="pageNo">{{ x }}</button></a
+      >
+      {% else %}
+      <a href="{{url_for('home', page=x)}}" class="pageDot">&#183;</a>
+      {% endif %} {% else %}
+      <a href="{{url_for('home', page=x)}}" class="pageDot">&#183;</a>
+      {% endif %} {% endfor %} {% if page != totalPages %}
+      <a href="{{url_for('home', page=page+1)}}"
+        ><button class="pageNo" id="nextPage">
+          <i class="fas fa-arrow-right"></i></button
+      ></a>
+      {% endif %}
+    </div>
+    {% endif %} {% endif %}
+  </main>
 </div>
 
-{% endblock %}
-
-{% block scripts %}
+{% endblock %} {% block scripts %}
 <script src="{{ url_for('static', filename='scripts/customer-home.js') }}"></script>
 {% endblock %}
