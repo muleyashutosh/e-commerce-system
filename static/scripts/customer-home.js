@@ -62,12 +62,12 @@ formFieldsRadios.map((el, index) => {
 //   return false;
 // });
 
-const filterRipples = [].map.call(
-  document.querySelectorAll(".filter-button"),
-  (el) => {
-    new MDCRipple(el);
-  }
-);
+// const filterRipples = [].map.call(
+//   document.querySelectorAll(".filter-button"),
+//   (el) => {
+//     new MDCRipple(el);
+//   }
+// );
 
 // const initialize_button_Ripples = () => {
 //   const ripples = [].map.call(
