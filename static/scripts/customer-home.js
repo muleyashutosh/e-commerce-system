@@ -57,28 +57,6 @@ formFieldsRadios.map((el, index) => {
   el.input = radios[index];
 });
 
-// document.getElementById("reset").addEventListener("click", function (event) {
-//   document.getElementById("filter").reset();
-//   return false;
-// });
-
-// const filterRipples = [].map.call(
-//   document.querySelectorAll(".filter-button"),
-//   (el) => {
-//     new MDCRipple(el);
-//   }
-// );
-
-// const initialize_button_Ripples = () => {
-//   const ripples = [].map.call(
-//     document.querySelectorAll(".addToCart"),
-//     (el) => {
-//       new MDCRipple(el);
-//     }
-//   );
-// };
-// initialize_button_Ripples();
-
 pages = $(".pageswitcher").children("a");
 dot_count = 0;
 for (x of pages) {
@@ -104,16 +82,16 @@ for (x of pages.get().reverse()) {
 // console.log(pages.get().reverse())
 
 const QuerySearch = (query, category, callback) => {
-  $.ajax({
-    method: "post",
-    url: "/api/getproducts",
-    data: {
+  $.post(
+    "/api/getproducts",
+    {
       search: query,
       category: category,
     },
-    success: callback,
-  });
+    callback
+  );
 };
+
 const gridContainer = $(".grid-container");
 var allproducts = gridContainer.contents();
 const searchInput = $("#search");
@@ -169,8 +147,6 @@ const renderProducts = ({ status, data }) => {
     gridContainer.empty();
     gridContainer.append(html);
     $(".pageswitcher").hide();
-
-    initialize_button_Ripples();
   }
 };
 
@@ -211,14 +187,13 @@ const fetchFilteredProducts = async (body) => {
 };
 
 const filterForm = document.querySelector("#filter");
-filterForm.addEventListener("submit", (event) => {
+filterForm.addEventListener("submit", async (event) => {
   event.preventDefault();
   NProgress.start();
   const formData = new FormData(filterForm);
   const body = JSON.stringify(Object.fromEntries(formData));
-  fetchFilteredProducts(body).then((data) => {
-    renderProducts(data);
-  });
+  const data = await fetchFilteredProducts(body);
+  renderProducts(data);
 });
 
 const redirectToProductPage = (e) => {

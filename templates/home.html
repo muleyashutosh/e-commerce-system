@@ -313,127 +313,130 @@
 <div class="mdc-drawer-app-content">
   <main class="main-content" id="main-content">
     {% if products|length == 0: %}
-    <div class="noItemsFound">
-      <h2>Oops, No Items matching your search were found!</h2>
-      <hr />
-    </div>
+      <div class="noItemsFound">
+        <h2>Oops, No Items matching your search were found!</h2>
+        <hr />
+      </div>
     {% else: %}
-    <div class="grid-container">
-      {% for x in products: %}
-      <div class="mdc-card">
-        <div class="mdc-card__primary-action">
-          <div
-            class="mdc-card__media mdc-card__media--square"
-            style="
-              background-image: url({{ x['img'] }});
-            "
-            data-redirect="{{ url_for('productPage', id=x['prodID']) }}"
-          ></div>
-          <div class="mdc-card__ripple"></div>
-        </div>
-        <div class="mdc-card-wrapper__text-section">
-          <div class="card__title">{{ x['prodName']|truncate(45) }}</div>
-        </div>
-        <div class="mdc-card__actions">
-          <div class="priceTag">&#x20B9;{{ x['minPrice'] }}.00</div>
-          <div class="mdc-card__action-icons">
-            <button
-              class="
-                material-icons
-                mdc-icon-button
-                mdc-card__action mdc-card__action--icon
-              "
-              title="Share"
-            >
-              add_shopping_cart
-            </button>
+      <div class="grid-container">
+        {% for x in products: %}
+        <div class="mdc-card">
+          <div class="mdc-card__primary-action">
+            <div
+              class="mdc-card__media mdc-card__media--square"
+              style=background-image:url({{x["img"]}})
+              data-redirect="{{ url_for('productPage', id=x['prodID']) }}"
+            ></div>
+            <div class="mdc-card__ripple"></div>
+          </div>
+          <div class="mdc-card-wrapper__text-section">
+            <div class="card__title">{{ x['prodName']|truncate(45) }}</div>
+          </div>
+          <div class="mdc-card__actions">
+            <div class="priceTag">&#x20B9;{{ x['minPrice'] }}.00</div>
+            <div class="mdc-card__action-icons">
+              <div class="mdc-touch-target-wrapper">
+                <button
+                  class="
+                    material-icons
+                    mdc-icon-button
+                    mdc-card__action mdc-card__action--icon
+                  "
+                  title="Share"
+                >
+                  add_shopping_cart
+                  <div class="mdc-icon-button__ripple"></div>
+                  <div class="mdc-icon-button__touch"></div>
+                </button>
+              </div>
+            </div>
           </div>
         </div>
+        {% endfor %}
       </div>
 
-      {% endfor %}
-    </div>
-
-    {% if filter == False or totalPages: %}
-    <div class="pageswitcher">
-      {% if page != 1 %}
-      <a href="{{url_for('home', page=page-1)}}">
-        <button class="pageNo" id="prevPage">
-          <i class="fas fa-arrow-left"></i>
-        </button>
-      </a>
-      {% endif %} {% for x in range(1, totalPages + 1) %} {% if x == 1 or x ==
-      totalPages %} {% if x == page %}
-      <a href="{{url_for('home', page=x)}}"
-        ><button class="pageNo selectedPage">{{ x }}</button></a
-      >
-      {% else %}
-      <a href="{{url_for('home', page=x)}}"
-        ><button class="pageNo">{{ x }}</button></a
-      >
-      {% endif %} {% elif page == 1 %} {% if x == page %}
-      <a href="{{url_for('home', page=x)}}"
-        ><button class="pageNo selectedPage">{{ x }}</button></a
-      >
-      {% elif (page+2) <= totalPages and x <=page+2 %}
-      <a href="{{url_for('home', page=x)}}"
-        ><button class="pageNo">{{ x }}</button></a
-      >
-      {% else %}
-      <a href="{{url_for('home', page=x)}}" class="pageDot">&#183;</a>
-      {% endif %} {% elif page == 2 %} {% if x == page %}
-      <a href="{{url_for('home', page=x)}}"
-        ><button class="pageNo selectedPage">{{ x }}</button></a
-      >
-      {% elif (page-1)>= 1 and (page+2) <= totalPages and x <=page+2 %}
-      <a href="{{url_for('home', page=x)}}"
-        ><button class="pageNo">{{ x }}</button></a
-      >
-      {% else %}
-      <a href="{{url_for('home', page=x)}}" class="pageDot">&#183;</a>
-      {% endif %} {% elif (page >= 3 and page <= (totalPages-2)) and (page-2)>=
-      1 and (page+2)<=totalPages and x>=(page-2) and x <= (page+2): %} {% if
-      x==page %}
-      <a href="{{url_for('home', page=x)}}"
-        ><button class="pageNo selectedPage">{{ x }}</button></a
-      >
-      {% else %}
-      <a href="{{url_for('home', page=x)}}"
-        ><button class="pageNo">{{ x }}</button></a
-      >
-      {% endif %} {% elif page == (totalPages-1) %} {% if x == page %}
-      <a href="{{url_for('home', page=x)}}"
-        ><button class="pageNo selectedPage">{{ x }}</button></a
-      >
-      {% elif (page-2) >= 1 and x >= (page-2) and x <= (page+1) %}
-      <a href="{{url_for('home', page=x)}}"
-        ><button class="pageNo">{{ x }}</button></a
-      >
-      {% else %}
-      <a href="{{url_for('home', page=x)}}" class="pageDot">&#183;</a>
-      {% endif %} {% elif page == totalPages %} {% if x == page %}
-      <a href="{{url_for('home', page=x)}}"
-        ><button class="pageNo selectedPage">{{ x }}</button></a
-      >
-      {% elif (page-2) >= 1 and x >= (page-2) %}
-      <a href="{{url_for('home', page=x)}}"
-        ><button class="pageNo">{{ x }}</button></a
-      >
-      {% else %}
-      <a href="{{url_for('home', page=x)}}" class="pageDot">&#183;</a>
-      {% endif %} {% else %}
-      <a href="{{url_for('home', page=x)}}" class="pageDot">&#183;</a>
-      {% endif %} {% endfor %} {% if page != totalPages %}
-      <a href="{{url_for('home', page=page+1)}}"
-        ><button class="pageNo" id="nextPage">
-          <i class="fas fa-arrow-right"></i></button
-      ></a>
-      {% endif %}
-    </div>
-    {% endif %} {% endif %}
+      {% if filter == False or totalPages: %}
+        <div class="pageswitcher">
+          {% if page != 1 %}
+          <a href="{{url_for('home', page=page-1)}}">
+            <button class="pageNo" id="prevPage">
+              <i class="fas fa-arrow-left"></i>
+            </button>
+          </a>
+          {% endif %} {% for x in range(1, totalPages + 1) %} {% if x == 1 or x ==
+          totalPages %} {% if x == page %}
+          <a href="{{url_for('home', page=x)}}"
+            ><button class="pageNo selectedPage">{{ x }}</button></a
+          >
+          {% else %}
+          <a href="{{url_for('home', page=x)}}"
+            ><button class="pageNo">{{ x }}</button></a
+          >
+          {% endif %} {% elif page == 1 %} {% if x == page %}
+          <a href="{{url_for('home', page=x)}}"
+            ><button class="pageNo selectedPage">{{ x }}</button></a
+          >
+          {% elif (page+2) <= totalPages and x <=page+2 %}
+          <a href="{{url_for('home', page=x)}}"
+            ><button class="pageNo">{{ x }}</button></a
+          >
+          {% else %}
+          <a href="{{url_for('home', page=x)}}" class="pageDot">&#183;</a>
+          {% endif %} {% elif page == 2 %} {% if x == page %}
+          <a href="{{url_for('home', page=x)}}"
+            ><button class="pageNo selectedPage">{{ x }}</button></a
+          >
+          {% elif (page-1)>= 1 and (page+2) <= totalPages and x <=page+2 %}
+          <a href="{{url_for('home', page=x)}}"
+            ><button class="pageNo">{{ x }}</button></a
+          >
+          {% else %}
+          <a href="{{url_for('home', page=x)}}" class="pageDot">&#183;</a>
+          {% endif %} {% elif (page >= 3 and page <= (totalPages-2)) and (page-2)>=
+          1 and (page+2)<=totalPages and x>=(page-2) and x <= (page+2): %} {% if
+          x==page %}
+          <a href="{{url_for('home', page=x)}}"
+            ><button class="pageNo selectedPage">{{ x }}</button></a
+          >
+          {% else %}
+          <a href="{{url_for('home', page=x)}}"
+            ><button class="pageNo">{{ x }}</button></a
+          >
+          {% endif %} {% elif page == (totalPages-1) %} {% if x == page %}
+          <a href="{{url_for('home', page=x)}}"
+            ><button class="pageNo selectedPage">{{ x }}</button></a
+          >
+          {% elif (page-2) >= 1 and x >= (page-2) and x <= (page+1) %}
+          <a href="{{url_for('home', page=x)}}"
+            ><button class="pageNo">{{ x }}</button></a
+          >
+          {% else %}
+          <a href="{{url_for('home', page=x)}}" class="pageDot">&#183;</a>
+          {% endif %} {% elif page == totalPages %} {% if x == page %}
+          <a href="{{url_for('home', page=x)}}"
+            ><button class="pageNo selectedPage">{{ x }}</button></a
+          >
+          {% elif (page-2) >= 1 and x >= (page-2) %}
+          <a href="{{url_for('home', page=x)}}"
+            ><button class="pageNo">{{ x }}</button></a
+          >
+          {% else %}
+          <a href="{{url_for('home', page=x)}}" class="pageDot">&#183;</a>
+          {% endif %} {% else %}
+          <a href="{{url_for('home', page=x)}}" class="pageDot">&#183;</a>
+          {% endif %} {% endfor %} {% if page != totalPages %}
+          <a href="{{url_for('home', page=page+1)}}"
+            ><button class="pageNo" id="nextPage">
+              <i class="fas fa-arrow-right"></i></button
+          ></a>
+          {% endif %}
+        </div>
+      {% endif %} 
+    {% endif %}
   </main>
 </div>
 
-{% endblock %} {% block scripts %}
+{% endblock %} 
+{% block scripts %}
 <script src="{{ url_for('static', filename='scripts/customer-home.js') }}"></script>
 {% endblock %}

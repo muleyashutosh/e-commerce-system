@@ -67,8 +67,4 @@
   .grid-item {
     grid-template-columns: 1fr;
   }
-  .grid-item img {
-    width: auto;
-    height: calc(100vh - 100px);
-  }
 }

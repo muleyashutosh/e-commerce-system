@@ -1,6 +1,7 @@
 from flask import Flask, json, render_template, request, session, url_for, jsonify
 from mysql.connector import Error
 from werkzeug.utils import redirect
+from flask_cachebuster import CacheBuster
 from workbench import Workbench
 from random import randint
 from datetime import date
@@ -14,6 +15,11 @@ app = Flask(__name__)
 
 CORS(app)
 
+config = {'extensions': ['.js', '.css', 'html'], 'hash_size': 5}
+
+cache_buster = CacheBuster(config=config)
+
+cache_buster.init_app(app)
 
 db = Workbench(**CONFIG)
 
@@ -243,7 +249,7 @@ def profile():
 
             def dataenter():
                 if session['paymentdetailID'] is None:
-                    payinfo = dict()
+                    payinfo = {}
                     payinfo['paymentdetailID'] = 'Pay-' + \
                         str(randint(1, 9999999) + randint(1, 999999))
                     if bool(cardinfo) != False:
@@ -263,6 +269,7 @@ def profile():
                             db.insert_into("upidet", values=upiinfo)
                         except Error as e:
                             print(e)
+                            print("basbdasjdaskjdasldasd")
                             return 'upidet.upiID'
                     if 'upidetailID' in payinfo or 'carddetailID' in payinfo:
                         session['paymentdetailID'] = payinfo['paymentdetailID']

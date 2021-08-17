@@ -1,25 +1,25 @@
 const onload = async (body) => {
-    const data = await fetch(`/productDetail/${id}`);
-    const resp = await data.json();
-return resp;
-  };
-  let product=[];
-  const gridContainer = $('.grid-container')
-  onload().then( (resp) => {
-      product = resp.data[0];
-      console.log(product);
-      let desc=product['prodDesc'].split('. ').reduce((prev,item)=>{
-        return `${prev}<li>${item}</li>`
-      },'')
-    const html = `<div class='grid-item' id='${product['prodID']}'>
-                    <img src="${product['img']}" alt="">
+  const data = await fetch(`/productDetail/${id}`);
+  const resp = await data.json();
+  return resp;
+};
+let product = [];
+const gridContainer = $(".grid-container");
+onload().then((resp) => {
+  product = resp.data[0];
+  console.log(product);
+  let desc = product["prodDesc"].split(". ").reduce((prev, item) => {
+    return `${prev}<li>${item}</li>`;
+  }, "");
+  const html = `<div class='grid-item' id='${product["prodID"]}'>
+                    <img src="${product["img"]}" alt="">
                     <div class='details'>
                       <div class='title'>
-                        ${product['prodName']}
+                        ${product["prodName"]}
                       </div>
                       <div class='priceTag'>
                       &#x20B9;
-                        ${product['minPrice']}
+                        ${product["minPrice"]}
                       </div>   
                       <div>
                       <ul>
@@ -34,9 +34,8 @@ return resp;
                         <span class="mdc-button__label">BUY NOW</span>
                       </button>
                     </div>                 
-                </div>`
-                
-    gridContainer.append(html);
-    // new MDCRipple(document.querySelector('.mdc-button')) 
-  })
-  
+                </div>`;
+
+  gridContainer.append(html);
+  // new MDCRipple(document.querySelector('.mdc-button'))
+});

@@ -18,15 +18,11 @@ const tooltips = [].map.call(
 const iconRipples = [].map.call(
   document.querySelectorAll(".mdc-icon-button"),
   (el) => {
-    return new MDCRipple(el);
+    const ripple = new MDCRipple(el);
+    ripple.unbounded = true;
+    return ripple;
   }
 );
-
-iconRipples.map((el) => {
-  el.unbounded = true;
-});
-
-console.log(iconRipples);
 
 const tooltipsCleanup = () => {
   tooltips.map(({ root }) => {
@@ -75,7 +71,7 @@ $(() => {
 
   $(".search-icon-button").on("click", floatingSearchToggle);
 
-  $("#dropbtn").click(function () {
+  $("#dropbtn .mdc-icon-button__touch").click(function () {
     $("#drop-content").slideToggle(200);
   });
 
@@ -98,7 +94,11 @@ $(() => {
   });
 
   window.onclick = function (e) {
-    if (!e.target.matches("#dropbtn") && !e.target.matches("#drop-btn")) {
+    if (
+      !e.target.matches("#dropbtn") &&
+      !e.target.matches("#drop-btn") &&
+      !e.target.matches("#drop-btn .mdc-icon-button__touch")
+    ) {
       $("#drop-content").slideUp();
     }
   };
