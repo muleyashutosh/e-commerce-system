@@ -88,19 +88,7 @@ h1 {
 }
 
 #button {
-  /* font-family: "Poppins", sans-serif;
-  font-weight: bold; */
-  /* height: 6%;
-  width: 21%; */
-  /* font-size: 18px;
-  margin-left: 40%;
-  margin-top: 5%;
-  border-radius: 10px;
-  cursor: pointer;
-  background-color: #e9b50d;
-  outline: none; */
   margin: 15px;
-  /* transition: all 0.3s ease; */
 }
 
 .mdc-button--raised:not(:disabled) {
@@ -131,18 +119,14 @@ h1 {
   float: right;
 }
 #addpay {
-  /* border: 1px solid black; */
-  /* color: black; */
   text-align: center;
   font-size: 19px;
-  /* float: right; */
-  /* cursor: pointer; */
-  /* border: transparent; */
+
   position: absolute;
   right: 0;
   top: 0;
   display: flex;
-  flex-direction: column;
+  flex-direction: row-reverse;
   align-items: center;
 }
 
@@ -175,20 +159,12 @@ h1 {
   width: 95%;
   margin: auto;
 }
-/* .dropDown1 {
-  float: right;
-  overflow: hidden;
-} */
 
 .dropdown-content1 {
-  /* position: absolute; */
-  /* right: 26.65%; */
   display: none;
   z-index: 2;
-  /* box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2); */
-  /* background-color: #2d2d2d; */
   align-items: center;
-  flex-direction: column;
+  flex-direction: row-reverse;
   justify-content: space-between;
   gap: 2px;
 }
@@ -208,8 +184,7 @@ h1 {
 .cardClass {
   font-size: 26px;
   color: #3f3f3f !important;
-  /* width: 45px;
-  height: 45px; */
+
   display: flex;
   align-items: center;
   justify-content: center;
@@ -222,12 +197,6 @@ h1 {
   background-position: 50%;
   background-repeat: no-repeat;
 }
-
-/* .dropdown-content1 > a:hover {
-  background-color: #eceff2;
-  color: #2d2d2d;
-  transform: scale(1.1);
-} */
 
 .marginTop {
   margin-top: 10px;
@@ -264,5 +233,32 @@ h1 {
 @media screen and (max-width: 600px) {
   #main {
     width: 95%;
+  }
+}
+
+#dropbtn1[close] {
+  animation: turnOff 0.1s normal;
+  animation-fill-mode: forwards;
+}
+
+#dropbtn1[open] {
+  animation: turnOpen 0.1s normal;
+  animation-fill-mode: forwards;
+}
+
+@keyframes turnOpen {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(45deg);
+  }
+}
+@keyframes turnOff {
+  0% {
+    transform: rotate(45deg);
+  }
+  100% {
+    transform: rotate(0deg);
   }
 }

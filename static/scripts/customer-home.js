@@ -194,6 +194,7 @@ filterForm.addEventListener("submit", async (event) => {
   const body = JSON.stringify(Object.fromEntries(formData));
   const data = await fetchFilteredProducts(body);
   renderProducts(data);
+  drawer.open = false;
 });
 
 const redirectToProductPage = (e) => {

@@ -63,13 +63,26 @@ window.onload = function () {
       !e.target.matches("#dropbtn1") &&
       !e.target.matches("#dropbtn1 .mdc-fab__touch")
     ) {
-      $("#drop-content1").slideUp();
+      if ($("#dropbtn1").attr("open")) {
+        $("#drop-content1").fadeOut(100);
+        $("#dropbtn1").attr("open", false);
+        $("#dropbtn1").attr("close", true);
+      }
+      // $("#dropbtn1 .mdc-fab__icon").text("add");
     }
   };
 };
 
 $("#dropbtn1 .mdc-fab__touch").click(function () {
-  $("#drop-content1").slideToggle(100);
+  if ($("#dropbtn1").attr("open")) {
+    $("#dropbtn1").attr("open", false);
+    $("#dropbtn1").attr("close", true);
+    $("#drop-content1").fadeOut(100);
+  } else {
+    $("#dropbtn1").attr("open", true);
+    $("#dropbtn1").attr("close", false);
+    $("#drop-content1").fadeIn(100).css("display", "flex");
+  }
   return false;
 });
 
