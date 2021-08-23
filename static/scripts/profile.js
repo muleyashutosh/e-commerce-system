@@ -61,14 +61,14 @@ window.onload = function () {
     // console.log(e.target)
     if (
       !e.target.matches("#dropbtn1") &&
-      !e.target.matches("#dropbtn1 .mdc-fab__touch")
+      !e.target.matches("#dropbtn1 .mdc-fab__touch") &&
+      $("#dropbtn1").attr("open")
     ) {
-      if ($("#dropbtn1").attr("open")) {
-        $("#drop-content1").fadeOut(100);
-        $("#dropbtn1").attr("open", false);
-        $("#dropbtn1").attr("close", true);
-      }
-      // $("#dropbtn1 .mdc-fab__icon").text("add");
+      $("#drop-content1").attr("open", false);
+      $("#drop-content1").attr("close", true);
+      $("#dropbtn1").attr("open", false);
+      $("#dropbtn1").attr("close", true);
+      $("#addpay").css("background-color", "#efefef");
     }
   };
 };
@@ -77,11 +77,15 @@ $("#dropbtn1 .mdc-fab__touch").click(function () {
   if ($("#dropbtn1").attr("open")) {
     $("#dropbtn1").attr("open", false);
     $("#dropbtn1").attr("close", true);
-    $("#drop-content1").fadeOut(100);
+    $("#drop-content1").attr("open", false);
+    $("#drop-content1").attr("close", true);
+    $("#addpay").css("background-color", "#efefef");
   } else {
     $("#dropbtn1").attr("open", true);
     $("#dropbtn1").attr("close", false);
-    $("#drop-content1").fadeIn(100).css("display", "flex");
+    $("#drop-content1").attr("open", true);
+    $("#drop-content1").attr("close", false);
+    $("#addpay").css("background-color", "#e5e5e5");
   }
   return false;
 });

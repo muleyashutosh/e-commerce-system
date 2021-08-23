@@ -153,21 +153,41 @@
             </div>
             <div class="dropdown-content1" id="drop-content1">
               <div class="cardClass">
-                <div
-                  class="material-icons material-icons-outlined"
-                  onclick="Card('card')"
-                  style="font-size: 32px"
-                  id="card"
-                >
-                  credit_card
+                <div class="mdc-touch-target-wrapper">
+                  <button
+                    class="
+                      mdc-icon-button mdc-icon-button--touch
+                      material-icons
+                    "
+                    onclick="Card('card')"
+                    id="card"
+                  >
+                    <div class="mdc-icon-button__ripple"></div>
+                    credit_card
+                    <div class="mdc-icon-button__touch"></div>
+                  </button>
                 </div>
               </div>
-              <a id="upi" class="upiCLass" onclick="Card('upi')"></a>
+                <div class="mdc-touch-target-wrapper">
+                  <button
+                    class="
+                      mdc-icon-button mdc-icon-button--touch
+                      upiCLass
+                    "
+                    id="upi"
+                    onclick="Card('upi')"
+                  >
+                    <div class="mdc-icon-button__ripple"></div>
+                    <div class="mdc-icon-button__touch">
+                    </div>
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
         </div>
         <br />
-        <div style="text-align: center" id="status">
+        <div style="text-align: center; margin-top:15px;" id="status">
           <label style="color: #888888">No Payment Methods Selected</label>
         </div>
         <div id="Card" style="display: none" class="marginTop">

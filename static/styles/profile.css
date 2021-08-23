@@ -121,13 +121,16 @@ h1 {
 #addpay {
   text-align: center;
   font-size: 19px;
-
   position: absolute;
   right: 0;
-  top: 0;
+  top: -15px;
   display: flex;
   flex-direction: row-reverse;
   align-items: center;
+  justify-content: center;
+  border-top-left-radius: 24px;
+  border-radius: 24px;
+  padding-left: 10px;
 }
 
 .close {
@@ -145,14 +148,6 @@ h1 {
   font-size: 12px;
   color: var(--mdc-red);
 }
-/* #dropbtn1 {
-  color: #1e555c;
-  margin-right: 2.5px;
-  font-size: 22px;
-}
-#dropbtn1:hover {
-  transform: scale(1.05);
-} */
 
 #forms {
   padding: 2%;
@@ -167,6 +162,17 @@ h1 {
   flex-direction: row-reverse;
   justify-content: space-between;
   gap: 2px;
+}
+
+.dropdown-content1[open] {
+  display: flex;
+  animation: dropdownSwipeLeft 0.1s normal;
+  animation-fill-mode: forwards;
+}
+
+.dropdown-content1[close="true"] {
+  animation: dropdownSwipeRight 0.1s normal;
+  animation-fill-mode: forwards;
 }
 
 .dropdown-content1 a {
@@ -254,11 +260,34 @@ h1 {
     transform: rotate(45deg);
   }
 }
+
 @keyframes turnOff {
   0% {
     transform: rotate(45deg);
   }
   100% {
     transform: rotate(0deg);
+  }
+}
+
+@keyframes dropdownSwipeLeft {
+  0% {
+    transform: translateX(10px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0px);
+    opacity: 1;
+  }
+}
+
+@keyframes dropdownSwipeRight {
+  0% {
+    transform: translateX(0px);
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(10px);
+    opacity: 0;
   }
 }
