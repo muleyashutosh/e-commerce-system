@@ -184,6 +184,10 @@ input[type="search"]:focus::-webkit-search-cancel-button {
   width: fit-content;
   position: relative;
   margin: 25px auto 25px auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 3px;
 }
 
 .pageNo {

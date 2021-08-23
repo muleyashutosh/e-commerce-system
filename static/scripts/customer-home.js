@@ -147,6 +147,7 @@ const renderProducts = ({ status, data }) => {
     gridContainer.empty();
     gridContainer.append(html);
     $(".pageswitcher").hide();
+    $(".mdc-card__primary-action").on("click", redirectToProductPage);
   }
 };
 
