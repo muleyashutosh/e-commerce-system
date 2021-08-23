@@ -109,17 +109,18 @@ class Workbench(Column):
         curr.execute(query)
 
     def insert_into(self, tablename, values=None):
-        columns = ', '.join([k for k in values.keys()])
-        vals = ', '.join([str(v) if type(v) != type(
-            'str') else '"' + v + '"' for v in values.values()])
+        columns = ", ".join([k for k in values.keys()])
+        vals = [v for v in values.values()]
+        # print(columns, vals)
         query = 'INSERT INTO ' + tablename + \
-            '(' + columns + ') VALUES (' + vals + ')'
+            '(' + columns + \
+            ') VALUES (' + ("%s, " * (len(vals)-1)) + "%s" + ')'
         print(query)
         if self.conn:
             curr = self.conn.cursor()
         else:
             curr = self.conn.cursor()
-        curr.execute(query)
+        curr.execute(query, tuple(vals))
         self.conn.commit()
 
     def show_tables(self):
@@ -226,7 +227,8 @@ class Workbench(Column):
         self.conn.commit()
 
     def custom_query(self, query):
-        self.connect_db()
+        if (not self.conn.is_connected()):
+            self.connect_db()
         curr = self.conn.cursor(dictionary=True)
         try:
             curr.execute(query)
