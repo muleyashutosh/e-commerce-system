@@ -13,11 +13,12 @@
     </div>
     <div class="mdc-snackbar__actions" aria-atomic="true">
       <button type="button" class="material-icons
-          mdc-icon-button mdc-snackbar__action material-icons-outlined" title="Dismiss">
+          mdc-icon-button mdc-snackbar__action material-icons-outlined mdc-snackbar__dismiss" title="Dismiss">
         <div class="mdc-button__ripple"></div>
         close
       </button>
     </div>
+    
   </div>
 </aside>
 <section class="main-content">
@@ -28,7 +29,7 @@
       {% if cart|length != 0: %} {% for x in cart: %}
       <li class="list-item" data-prodid="{{x['prodID']}}">
         <div class="item-img">
-          <img src="{{ x['img']}}" alt="" width="225px" height="100%" />
+          <img src="{{ x['img']}}" alt="" class='item-imgtag' />
         </div>
         <div class="item-data">
           <div class="item-name">{{ x['prodName'] }}</div>

@@ -3,6 +3,7 @@ const { MDCSnackbar } = mdc.snackbar;
 const removedSnackbar = new MDCSnackbar(
   document.querySelector(".removed-snackbar")
 );
+removedSnackbar.timeoutMs = 4000;
 
 const addButton = document.querySelectorAll(".add-button");
 const minusButton = document.querySelectorAll(".minus-button");

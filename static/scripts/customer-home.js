@@ -11,6 +11,8 @@ const addedSnackbar = new MDCSnackbar(
 const removedSnackbar = new MDCSnackbar(
   document.querySelector(".removed-snackbar")
 );
+addedSnackbar.timeoutMs = 4000;
+removedSnackbar.timeoutMs = 4000;
 
 const selector = ".mdc-card__primary-action, .mdc-snackbar__actions";
 const ripples = [].map.call(document.querySelectorAll(selector), function (el) {
