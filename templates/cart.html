@@ -84,7 +84,10 @@
           </div>
         </div>
       </li>
-      {% endfor %} {% else: %} {% endif %}
+      {% endfor %} 
+      {% else: %}
+      <img src="{{ url_for('static', filename='styles/empty_cart.jpg') }}" alt="" srcset="">
+      {% endif %}
     </ul>
   </section>
   <aside class="subtotal mdc-elevation--z2">
