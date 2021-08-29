@@ -35,6 +35,7 @@ body {
 .mdc-card {
   justify-content: space-between;
   gap: 2px;
+  padding: 0 0 5px;
 }
 
 .card__title {

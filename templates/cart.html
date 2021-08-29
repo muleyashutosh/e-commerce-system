@@ -1,6 +1,95 @@
-{% extends "base.html" %}
-{% block title %}
-My Cart
+{% extends "base.html" %} {% block title %} My Cart {% endblock %} {% block head
+%}
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='styles/customerCart.css')}}"
+/>
+{% endblock %} {% block body %}
+<section class="main-content">
+  <section class="cart-items mdc-elevation--z2">
+    <div class="cart-heading">Shopping Cart</div>
+    <hr class="mdc-list-divider" />
+    <ul class="items-list">
+      {% if cart|length != 0: %} {% for x in cart: %}
+      <li class="list-item" data-prodid="{{x['prodID']}}">
+        <div class="item-img">
+          <img src="{{ x['img']}}" alt="" width="225px" height="100%" />
+        </div>
+        <div class="item-data">
+          <div class="item-name">{{ x['prodName'] }}</div>
+          <div class="item-price">&#x20B9;{{ x['minPrice'] }}.00</div>
+          <div class="item-bottom" data-prodid='{{ x["prodID"]}}'>
+            <div class="quantity-adjust">
+              <div class="mdc-touch-target-wrapper">
+                <button
+                  class="
+                    quantity-buttons
+                    minus-button
+                    mdc-icon-button mdc-icon-button--touch
+                    material-icons
+                  "
+                  {{ 'disabled' if x['quantity'] == 1 else '' }}
+                >
+                  <div class="mdc-icon-button__ripple"></div>
+                  remove
+                  <div class="mdc-icon-button__touch"></div>
+                </button>
+              </div>
+              <div class="quantity--text">{{ x['quantity'] }}</div>
+              <div class="mdc-touch-target-wrapper">
+                <button
+                  class="
+                    quantity-buttons
+                    add-button
+                    mdc-icon-button mdc-icon-button--touch
+                    material-icons
+                  "
+                >
+                  <div class="mdc-icon-button__ripple"></div>
+                  add
+                  <div class="mdc-icon-button__touch"></div>
+                </button>
+              </div>
+            </div>
+            <div class="mdc-touch-target-wrapper">
+              <button
+                class="
+                  quantity-buttons
+                  delete-button
+                  mdc-icon-button mdc-icon-button--touch
+                  material-icons
+                "
+              >
+                <div class="mdc-icon-button__ripple"></div>
+                delete
+                <div class="mdc-icon-button__touch"></div>
+              </button>
+            </div>
+          </div>
+        </div>
+      </li>
+      {% endfor %} {% else: %} {% endif %}
+    </ul>
+  </section>
+  <aside class="subtotal mdc-elevation--z2">
+    <div class="subtotal-top--wrapper">
+      <div class="subtotal-heading">Subtotal({{ cart|length }} items):</div>
+      <div class="subtotal-amount">
+        &#x20B9;{{ cart[0]['subtotal'] if cart|length else 0}}.00
+      </div>
+    </div>
+    <div class="mdc-touch-target-wrapper">
+      <button
+        class="proceed-button mdc-button mdc-button--touch mdc-button--raised"
+      >
+        <span class="mdc-button__ripple"></span>
+
+        <span class="mdc-button__touch"></span>
+        <span class="mdc-button__label">Proceed to Pay</span>
+      </button>
+    </div>
+  </aside>
+</section>
+{% endblock %} {% block scripts %}
+<script src="{{ url_for('static', filename='scripts/customer-cart.js') }}"></script>
 {% endblock %}
-{% block body %} {% endblock %}
-{% block scripts %} {% endblock %}

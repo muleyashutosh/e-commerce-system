@@ -109,19 +109,22 @@ class Workbench(Column):
         curr.execute(query)
 
     def insert_into(self, tablename, values=None):
-        columns = ", ".join([k for k in values.keys()])
-        vals = [v for v in values.values()]
-        # print(columns, vals)
-        query = 'INSERT INTO ' + tablename + \
-            '(' + columns + \
-            ') VALUES (' + ("%s, " * (len(vals)-1)) + "%s" + ')'
-        print(query)
-        if self.conn:
-            curr = self.conn.cursor()
-        else:
-            curr = self.conn.cursor()
-        curr.execute(query, tuple(vals))
-        self.conn.commit()
+        try:
+            columns = ", ".join([k for k in values.keys()])
+            vals = [v for v in values.values()]
+            # print(columns, vals)
+            query = 'INSERT INTO ' + tablename + \
+                '(' + columns + \
+                ') VALUES (' + ("%s, " * (len(vals)-1)) + "%s" + ')'
+            print(query, vals)
+            if not self.conn.is_connected():
+                self.connect_db()
+            else:
+                curr = self.conn.cursor()
+                curr.execute(query, tuple(vals))
+                self.conn.commit()
+        except Error as e:
+            raise e
 
     def show_tables(self):
         """
@@ -144,7 +147,7 @@ class Workbench(Column):
         curr = self.conn.cursor()
         curr.execute(query)
 
-    def select_from(self, tablename, attributes=None, where_clause=None, key='AND'):
+    def select_from(self, tablename, attributes=None, where_clause=None, key='AND', limit=tuple()):
         """
         This function will execute the SELECT query to select particular
         attributes from the table along with checking the where clause
@@ -160,18 +163,23 @@ class Workbench(Column):
         else:
             attr = ",".join(attributes)
         if where_clause is None:
-            where = ";"
+            where = " "
         else:
             where_clause = [k + ' = "' + v +
                             '"' for k, v in where_clause.items()]
-            where = " WHERE " + key.join(where_clause) + ';'
-        search = 'SELECT ' + attr + ' FROM ' + tablename + where
+            where = " WHERE " + key.join(where_clause) + ' '
+
+        if limit:
+            limitString = "LIMIT %s, %s;"
+        else:
+            limitString = ";"
+        search = 'SELECT ' + attr + ' FROM ' + tablename + where + limitString
         print(search)
         if (not self.conn.is_connected()):
             self.connect_db()
         curr = self.conn.cursor(dictionary=True)
         try:
-            curr.execute(search)
+            curr.execute(search, tuple(limit))
         except Error as e:
             raise e
         return curr.fetchall()
@@ -186,19 +194,23 @@ class Workbench(Column):
 
         Returns: None
         """
-        key = ' ' + key + ' '
-        if where_clause is not None:
-            where = [k + ' = "' + v + '"'for k, v in where_clause.items()]
-            where = key.join(where)
-            query = 'DELETE FROM ' + tablename + ' WHERE ' + where
-        else:
-            query = 'DELETE FROM ' + tablename
-        # print(query)
-        if (not self.conn.is_connected()):
-            self.connect_db()
-        curr = self.conn.cursor()
-        curr.execute(query)
-        self.conn.commit()
+        try:
+            key = ' ' + key + ' '
+            if where_clause is not None:
+                where = [k + ' = %s'for k, v in where_clause.items()]
+                vals = [v for k, v in where_clause.items()]
+                where = key.join(where)
+                query = 'DELETE FROM ' + tablename + ' WHERE ' + where
+            else:
+                query = 'DELETE FROM ' + tablename
+            print(query, tuple(vals))
+            if (not self.conn.is_connected()):
+                self.connect_db()
+            curr = self.conn.cursor()
+            curr.execute(query, tuple(vals))
+            self.conn.commit()
+        except Error as e:
+            raise e
 
     def update_table(self, tablename, updates, where_clause=None, key='AND'):
         """
@@ -210,21 +222,25 @@ class Workbench(Column):
                items
         RETURNS: None
         """
-        key = ' ' + key + ' '
-        updates = [k + ' = "' + v + '"' if v !=
-                   None else k + '=NULL' for k, v in updates.items()]
-        updates = ', '.join(updates)
-        if where_clause is not None:
-            where = [k + ' = "' + v + '"' for k, v in where_clause.items()]
-            where = key.join(where)
-            query = 'UPDATE ' + tablename + ' SET ' + updates + ' WHERE ' + where
-        else:
-            query = 'UPDATE ' + tablename + ' SET ' + updates
-        if (not self.conn.is_connected()):
-            self.connect_db()
-        curr = self.conn.cursor()
-        curr.execute(query)
-        self.conn.commit()
+        try:
+            key = ' ' + key + ' '
+            vals = [v for k, v in updates.items()]
+            updates = [k + ' = %s' if v !=
+                       None else k + '=NULL' for k, v in updates.items()]
+            updates = ', '.join(updates)
+            if where_clause is not None:
+                where = [k + ' = "' + v + '"' for k, v in where_clause.items()]
+                where = key.join(where)
+                query = 'UPDATE ' + tablename + ' SET ' + updates + ' WHERE ' + where
+            else:
+                query = 'UPDATE ' + tablename + ' SET ' + updates
+            if (not self.conn.is_connected()):
+                self.connect_db()
+            curr = self.conn.cursor()
+            curr.execute(query, tuple(vals))
+            self.conn.commit()
+        except Error as e:
+            raise e
 
     def custom_query(self, query):
         if (not self.conn.is_connected()):
@@ -232,17 +248,19 @@ class Workbench(Column):
         curr = self.conn.cursor(dictionary=True)
         try:
             curr.execute(query)
+            curr.close()
             self.conn.commit()
             return "executed succesfully"
         except Error as e:
             return e
 
-    def select_from_custom(self, query):
+    def select_from_custom(self, query, *parameters):
         if (not self.conn.is_connected()):
             self.connect_db()
         curr = self.conn.cursor(dictionary=True)
+        # print(type(parameters), parameters)
         try:
-            curr.execute(query)
+            curr.execute(query, parameters)
             return curr.fetchall()
         except Error as e:
-            return e
+            raise(e)

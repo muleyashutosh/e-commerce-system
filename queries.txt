@@ -98,6 +98,68 @@ begin
 end //
 delimiter ;
 
+DROP TRIGGER IF EXISTS cardSubtotalUpdateOnAdd;
+
+delimiter // 
+CREATE TRIGGER cardSubtotalUpdateOnAdd
+AFTER INSERT 
+ON cart FOR EACH ROW 
+begin 
+    declare subt int;
+
+    SELECT SUM(minPrice * quantity) INTO subt from products NATURAL JOIN cart WHERE cartID = new.cartID;
+    IF (subt IS NULL) THEN 
+        UPDATE cartDetails SET subtotal = 0 WHERE cartID = new.cartID;
+    ELSE 
+        UPDATE cartDetails SET subtotal = subt WHERE cartID = new.cartID;
+    END IF;
+end //
+
+
+DROP TRIGGER IF EXISTS cardSubtotalUpdateOnRemove;
+
+delimiter // 
+CREATE TRIGGER cardSubtotalUpdateOnRemove
+AFTER DELETE 
+ON cart FOR EACH ROW 
+begin 
+    declare subt int;
+
+    SELECT SUM(minPrice * quantity) INTO subt from products NATURAL JOIN cart WHERE cartID = old.cartID;
+    IF (subt IS NULL) THEN 
+        UPDATE cartDetails SET subtotal = 0 WHERE cartID = old.cartID;
+    ELSE 
+        UPDATE cartDetails SET subtotal = subt WHERE cartID = old.cartID;
+    END IF;
+end //
+delimiter ;
+
+
+DROP TRIGGER IF EXISTS cartSubtotalUpdateOnUpdateQuantity;
+
+delimiter //
+CREATE TRIGGER cartSubtotalUpdateOnUpdateQuantity
+AFTER UPDATE
+ON cart FOR EACH ROW
+begin
+	declare subt int;
+    IF (old.quantity <> new.quantity) then
+        SELECT SUM(minPrice * quantity) INTO subt from products NATURAL JOIN cart WHERE cartID = new.cartID;
+        IF (subt IS NULL) THEN 
+            UPDATE cartDetails SET subtotal = 0 WHERE cartID = new.cartID;
+        ELSE 
+            UPDATE cartDetails SET subtotal = subt WHERE cartID = new.cartID;
+        END IF;
+    END IF;
+
+end //
+delimiter ;
+
+
+
+
+
+
 
 CREATE TABLE cartDetails (
     cartID VARCHAR(20) PRIMARY KEY NOT NULL,

@@ -1,5 +1,5 @@
 const onload = async (body) => {
-  const data = await fetch(`/productDetail/${id}`);
+  const data = await fetch(`/api/productDetail/${id}`);
   const resp = await data.json();
   return resp;
 };

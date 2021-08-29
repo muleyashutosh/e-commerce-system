@@ -337,19 +337,38 @@
           <div class="mdc-card__actions">
             <div class="priceTag">&#x20B9;{{ x['minPrice'] }}.00</div>
             <div class="mdc-card__action-icons">
-              <div class="mdc-touch-target-wrapper">
-                <button
-                  class="
-                    material-icons
-                    mdc-icon-button
-                    mdc-card__action mdc-card__action--icon
-                  "
-                  title="Add"
-                >
-                  add_shopping_cart
-                  <div class="mdc-icon-button__ripple"></div>
-                  <div class="mdc-icon-button__touch"></div>
-                </button>
+              <div class="mdc-touch-target-wrapper" data-prodID="{{ x['prodID'] }}">
+                {% if x['inCart']: %}
+                  <button
+                    class="
+                      material-icons
+                      mdc-icon-button
+                      mdc-card__action mdc-card__action--icon
+                      material-icons-outlined
+                    "
+                    title="Remove Item from Cart"
+                    onclick="removeFromCart(event, `{{ x['prodID'] }}`)"
+                  >
+                    remove_shopping_cart
+                    <div class="mdc-icon-button__ripple"></div>
+                    <div class="mdc-icon-button__touch"></div>
+                  </button>
+                {% else: %}
+                  <button
+                    class="
+                      material-icons
+                      mdc-icon-button
+                      mdc-card__action mdc-card__action--icon
+                      material-icons-outlined
+                    "
+                    title="Add Item to Cart"
+                    onclick="addToCart(event, `{{ x['prodID'] }}`)"
+                  >
+                    add_shopping_cart
+                    <div class="mdc-icon-button__ripple"></div>
+                    <div class="mdc-icon-button__touch"></div>
+                  </button>
+                {% endif %}
               </div>
             </div>
           </div>

@@ -129,16 +129,37 @@ const renderProducts = ({ status, data }) => {
         <div class="mdc-card__actions">
           <div class="priceTag">&#x20B9;${item.minPrice}.00</div>
           <div class="mdc-card__action-icons">
-            <button
-              class="
-                material-icons
-                mdc-icon-button
-                mdc-card__action mdc-card__action--icon
-              "
-              title="Share"
-            >
-              add_shopping_cart
-            </button>
+            ${
+              item.inCart
+                ? `<button
+                    class="
+                      material-icons
+                      mdc-icon-button
+                      mdc-card__action mdc-card__action--icon
+                      material-icons-outlined
+                    "
+                    title="Remove Item from Cart"
+                    onclick="removeFromCart(event, '${item.prodID}')"
+                  >
+                    remove_shopping_cart
+                    <div class="mdc-icon-button__ripple"></div>
+                    <div class="mdc-icon-button__touch"></div>
+                  </button>`
+                : `<button
+                    class="
+                      material-icons
+                      mdc-icon-button
+                      mdc-card__action mdc-card__action--icon
+                      material-icons-outlined
+                    "
+                    title="Add Item to Cart"
+                    onclick="addToCart(event, '${item.prodID}')"
+                  >
+                    add_shopping_cart
+                    <div class="mdc-icon-button__ripple"></div>
+                    <div class="mdc-icon-button__touch"></div>
+                  </button>`
+            }
           </div>
         </div>
       </div>`;
@@ -210,3 +231,65 @@ const redirectToProductPage = (e) => {
 };
 
 $(".mdc-card__primary-action").on("click", redirectToProductPage);
+
+const addToCart = async (event, id) => {
+  try {
+    const resp = await fetch(`/api/addToCart/${id}`, {
+      method: "POST",
+    });
+    const data = await resp.json();
+    cartButtonChange(event.path[1].parentElement, "remove");
+    console.log(data);
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+const removeFromCart = async (event, id) => {
+  try {
+    const resp = await fetch(`/api/removeFromCart/${id}`, {
+      method: "DELETE",
+    });
+    const data = await resp.json();
+    console.log(data);
+    // console.log(event.path[1].parentElement);
+    cartButtonChange(event.path[1].parentElement, "add");
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+const cartButtonChange = (target, type) => {
+  const pid = target.getAttribute("data-prodID");
+  if (type === "add") {
+    target.innerHTML = `<button
+                    class="
+                      material-icons
+                      mdc-icon-button
+                      mdc-card__action mdc-card__action--icon
+                      material-icons-outlined
+                    "
+                    title="Remove Item from Cart"
+                    onClick="addToCart(event,'${pid}')"
+                  >
+                    add_shopping_cart
+                    <div class="mdc-icon-button__ripple"></div>
+                    <div class="mdc-icon-button__touch"></div>
+                  </button>`;
+  } else {
+    target.innerHTML = `<button
+                    class="
+                      material-icons
+                      mdc-icon-button
+                      material-icons-outlined
+                      mdc-card__action mdc-card__action--icon
+                    "
+                    title="Add Item to Cart"
+                    onclick="removeFromCart(event, '${pid}')"
+                  >
+                    remove_shopping_cart
+                    <div class="mdc-icon-button__ripple"></div>
+                    <div class="mdc-icon-button__touch"></div>
+                  </button>`;
+  }
+};

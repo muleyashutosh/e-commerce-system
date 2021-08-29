@@ -5,7 +5,7 @@ from flask_cachebuster import CacheBuster
 from workbench import Workbench
 from random import randint
 from datetime import date
-from re import I, search
+from re import I, U, search
 from flask_cors import CORS
 from bcrypt import checkpw, hashpw, gensalt
 from db_config import CONFIG
@@ -43,8 +43,8 @@ def login():
     idName = 'custID' if user == 'customer' else 'supplierID'
     try:
         userData = db.select_from(
-            tableName, [idName, 'firstname'], {'email': email})
-        # print(userData)
+            tableName, [idName, 'firstname', 'cartID'], {'email': email})
+        print(userData)
     except Error as e:
         print('error while trying to get userData')
         print(e)
@@ -68,6 +68,7 @@ def login():
                 session['email'] = email
                 session['firstname'] = userData[0]["firstname"]
                 session['userID'] = userID
+                session['cartID'] = userData[0]['cartID']
             return jsonify({"status": 'verified'})
         else:
             return jsonify({'status': "Invalid Credentials"})
@@ -116,6 +117,7 @@ def register():
         session['email'] = data['email']
         session['firstname'] = data['firstname']
         session['userID'] = data[idName]
+        session['cartID'] = data['cartID']
     return jsonify({"status": 'User registered successfully'})
 
 # filter products route
@@ -157,11 +159,18 @@ def filter():
     print(query)
     try:
         products = db.select_from_custom(query)
+        cart = db.select_from('cart', where_clause={
+                              'cartID': session['cartID']})
+        cart = {x['prodID']: True for x in cart}
+
+        products = [{**x, 'inCart': True} if x['prodID']
+                    in cart else {**x, 'inCart': False} for x in products]
     except Error as e:
         print(e)
         return jsonify({
             "status": "Error while accessing database"
         })
+
     return jsonify({
         "status": "OK",
         "data": products
@@ -176,13 +185,19 @@ def home(page=1):
         startAt = perPage * page - perPage
         user = session['email']
         firstname = session['firstname']
-        global allproducts
-        if not len(allproducts):
-            allproducts = db.select_from('products')
-        products = allproducts
-        totalPages = len(products) // 20 + 1
-        # print(totalPages)
-        products = products[startAt:startAt + perPage]
+        products = db.select_from(
+            'products', ['prodID', 'prodName', 'minPrice', 'img'], limit=[startAt, startAt + perPage])
+        # cartItems = db.select_from('cart')
+        totalPages = db.select_from(
+            'products', ['COUNT(*)'])[0]['COUNT(*)'] // 20 + 1
+
+        cart = db.select_from('cart', where_clause={
+                              'cartID': session['cartID']})
+        cart = {x['prodID']: True for x in cart}
+
+        products = [{**x, 'inCart': True} if x['prodID']
+                    in cart else {**x, 'inCart': False} for x in products]
+        # print(products)
         filter = False
         payload = {
             "user": user,
@@ -217,7 +232,7 @@ def sellerHome():
         NATURAL JOIN 
             products 
         WHERE 
-            supplierID = '{uid}';''')
+            supplierID = '%s';''', uid)
         # print(productlist)
         # productdetails = db.select_from(
         #     'supplierdet', where_clause={'supplierID': uid})
@@ -378,9 +393,14 @@ def cart():
     if 'email' in session:
         user = session['email']
         firstname = session['firstname']
+        cartID = session['cartID']
+        cart = db.select_from_custom(
+            "SELECT prodID, minPrice, cartID, quantity, prodName, prodDesc, img, subtotal FROM cartDetails NATURAL JOIN cart NATURAL JOIN products WHERE cartID=%s", cartID)
+        print(cart)
+
     else:
         return redirect(url_for('index'))
-    return render_template('cart.html', user=user, firstname=firstname, login_status=True)
+    return render_template('cart.html', user=user, firstname=firstname, login_status=True, cart=cart)
 
 
 @app.route('/sellerProfile', methods=['GET', 'POST'])
@@ -555,10 +575,17 @@ def searchApi():
     # db = Workbench('minProj', password=mysql_pwd)
     if(cat != 0):
         products = db.select_from_custom(
-            f"SELECT * FROM products WHERE MATCH(prodName, prodDesc) AGAINST ('{search}' IN NATURAL LANGUAGE MODE) AND categoryID = {cat};")
+            "SELECT * FROM products WHERE MATCH(prodName, prodDesc) AGAINST (%s IN NATURAL LANGUAGE MODE) AND categoryID = %s;", search, cat)
     else:
         products = db.select_from_custom(
-            f"SELECT * FROM products WHERE MATCH(prodName, prodDesc) AGAINST ('{search}' IN NATURAL LANGUAGE MODE);")
+            "SELECT * FROM products WHERE MATCH(prodName, prodDesc) AGAINST (%s IN NATURAL LANGUAGE MODE);", search)
+
+    cart = db.select_from('cart', where_clause={
+        'cartID': session['cartID']})
+    cart = {x['prodID']: True for x in cart}
+
+    products = [{**x, 'inCart': True} if x['prodID']
+                in cart else {**x, 'inCart': False} for x in products]
     return (
         jsonify({
             "status": "OK",
@@ -567,13 +594,72 @@ def searchApi():
     )
 
 
-@app.route('/productDetail/<id>', methods=['GET'])
-def productDetail(id):
+@app.route('/api/productDetail/<id>', methods=['GET'])
+def product_details(id):
     try:
         # print(type(id))
         product = db.select_from_custom(
-            f"SELECT * FROM products WHERE prodID='{id}'")
+            "SELECT * FROM products WHERE prodID=%s;", id)
         # print(product);
         return jsonify({"status": "OK", "data": product})
-    except:
-        return jsonify({"status": "not found"})
+    except Error as err:
+        print(err)
+        return jsonify({"status": "not found"}), 404
+
+
+@app.route('/api/addToCart/<id>', methods=['POST'])
+def add_to_cart(id):
+    try:
+        if not id:
+            return jsonify({"status": "Product ID Not provided"}), 400
+        print(id)
+        cartID = session['cartID']
+        db.insert_into('cart', {"prodID": id, "cartID": cartID})
+        return jsonify({"status": "Added to Cart successfully"})
+    except Error as err:
+        print(err)
+        if "Duplicate entry" in str(err):
+            return jsonify({"status": "Item Already present in cart"}), 400
+        return jsonify({"status": "Error adding to Cart"}), 500
+
+
+@app.route('/api/removeFromCart/<id>', methods=['DELETE'])
+def remove_from_cart(id):
+    try:
+        if not id:
+            return jsonify({"status": "Product ID Not provided"}), 400
+        print(id)
+        cartID = session['cartID']
+        db.delete_from('cart', where_clause={'prodID': id, 'cartID': cartID})
+        subtotal = db.select_from(
+            'cartDetails', ['subtotal'], where_clause={'cartID': cartID})[0]['subtotal']
+        print(subtotal)
+        itemsLength = db.select_from(
+            'cart', ['COUNT(*)'], where_clause={'cartID': cartID})[0]['COUNT(*)']
+        # print(itemsLength)
+        return jsonify({"status": "Deleted item from Cart successfully", "subtotal": subtotal, "length": itemsLength})
+    except Error as err:
+        print(err)
+        return jsonify({"status": "Error removing item from Cart"}), 500
+
+
+@app.route('/api/editCart/<id>', methods=['PUT'])
+def edit_cart(id):
+    try:
+        if not id:
+            return jsonify({"status": "Product ID Not provided"}), 400
+        print(id)
+        quantity = request.json['quantity']
+        cartID = session['cartID']
+        where_clause = {
+            "cartID": cartID, "prodID": id}
+        db.update_table('cart', {"quantity": quantity}, where_clause)
+        updatedQuantity = db.select_from(
+            'cart', ['quantity'], where_clause=where_clause)[0]['quantity']
+        # print(updatedQuantity)
+        subtotal = db.select_from(
+            'cartDetails', ['subtotal'], where_clause={'cartID': cartID})[0]['subtotal']
+        return jsonify({"status": "Updated quantity from Cart successfully", "quantity": updatedQuantity, "subtotal": subtotal})
+    except Error as err:
+        print(err)
+        return jsonify({"status": "Error updating quantity from Cart"}), 500
