@@ -254,3 +254,8 @@ input[type="search"]:focus::-webkit-search-cancel-button {
 .pageDot {
   font-size: small;
 }
+
+.mdc-snackbar {
+  margin: 15px;
+  left: auto;
+}

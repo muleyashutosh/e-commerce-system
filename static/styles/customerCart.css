@@ -134,3 +134,8 @@ ul {
 .proceed-button {
   background-color: var(--mdc-theme-secondary);
 }
+
+.mdc-snackbar {
+  margin: 15px;
+  left: auto;
+}

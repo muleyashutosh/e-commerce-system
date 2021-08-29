@@ -5,6 +5,21 @@
   href="{{ url_for('static', filename='styles/customerCart.css')}}"
 />
 {% endblock %} {% block body %}
+
+<aside class="mdc-snackbar removed-snackbar">
+  <div class="mdc-snackbar__surface" role="status" aria-relevant="additions">
+    <div class="mdc-snackbar__label" aria-atomic="false">
+      Item Removed from Cart
+    </div>
+    <div class="mdc-snackbar__actions" aria-atomic="true">
+      <button type="button" class="material-icons
+          mdc-icon-button mdc-snackbar__action material-icons-outlined" title="Dismiss">
+        <div class="mdc-button__ripple"></div>
+        close
+      </button>
+    </div>
+  </div>
+</aside>
 <section class="main-content">
   <section class="cart-items mdc-elevation--z2">
     <div class="cart-heading">Shopping Cart</div>

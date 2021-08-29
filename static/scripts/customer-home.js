@@ -3,8 +3,16 @@ const { MDCFormField } = mdc.formField;
 const { MDCRadio } = mdc.radio;
 const { MDCList } = mdc.list;
 const { MDCDrawer } = mdc.drawer;
+const { MDCSnackbar } = mdc.snackbar;
 
-const selector = ".mdc-card__primary-action";
+const addedSnackbar = new MDCSnackbar(
+  document.querySelector(".added-snackbar")
+);
+const removedSnackbar = new MDCSnackbar(
+  document.querySelector(".removed-snackbar")
+);
+
+const selector = ".mdc-card__primary-action, .mdc-snackbar__actions";
 const ripples = [].map.call(document.querySelectorAll(selector), function (el) {
   return new MDCRipple(el);
 });
@@ -234,10 +242,16 @@ $(".mdc-card__primary-action").on("click", redirectToProductPage);
 
 const addToCart = async (event, id) => {
   try {
+    NProgress.start();
+    const button = event.path[1];
+    button.disabled = true;
     const resp = await fetch(`/api/addToCart/${id}`, {
       method: "POST",
     });
     const data = await resp.json();
+    // button.disabled = false;
+    NProgress.done();
+    addedSnackbar.open();
     cartButtonChange(event.path[1].parentElement, "remove");
     console.log(data);
   } catch (e) {
@@ -247,12 +261,16 @@ const addToCart = async (event, id) => {
 
 const removeFromCart = async (event, id) => {
   try {
+    NProgress.start();
+    const button = event.path[1];
+    button.disabled = true;
     const resp = await fetch(`/api/removeFromCart/${id}`, {
       method: "DELETE",
     });
     const data = await resp.json();
     console.log(data);
-    // console.log(event.path[1].parentElement);
+    NProgress.done();
+    removedSnackbar.open();
     cartButtonChange(event.path[1].parentElement, "add");
   } catch (e) {
     console.log(e);

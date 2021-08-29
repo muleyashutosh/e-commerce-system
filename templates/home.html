@@ -4,6 +4,34 @@
   href="{{ url_for('static', filename='styles/customerHome.css')}}"
 />
 {% endblock %} {% block body %}
+<aside class="mdc-snackbar added-snackbar">
+  <div class="mdc-snackbar__surface" role="status" aria-relevant="additions">
+    <div class="mdc-snackbar__label" aria-atomic="false">
+      Item Added to Cart
+    </div>
+    <div class="mdc-snackbar__actions" aria-atomic="true">
+      <button type="button" class="material-icons
+          mdc-icon-button mdc-snackbar__action material-icons-outlined" title="Dismiss">
+        <div class="mdc-button__ripple"></div>
+        close
+      </button>
+    </div>
+  </div>
+</aside>
+<aside class="mdc-snackbar removed-snackbar">
+  <div class="mdc-snackbar__surface" role="status" aria-relevant="additions">
+    <div class="mdc-snackbar__label" aria-atomic="false">
+      Item Removed from Cart
+    </div>
+    <div class="mdc-snackbar__actions" aria-atomic="true">
+      <button type="button" class="material-icons
+          mdc-icon-button mdc-snackbar__action material-icons-outlined" title="Dismiss">
+        <div class="mdc-button__ripple"></div>
+        close
+      </button>
+    </div>
+  </div>
+</aside>
 <aside class="category-filter mdc-drawer mdc-drawer--modal">
   <div class="mdc-drawer__content">
     <form id="filter" method="post">
