@@ -2,7 +2,12 @@
   width: 100%;
   display: flex;
   gap: 10px;
-  padding: 25px;
+  padding: 15px;
+}
+
+#searchfield,
+.search-icon-button {
+  display: none;
 }
 
 .main-content > div,
@@ -94,6 +99,8 @@ ul {
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
+  right: 2px;
+  position: fixed;
 }
 
 .subtotal-heading {
@@ -202,6 +209,7 @@ ul {
   }
   .subtotal {
     width: 95%;
+    position: relative;
   }
 }
 @media screen and (max-width: 425px) {

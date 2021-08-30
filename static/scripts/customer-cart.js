@@ -11,6 +11,7 @@ const deleteButton = document.querySelectorAll(".delete-button");
 const itemsList = document.querySelector(".items-list");
 const subtotalValue = document.querySelector(".subtotal-amount");
 const subtotalHeading = document.querySelector(".subtotal-heading");
+const CART_EMPTY_IMAGE_SRC = `/static/styles/empty_cart.jpg`;
 
 const iconButtonRipple = new MDCRipple(
   document.querySelector(".mdc-icon-button")
@@ -117,6 +118,11 @@ const removeFromCart = async (event) => {
   subtotalValue.innerHTML = `&#x20B9;${x.subtotal}.00`;
   subtotalHeading.innerHTML = `Subtotal(${x.length} items):`;
   itemsList.removeChild(listElement);
+  if (!x.length) {
+    const img = document.createElement("img");
+    img.src = CART_EMPTY_IMAGE_SRC;
+    itemsList.appendChild(img);
+  }
 };
 
 if (addButton.length)

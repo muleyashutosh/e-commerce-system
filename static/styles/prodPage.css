@@ -57,6 +57,14 @@
   margin: 10px 20px 0px !important;
 }
 
+#searchfield {
+  display: none;
+}
+
+.search-icon-button {
+  display: none;
+}
+
 @media screen and (max-width: 800px) {
   .grid-item img {
     width: 75%;

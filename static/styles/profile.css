@@ -4,6 +4,15 @@ body {
 .cart {
   display: none;
 }
+
+.search-icon-button {
+  display: none !important;
+}
+
+#searchfield {
+  display: none;
+}
+
 #main {
   background-color: #efefef;
   width: 50%;
