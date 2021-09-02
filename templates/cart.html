@@ -32,7 +32,7 @@
           <img src="{{ x['img']}}" alt="" class='item-imgtag' />
         </div>
         <div class="item-data">
-          <div class="item-name">{{ x['prodName'] }}</div>
+          <div class="item-name"><a href="{{ url_for('productPage', id=x['prodID']) }}">{{ x['prodName'] }}</a></div>
           <div class="item-price">&#x20B9;{{ x['minPrice'] }}.00</div>
           <div class="item-bottom" data-prodid='{{ x["prodID"]}}'>
             <div class="quantity-adjust">
