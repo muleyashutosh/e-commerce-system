@@ -184,25 +184,28 @@ input[type="search"]:focus::-webkit-search-cancel-button {
 .pageswitcher {
   width: fit-content;
   position: relative;
-  margin: 25px auto 25px auto;
+  margin: 35px auto 25px auto;
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 3px;
+  gap: 4px;
 }
 
 .pageNo {
   outline: 0;
-  border-radius: 2px;
-  width: fit-content;
-  height: 40px;
+  border-radius: 0;
+  width: 38px;
+  height: 38px;
   cursor: pointer;
-  padding: 10px;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   font-size: 15px;
   color: #2d2d2d;
   border: none;
   background-color: #c4c7c5;
-  transition: all 0.3s;
+  transition: all 0.1s;
 }
 #prevPage,
 #nextPage {
@@ -215,26 +218,26 @@ input[type="search"]:focus::-webkit-search-cancel-button {
   text-decoration: none;
 }
 
-.pageNo:hover {
-  transform: scale(1.1, 1.1);
+button.pageNo:not(.selectedPage):hover {
+  background-color: darkgray;
 }
 
 .mdc-button--raised:not(:disabled) {
   background-color: var(--dark-yellow);
   color: var(--mdc-theme-on-secondary);
 }
-
+/* 
 .addToCart {
   background-color: #ffa400;
   color: #2d2d2d;
   opacity: 1 !important;
   display: none;
-  /* transition: all 0.05s ease; */
+  transition: all 0.05s ease;
 }
 
 .addToCart:focus {
   outline: none;
-}
+} */
 
 .noItemsFound {
   padding: 20px 20px 5px 20px;
@@ -252,7 +255,7 @@ input[type="search"]:focus::-webkit-search-cancel-button {
 }
 
 .pageDot {
-  font-size: small;
+  font-size: medium;
 }
 
 .mdc-snackbar {

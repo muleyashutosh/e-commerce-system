@@ -54,7 +54,12 @@
 }
 
 .button {
-  margin: 10px 20px 0px !important;
+  /* margin: 10px 20px 0px !important; */
+  width: 80%;
+}
+.addToCart:not(:disabled) {
+  background-color: var(--mdc-theme-secondary) !important;
+  color: var(--mdc-theme-on-secondary) !important;
 }
 
 #searchfield {
@@ -65,6 +70,18 @@
   display: none;
 }
 
+.buttonsContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.mdc-snackbar {
+  margin: 15px;
+  left: auto;
+}
 @media screen and (max-width: 800px) {
   .grid-item img {
     width: 75%;
@@ -74,5 +91,12 @@
 @media screen and (max-width: 600px) {
   .grid-item {
     grid-template-columns: 1fr;
+  }
+  .buttonsContainer {
+    flex-direction: column;
+  }
+  .button {
+    /* margin: 10px 20px 0px !important; */
+    width: 100%;
   }
 }

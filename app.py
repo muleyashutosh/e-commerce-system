@@ -601,7 +601,14 @@ def product_details(id):
         product = db.select_from_custom(
             "SELECT * FROM products WHERE prodID=%s;", id)
         # print(product);
-        return jsonify({"status": "OK", "data": product})
+        cart = db.select_from('cart', where_clause={
+                              'cartID': session['cartID']})
+        cart = {x['prodID']: True for x in cart}
+
+        products = [{**x, 'inCart': True} if x['prodID']
+                    in cart else {**x, 'inCart': False} for x in product]
+
+        return jsonify({"status": "OK", "data": products})
     except Error as err:
         print(err)
         return jsonify({"status": "not found"}), 404
