@@ -41,9 +41,11 @@ def login():
     email, password, user = data.values()
     tableName = 'customers' if user == 'customer' else 'suppliers'
     idName = 'custID' if user == 'customer' else 'supplierID'
+    colNames = [idName, 'firstname', 'cartID'] if user == 'customer' else [
+        idName, 'firstname']
     try:
         userData = db.select_from(
-            tableName, [idName, 'firstname', 'cartID'], {'email': email})
+            tableName, colNames, {'email': email})
         print(userData)
     except Error as e:
         print('error while trying to get userData')
@@ -68,7 +70,8 @@ def login():
                 session['email'] = email
                 session['firstname'] = userData[0]["firstname"]
                 session['userID'] = userID
-                session['cartID'] = userData[0]['cartID']
+                if user == 'customer':
+                    session['cartID'] = userData[0]['cartID']
             return jsonify({"status": 'verified'})
         else:
             return jsonify({'status': "Invalid Credentials"})
@@ -222,7 +225,7 @@ def sellerHome():
         firstname = session['firstname']
         uid = session['userID']
         print(user, firstname, uid)
-        productlist = db.select_from_custom(f'''
+        productlist = db.select_from_custom('''
         SELECT 
             prodID, prodName, prodDesc, minPrice, img, rating, unitStock, categoryID, prodAvail
         FROM 
@@ -232,7 +235,7 @@ def sellerHome():
         NATURAL JOIN 
             products 
         WHERE 
-            supplierID = '%s';''', uid)
+            supplierID = %s;''', uid)
         # print(productlist)
         # productdetails = db.select_from(
         #     'supplierdet', where_clause={'supplierID': uid})
