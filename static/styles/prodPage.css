@@ -58,7 +58,7 @@
   width: 45%;
 }
 .addToCart:not(:disabled) {
-  background-color: var(--mdc-theme-secondary) !important;
+  background-color: var(--dark-yellow) !important;
   color: var(--mdc-theme-on-secondary) !important;
 }
 
