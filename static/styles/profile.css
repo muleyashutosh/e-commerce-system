@@ -30,22 +30,22 @@ h1 {
 .inputl {
   display: inline-block;
   width: 45%;
-  font-family: "Open Sans", sans-serif;
+  font-family: "Roboto", sans-serif;
 }
 #Card.inputr {
-  font-family: "Open Sans", sans-serif;
+  font-family: "Roboto", sans-serif;
   float: right;
   width: 45%;
   height: 150px !important;
 }
 .inputr {
-  font-family: "Open Sans", sans-serif;
+  font-family: "Roboto", sans-serif;
   float: right;
   width: 45%;
 }
 .input2b {
   margin-top: 10px;
-  font-family: "Open Sans", sans-serif;
+  font-family: "Roboto", sans-serif;
   background-color: #efefef;
   height: 35px;
   width: 100%;
@@ -59,7 +59,7 @@ h1 {
 }
 #cvv {
   background-color: #efefef;
-  font-family: "Open Sans", sans-serif;
+  font-family: "Roboto", sans-serif;
   font-size: 15px;
   border-radius: var(--mdc-shape-small-component-radius);
   border: 1px solid #3f3f3f;
@@ -84,7 +84,7 @@ h1 {
 }
 .input2a {
   margin-top: 10px;
-  font-family: "Open Sans", sans-serif;
+  font-family: "Roboto", sans-serif;
   background-color: #efefef;
   border: 1px solid #3f3f3f;
   border-radius: var(--mdc-shape-small-component-radius);

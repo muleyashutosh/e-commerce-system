@@ -55,7 +55,7 @@
 
 .button {
   /* margin: 10px 20px 0px !important; */
-  width: 80%;
+  width: 45%;
 }
 .addToCart:not(:disabled) {
   background-color: var(--mdc-theme-secondary) !important;
@@ -97,6 +97,6 @@
   }
   .button {
     /* margin: 10px 20px 0px !important; */
-    width: 100%;
+    width: 90%;
   }
 }
