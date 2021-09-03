@@ -39,23 +39,6 @@ const tooltipsCleanup = () => {
 setInterval(tooltipsCleanup, 25);
 
 $(() => {
-  const LOGO = `/static/styles/logo.png`;
-  const SHORT_LOGO = `/static/styles/logo1.png`;
-
-  const adjustLogo = () => {
-    const width = window.outerWidth;
-    const img = document.getElementById("headerLogo");
-    if (width < 467) {
-      img.src = SHORT_LOGO;
-    } else {
-      img.src = LOGO;
-    }
-  };
-
-  adjustLogo();
-
-  $(window).resize(adjustLogo);
-
   const floatingSearchToggle = () => {
     const searchfield = $("#searchfield");
     // console.log(searchfield.hasClass('floating-search'))

@@ -91,11 +91,17 @@
           <a
             href="{{ url_for('home') if 'C' in session['userID'] else url_for('sellerHome') }}"
           >
-            <img
-              src="{{ url_for('static', filename='styles/logo.png') }}"
-              id="headerLogo"
-              alt=""
-            />
+            <picture>
+              <source
+                srcset="{{ url_for('static', filename='styles/logo1.png') }}"
+                media="(max-width: 467px)"
+              />
+              <img
+                src="{{ url_for('static', filename='styles/logo.png') }}"
+                id="headerLogo"
+                alt=""
+              />
+            </picture>
           </a>
         </h2>
         <div id="searchfield">
