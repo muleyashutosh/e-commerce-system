@@ -30,6 +30,12 @@ allproducts = []
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
+    if "email" in session:
+        userID = session['userID']
+        if userID[0] == 'C':
+            return redirect(url_for('home'))
+        else:
+            return redirect(url_for('sellerHome'))
     return render_template("index.html")
 
 
