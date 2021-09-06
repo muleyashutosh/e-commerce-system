@@ -119,10 +119,10 @@ class Workbench(Column):
             print(query, vals)
             if not self.conn.is_connected():
                 self.connect_db()
-            else:
-                curr = self.conn.cursor()
-                curr.execute(query, tuple(vals))
-                self.conn.commit()
+
+            curr = self.conn.cursor()
+            curr.execute(query, tuple(vals))
+            self.conn.commit()
         except Error as e:
             raise e
 
