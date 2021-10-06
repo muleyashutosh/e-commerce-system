@@ -1,11 +1,10 @@
-from flask import Flask, json, render_template, request, session, url_for, jsonify
+from flask import Flask, render_template, request, session, url_for, jsonify
 from mysql.connector import Error
 from werkzeug.utils import redirect
 from flask_cachebuster import CacheBuster
 from workbench import Workbench
 from random import randint
 from datetime import date
-from re import I, U, search
 from flask_cors import CORS
 from bcrypt import checkpw, hashpw, gensalt
 from db_config import CONFIG
