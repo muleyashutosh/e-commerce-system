@@ -560,7 +560,12 @@ def myOrders():
 
 @app.route('/productPage/<string:id>')
 def productPage(id):
-    return render_template('prodDetail.html', id=id)
+    payload = {
+        "id": id,
+        "user": session['email'],
+        "firstname": session['firstname']
+    }
+    return render_template('prodDetail.html', **payload)
 
 
 @app.route('/payment')
